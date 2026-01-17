@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TF Slides - Real-time & Scaling Masterclass</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* ============================================
+           CORE SETUP: FIXED SLIDE MODE 
+           ============================================ */
+        
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0;
+        }
+        
+        :root { 
+            --bg-color: #f2f2f2; 
+            --accent-yellow: #fff500; 
+            --accent-pink: #ff00ff; 
+            --accent-cyan: #00ffff; 
+            --accent-green: #00ff00; 
+            --accent-black: #000000; 
+            --border-thickness: 4px; 
+        }
+        
+        body { 
+            background-color: #222; 
+            font-family: 'Space Mono', monospace; 
+            margin: 0; 
+            padding: 40px 0;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+        }
+
+        /* ============================================
+           SLIDE CONTAINER (FIXED 1280x720)
+           ============================================ */
+        
+        .slide-container {
+            width: 1280px; 
+            height: 720px;
+            background-color: var(--bg-color);
+            border: var(--border-thickness) solid var(--accent-black);
+            box-shadow: 12px 12px 0px var(--accent-black);
+            position: relative; 
+            overflow: hidden; 
+            padding: 50px 60px; 
+            margin-bottom: 60px;
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center;
+        }
+
+        /* ============================================
+           MANDATORY HEADER
+           ============================================ */
+        
+        .slide-header {
+            position: absolute; 
+            top: 0; 
+            left: 0;
+            background: var(--accent-black); 
+            color: var(--accent-yellow);
+            padding: 8px 20px; 
+            font-family: 'Lexend Mega'; 
+            font-size: 13px; 
+            font-weight: 700;
+            border-bottom: 4px solid var(--accent-pink); 
+            border-right: 4px solid var(--accent-pink);
+            z-index: 100; 
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ============================================
+           ANTI-OVERFLOW CORE RULES
+           ============================================ */
+        
+        .slide-container * {
+            max-width: 100%;
+            word-wrap: break-word; 
+            overflow-wrap: break-word;
+        }
+
+        /* ============================================
+           TYPOGRAPHY
+           ============================================ */
+        
+        h1, h2, h3 { 
+            font-family: 'Lexend Mega'; 
+            text-transform: uppercase; 
+            color: #000; 
+            margin: 0 0 20px 0;
+        }
+        
+        h1 { 
+            font-size: clamp(48px, 6vw, 72px);
+            font-weight: 900; 
+            line-height: 0.95; 
+            text-shadow: 4px 4px 0px var(--accent-pink); 
+            margin-bottom: 30px;
+        }
+        
+        h2 { 
+            font-size: clamp(32px, 4vw, 42px); 
+            font-weight: 700;
+            background: var(--accent-yellow); 
+            border: 4px solid black; 
+            padding: 10px 20px; 
+            display: inline-block; 
+            box-shadow: 6px 6px 0px black;
+            line-height: 1.1;
+            margin-bottom: 25px;
+        }
+
+        h3 { 
+            font-size: clamp(24px, 3vw, 36px); 
+            font-weight: 700;
+            border-bottom: 4px solid var(--accent-cyan);
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        /* Body Text */
+        p { 
+            font-size: 20px; 
+            line-height: 1.5; 
+            margin-bottom: 16px;
+            font-weight: 400;
+        }
+
+        strong, b {
+            font-weight: 700;
+            color: var(--accent-black);
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 0 0 20px 0;
+            padding-left: 35px;
+        }
+
+        li {
+            font-size: 20px;
+            line-height: 1.5;
+            margin-bottom: 14px;
+            font-weight: 400;
+        }
+
+        li strong {
+            color: var(--accent-pink);
+        }
+
+        /* ============================================
+           COMPONENTS
+           ============================================ */
+        
+        /* Neo Box */
+        .neo-box { 
+            background: white; 
+            border: 4px solid black; 
+            padding: 20px 24px; 
+            box-shadow: 6px 6px 0px black; 
+            margin-bottom: 20px;
+            font-size: 18px;
+            height: 100%;
+        }
+
+        /* Code Block */
+        .code-block { 
+            background: #000; 
+            color: #00ff00; 
+            padding: 16px 20px; 
+            border: 4px solid var(--accent-pink); 
+            font-family: 'Space Mono', monospace;
+            font-size: 16px;
+            line-height: 1.4;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+
+        .code-block .comment {
+            color: #888;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: var(--accent-yellow);
+            border: 4px solid black;
+            padding: 16px 20px;
+            box-shadow: 6px 6px 0px black;
+            font-weight: 700;
+            font-size: 22px;
+            margin: 20px 0;
+            transform: rotate(-1deg);
+        }
+
+        /* Quote Box */
+        .quote-box {
+            background: var(--accent-cyan);
+            border: 4px solid black;
+            padding: 20px 24px;
+            box-shadow: 8px 8px 0px black;
+            font-style: italic;
+            font-size: 20px;
+            border-left: 12px solid var(--accent-pink);
+            margin: 20px 0;
+        }
+
+        /* ============================================
+           LAYOUT UTILITIES
+           ============================================ */
+        
+        /* Grid 2 Columns */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        /* Grid 3 Columns */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        /* Flex Row */
+        .flex-row {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        /* Center Content */
+        .center {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+
+        /* ============================================
+           ROTATION UTILITIES
+           ============================================ */
+        
+        .rotate-1 { transform: rotate(1deg); }
+        .rotate-neg-1 { transform: rotate(-1deg); }
+        .rotate-2 { transform: rotate(2deg); }
+        .rotate-neg-2 { transform: rotate(-2deg); }
+
+        /* ============================================
+           ICON STYLING
+           ============================================ */
+        
+        .icon-large {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .icon-accent-yellow { color: var(--accent-yellow); }
+        .icon-accent-pink { color: var(--accent-pink); }
+        .icon-accent-cyan { color: var(--accent-cyan); }
+        .icon-accent-green { color: var(--accent-green); }
+
+        /* Inline Icons */
+        li i, p i {
+            margin-right: 8px;
+            color: var(--accent-pink);
+        }
+
+        /* ============================================
+           SLIDE NUMBERS
+           ============================================ */
+        
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 30px;
+            background: var(--accent-black);
+            color: var(--accent-yellow);
+            padding: 6px 14px;
+            font-family: 'Lexend Mega';
+            font-size: 14px;
+            font-weight: 700;
+            border: 3px solid var(--accent-pink);
+        }
+
+        /* ============================================
+           CUSTOM STYLES
+           ============================================ */
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border: 4px solid black;
+        }
+        
+        .comparison-table th {
+            background: var(--accent-black);
+            color: var(--accent-yellow);
+            padding: 12px;
+            font-family: 'Lexend Mega';
+            text-transform: uppercase;
+            border: 3px solid var(--accent-pink);
+            text-align: center;
+        }
+        
+        .comparison-table td {
+            padding: 12px;
+            border: 2px solid black;
+            vertical-align: top;
+            font-size: 18px;
+        }
+        
+        .warning-box {
+            background: var(--accent-pink);
+            color: black;
+            border: 4px solid black;
+            padding: 16px 20px;
+            box-shadow: 6px 6px 0px black;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+        
+        .protocol-box {
+            width: 200px;
+            height: 200px;
+            border: 4px solid black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 8px 8px 0px black;
+            text-align: center;
+        }
+        
+        .http-box {
+            background: #ff6b6b;
+        }
+        
+        .websocket-box {
+            background: #4ecdc4;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <!-- ============================================
+         SLIDE 1: TRANG TIÊU ĐỀ
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <div class="center">
+            <h1>KẾT NỐI SIÊU TỐC<br>& BỨC TRANH TOÀN CẢNH</h1>
+            <div class="highlight-box rotate-neg-1">
+                WebSockets & Chiến lược tích hợp công nghệ
+            </div>
+            <p style="font-size: 24px; font-weight: 700; margin-top: 30px;">
+                <i class="fa-solid fa-user"></i> Người trình bày: [Tên bạn]
+            </p>
+            <p style="margin-top: 10px; font-style: italic;">
+                "Trùm cuối" - Tổng hợp toàn bộ series
+            </p>
+        </div>
+        
+        <div class="slide-number">01</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 2: VẤN ĐỀ HTTP TRUYỀN THỐNG
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-ban"></i> HTTP: Câu Chuyện Cũ</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box">
+                <h3>Request - Response</h3>
+                <p><strong>"Hỏi - Trả lời"</strong></p>
+                <p>Client phải hỏi trước</p>
+                <p>Server bị động</p>
+                <p>Stateless by design</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3>Polling (Kỹ thuật cũ)</h3>
+                <p><strong>"Có gì mới không?"</strong></p>
+                <p>Hỏi mỗi 1 giây</p>
+                <p>90% responses: "Không"</p>
+                <p>Lãng phí tài nguyên</p>
+                <p>Still có độ trễ</p>
+            </div>
+        </div>
+        
+        <div class="warning-box" style="margin-top: 20px;">
+            <i class="fa-solid fa-triangle-exclamation"></i> VẤN ĐỀ: Server KHÔNG THỂ chủ động thông báo cho Client. "Giá chứng khoán tăng!" - Client không biết cho đến khi hỏi.
+        </div>
+        
+        <div class="slide-number">02</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 3: NHU CẦU REAL-TIME
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-bolt"></i> Real-time Requirements</h2>
+        
+        <div class="grid-4" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 20px;">
+            <div class="neo-box">
+                <h3><i class="fa-solid fa-comment"></i> Chat</h3>
+                <p>Messenger, Zalo</p>
+                <p>Instant messaging</p>
+                <p><50ms latency</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3><i class="fa-solid fa-bell"></i> Notif</h3>
+                <p>Push notifications</p>
+                <p>Live updates</p>
+                <p>Real-time alerts</p>
+            </div>
+            
+            <div class="neo-box rotate-neg-1">
+                <h3><i class="fa-solid fa-gamepad"></i> Gaming</h3>
+                <p>Multiplayer games</p>
+                <p>Character movement</p>
+                <p><16ms (60fps)</p>
+            </div>
+            
+            <div class="neo-box rotate-2">
+                <h3><i class="fa-solid fa-chart-line"></i> Trading</h3>
+                <p>Stock prices</p>
+                <p>Crypto trading</p>
+                <p><10ms critical</p>
+            </div>
+        </div>
+        
+        <div class="highlight-box" style="margin-top: 20px; font-size: 24px;">
+            <i class="fa-solid fa-stopwatch"></i> ĐỘ TRỄ YÊU CẦU: <strong>MILLI-GIÂY (ms)</strong>, không phải giây!
+        </div>
+        
+        <div class="slide-number">03</div>
+    </div>
+
+    <!-- ============================================
+     SLIDE 4: WEBSOCKETS LÀ GÌ? (FIXED VERSION)
+     ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-bolt-lightning"></i> WebSockets: Đường Dây Nóng</h2>
+        
+        <div class="grid-2" style="margin-top: 20px;">
+            <div class="center">
+                <div style="width: 160px; height: 160px; background: #ff6b6b; border: 4px solid black; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 15px; box-shadow: 8px 8px 0px black;">
+                    <i class="fa-solid fa-walkie-talkie" style="font-size: 48px;"></i>
+                    <p style="font-weight: 700; margin-top: 8px; font-size: 16px;">HTTP</p>
+                    <p style="font-size: 14px;">Bộ đàm</p>
+                    <p style="font-size: 12px;">Nói xong → Nhả nút</p>
+                </div>
+                <h3 style="font-size: 22px;">Half-duplex</h3>
+                <p style="font-size: 18px;">Request → Response</p>
+                <p style="font-size: 18px;">Turn-based</p>
+            </div>
+            
+            <div class="center">
+                <div style="width: 160px; height: 160px; background: #4ecdc4; border: 4px solid black; display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 15px; box-shadow: 8px 8px 0px black;">
+                    <i class="fa-solid fa-phone" style="font-size: 48px;"></i>
+                    <p style="font-weight: 700; margin-top: 8px; font-size: 16px;">WebSocket</p>
+                    <p style="font-size: 14px;">Điện thoại</p>
+                    <p style="font-size: 12px;">Nói & Nghe cùng lúc</p>
+                </div>
+                <h3 style="font-size: 22px;">Full-duplex</h3>
+                <p style="font-size: 18px;">Bi-directional</p>
+                <p style="font-size: 18px;">Persistent</p>
+            </div>
+        </div>
+        
+        <div class="quote-box" style="margin-top: 20px; padding: 15px 20px; font-size: 18px;">
+            <i class="fa-solid fa-satellite-dish"></i> "WebSocket: Một kết nối TCP, hai chiều, sống mãi đến khi app tắt."
+        </div>
+        
+        <div class="slide-number">04</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 5: CƠ CHẾ HANDSHAKE
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-handshake"></i> The Handshake</h2>
+        
+        <div class="grid-3">
+            <div class="neo-box rotate-neg-1">
+                <h3>Bước 1: Client</h3>
+                <p><strong>Gửi HTTP Request:</strong></p>
+                <div class="code-block" style="font-size: 12px;">
+GET /chat HTTP/1.1<br>
+Host: server.example.com<br>
+Upgrade: websocket<br>
+Connection: Upgrade<br>
+Sec-WebSocket-Key: x3JJHMbDL1EzLkh9GBhXDw==<br>
+                </div>
+                <p>"Nâng cấp lên WebSocket nhé?"</p>
+            </div>
+            
+            <div class="neo-box">
+                <h3>Bước 2: Server</h3>
+                <p><strong>Đồng ý (101):</strong></p>
+                <div class="code-block" style="font-size: 12px;">
+HTTP/1.1 101 Switching Protocols<br>
+Upgrade: websocket<br>
+Connection: Upgrade<br>
+Sec-WebSocket-Accept: HSmrc0sMlYUkAGmm5OPpG2HaGWk=<br>
+                </div>
+                <p>"OK, chuyển kênh!"</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3>Bước 3: Kết nối</h3>
+                <p><strong>HTTP đóng lại</strong></p>
+                <p>WebSocket mở ra</p>
+                <p>Giữ kết nối mãi mãi</p>
+                <p>Cho đến khi tắt app</p>
+                <p>Persistent pipe</p>
+            </div>
+        </div>
+        
+        <div class="slide-number">05</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 6: TẠI SAO WEBSOCKET NHANH?
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-gauge-high"></i> Tại sao WebSocket nhanh hơn?</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box">
+                <h3><i class="fa-solid fa-suitcase"></i> HTTP Overhead</h3>
+                <p><strong>"Balo" Headers nặng:</strong></p>
+                <ul>
+                    <li>Cookie (hàng KB)</li>
+                    <li>User-Agent</li>
+                    <li>Accept-Encoding</li>
+                    <li>Authorization</li>
+                    <li>Cache-Control</li>
+                </ul>
+                <p>Mỗi request cõng balo</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3><i class="fa-solid fa-paper-plane"></i> WebSocket Lightweight</h3>
+                <p><strong>Chỉ balo 1 lần:</strong></p>
+                <p>Handshake đầu tiên</p>
+                <p>Sau đó: Raw data only</p>
+                <p>Tiny frames (2-10 bytes)</p>
+                <p>Không headers lặp lại</p>
+            </div>
+        </div>
+        
+        <div class="highlight-box" style="margin-top: 20px; font-size: 24px;">
+            <i class="fa-solid fa-weight-scale"></i> KẾT QUẢ: Giảm kích thước gói tin đi <strong>hàng trăm lần</strong>!
+        </div>
+        
+        <div class="slide-number">06</div>
+    </div>
+
+    <!-- ============================================
+     SLIDE 7: LUỒNG DỮ LIỆU TRỰC QUAN (FIXED)
+     ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-diagram-project"></i> Data Flow Visualization</h2>
+        
+        <div class="grid-2" style="gap: 15px; margin-top: 10px;">
+            <div class="center">
+                <div style="width: 100%; height: 250px; background: white; border: 4px solid black; padding: 15px; margin: 0 auto; box-shadow: 8px 8px 0px black;">
+                    <h3 style="color: #ff6b6b; font-size: 20px; margin-bottom: 10px;">HTTP Polling</h3>
+                    <div style="display: flex; align-items: center; height: 150px;">
+                        <div style="flex: 1; text-align: center; padding: 5px;">
+                            <div style="font-size: 36px;">⟳</div>
+                            <p style="font-size: 14px;">Request 1</p>
+                            <p style="font-size: 12px;">Wait...</p>
+                            <p style="font-size: 14px;">Response 1</p>
+                        </div>
+                        <div style="flex: 1; text-align: center; padding: 5px;">
+                            <div style="font-size: 36px;">⟳</div>
+                            <p style="font-size: 14px;">Request 2</p>
+                            <p style="font-size: 12px;">Wait...</p>
+                            <p style="font-size: 14px;">Response 2</p>
+                        </div>
+                        <div style="flex: 1; text-align: center; padding: 5px;">
+                            <div style="font-size: 36px;">⟳</div>
+                            <p style="font-size: 14px;">Request 3</p>
+                            <p style="font-size: 12px;">Wait...</p>
+                            <p style="font-size: 14px;">Response 3</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="center">
+                <div style="width: 100%; height: 250px; background: white; border: 4px solid black; padding: 15px; margin: 0 auto; box-shadow: 8px 8px 0px black;">
+                    <h3 style="color: #4ecdc4; font-size: 20px; margin-bottom: 10px;">WebSocket</h3>
+                    <div style="display: flex; align-items: center; height: 150px;">
+                        <div style="flex: 1; text-align: center; padding: 5px;">
+                            <div style="font-size: 48px;">⚡</div>
+                            <p style="font-size: 14px;">Handshake</p>
+                            <p style="font-size: 12px;">Connection<br>Open</p>
+                        </div>
+                        <div style="flex: 2; text-align: center; padding: 5px; border-left: 2px dashed #4ecdc4; border-right: 2px dashed #4ecdc4;">
+                            <div style="font-size: 36px;">⇄</div>
+                            <p style="font-size: 14px;"><strong>Đường ống liền mạch</strong></p>
+                            <p style="font-size: 12px;">Data flows both ways</p>
+                            <p style="font-size: 12px;">Real-time streaming</p>
+                        </div>
+                        <div style="flex: 1; text-align: center; padding: 5px;">
+                            <div style="font-size: 48px;">⏹️</div>
+                            <p style="font-size: 14px;">App Close</p>
+                            <p style="font-size: 12px;">Connection<br>End</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide-number">07</div>
+    </div>
+
+
+    <!-- ============================================
+         SLIDE 8: LỰA CHỌN THAY THẾ
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-code-branch"></i> Khi KHÔNG dùng WebSocket?</h2>
+        
+        <div class="grid-3">
+            <div class="neo-box">
+                <h3><i class="fa-solid fa-arrow-right"></i> SSE</h3>
+                <p><strong>Server-Sent Events</strong></p>
+                <p>Chỉ 1 chiều: Server → Client</p>
+                <p>Dùng cho: Tin tức, tỉ số</p>
+                <p>Dễ implement hơn</p>
+                <p>Vẫn dùng HTTP</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3><i class="fa-solid fa-hourglass"></i> Long Polling</h3>
+                <p><strong>Kỹ thuật cũ</strong></p>
+                <p>Giữ connection chờ data</p>
+                <p>Fallback khi không có WS</p>
+                <p>Better than short polling</p>
+                <p>Legacy systems</p>
+            </div>
+            
+            <div class="neo-box rotate-neg-1">
+                <h3><i class="fa-solid fa-wifi"></i> WebSocket Use Cases</h3>
+                <p><strong>KHI NÊN DÙNG:</strong></p>
+                <p>Chat 2 chiều</p>
+                <p>Collaborative editing</p>
+                <p>Real-time gaming</p>
+                <p>Live dashboards</p>
+            </div>
+        </div>
+        
+        <div class="slide-number">08</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 9: STATELESS VS. STATEFUL
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-scale-balanced"></i> Stateless vs. Stateful</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box" style="background: #a8e6cf;">
+                <h3><i class="fa-solid fa-unlink"></i> REST/HTTP (Stateless)</h3>
+                <p><strong>Không lưu trạng thái</strong></p>
+                <p>Mỗi request độc lập</p>
+                <p>Server nào xử lý cũng được</p>
+                <p><strong>Dễ Scale:</strong> Thêm máy là xong</p>
+                <p>Load balancing đơn giản</p>
+            </div>
+            
+            <div class="neo-box rotate-1" style="background: #ffd3b6;">
+                <h3><i class="fa-solid fa-link"></i> WebSocket (Stateful)</h3>
+                <p><strong>Có lưu trạng thái</strong></p>
+                <p>Kết nối dính vào 1 Server</p>
+                <p>Session state maintained</p>
+                <p><strong>Rất khó Scale:</strong> Phải biết client ở đâu</p>
+                <p>Load balancing phức tạp</p>
+            </div>
+        </div>
+        
+        <div class="warning-box" style="margin-top: 20px;">
+            <i class="fa-solid fa-triangle-exclamation"></i> ĐÂY LÀ THÁCH THỨC LỚN NHẤT: WebSocket phá vỡ nguyên tắc stateless của web, làm scaling trở nên phức tạp.
+        </div>
+        
+        <div class="slide-number">09</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 10: LOAD BALANCING VẤN ĐỀ
+         ============================================ -->
+    <div class="slide-container">
+        
+        <h2><i class="fa-solid fa-server"></i> Load Balancing Nightmare</h2>
+        
+        <div class="center">
+            <div style="width: 90%; margin: 0 auto;">
+                <div style="display: flex; justify-content: space-around; margin-bottom: 30px;">
+                    <div style="text-align: center;">
+                        <div style="width: 50px; height: 50px; background: #ff6b6b; border: 4px solid black; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;">
+                            <i class="fa-solid fa-user" style="font-size: 48px;"></i>
+                        </div>
+                        <p>Kết nối vào</p>
+                        <p><strong>Server 1</strong></p>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <div style="width: 50px; height: 50px; background: #4ecdc4; border: 4px solid black; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px;">
+                            <i class="fa-solid fa-user" style="font-size: 48px;"></i>
+                        </div>
+                        <p>Kết nối vào</p>
+                        <p><strong>Server 2</strong></p>
+                    </div>
+                </div>
+                
+                <div class="highlight-box" style="text-align: center;">
+                    <h3>VẤN ĐỀ: User A nhắn cho User B</h3>
+                    <p><strong>1.</strong> Server 1 nhận tin từ A</p>
+                    <p><strong>2.</strong> Server 1 KHÔNG BIẾT B ở đâu!</p>
+                    <p><strong>3.</strong> Tin nhắn bị MẤT!</p>
+                </div>
+                
+                <div class="highlight-box" style="margin-top: 20px;">
+                    <i class="fa-solid fa-skull-crossbones"></i> STATEFUL CONNECTIONS: Mỗi server chỉ biết clients của mình, không biết toàn hệ thống.
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide-number">10</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 11: GIẢI PHÁP PUB/SUB (REDIS)
+         ============================================ -->
+    <div class="slide-container">
+        
+        <h2><i class="fa-solid fa-bullhorn"></i> Giải pháp: Pub/Sub với Redis</h2>
+        
+        <div class="center">
+            <div style="width: 200px; height: 200px; background: #ff6b6b; border: 4px solid black; border-radius: 100px; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px; box-shadow: 8px 8px 0px black;">
+                <div style="text-align: center;">
+                    <i class="fa-brands fa-redis" style="font-size: 64px; color: white;"></i>
+                    <p style="font-weight: 700; margin-top: 10px; color: white;">REDIS</p>
+                    <p style="color: white;">"Loa phát thanh"</p>
+                </div>
+            </div>
+            
+            <div class="grid-3" style="width: 100%;">
+                <div class="neo-box rotate-neg-1">
+                    <h3>Bước 1: Publish</h3>
+                    <p><strong>Server 1 hét lên:</strong></p>
+                    <p>"Có tin cho User B!"</p>
+                    <p>Redis.publish('user:B', message)</p>
+                    <p>Broadcast to all</p>
+                </div>
+                
+                <div class="neo-box">
+                    <h3>Bước 2: Subscribe</h3>
+                    <p><strong>Tất cả Server nghe</strong></p>
+                    <p>Mỗi server subscribed</p>
+                    <p>Redis.subscribe('user:*')</p>
+                    <p>Listening for events</p>
+                </div>
+                
+                <div class="neo-box rotate-1">
+                    <h3>Bước 3: Deliver</h3>
+                    <p><strong>Server 2 nhận ra:</strong></p>
+                    <p>"User B là khách của tôi!"</p>
+                    <p>Chuyển tin xuống client</p>
+                    <p>Message delivered!</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide-number">11</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 12: C10K PROBLEM
+         ============================================ -->
+    <div class="slide-container">
+        
+        <h2><i class="fa-solid fa-users"></i> C10K Problem </h2>
+        
+        <div class="grid-2">
+            <div class="neo-box">
+                <h3><i class="fa-solid fa-microchip"></i> Tài nguyên tiêu thụ</h3>
+                <p><strong>Mỗi WebSocket connection:</strong></p>
+                <ul>
+                    <li>~50KB RAM</li>
+                    <li>1 File Descriptor</li>
+                    <li>1 Thread/Process (tùy setup)</li>
+                    <li>TCP buffer memory</li>
+                </ul>
+                <p>Resources add up quickly</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3><i class="fa-solid fa-chart-line"></i> Giới hạn thực tế</h3>
+                <p><strong>Một server vật lý:</strong></p>
+                <p>10,000 - 100,000 connections</p>
+                <p>Tùy vào RAM, CPU, OS limits</p>
+                <p>File descriptors limit (~65k)</p>
+                <p>Memory là bottleneck</p>
+            </div>
+        </div>
+        
+        <div class="highlight-box" style="margin-top: 20px;">
+            <i class="fa-solid fa-sitemap"></i> GIẢI PHÁP: Phải dùng <strong>Cluster</strong> nhiều server + Load Balancer thông minh (sticky sessions).
+        </div>
+        
+        <div class="slide-number">12</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 13: WEBSOCKET & SERVERLESS
+         ============================================ -->
+    <div class="slide-container">
+        
+        <h2><i class="fa-solid fa-cloud"></i> WebSocket + Serverless = ?</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box" style="background: #c77dff; color: black;">
+                <h3><i class="fa-solid fa-skull"></i> Xung đột</h3>
+                <p><strong>Serverless (Lambda):</strong></p>
+                <p>"Chết sớm" (Timeout 15 phút)</p>
+                <p>Stateless by design</p>
+                <p>Cold starts</p>
+                <p>Ephemeral runtime</p>
+                
+                <p><strong>WebSocket:</strong></p>
+                <p>"Sống dai" (Persistent)</p>
+                <p>Stateful connections</p>
+                <p>Long-lived</p>
+                <p>Memory resident</p>
+            </div>
+            
+            <div class="neo-box rotate-1" style="background: #a8e6cf;">
+                <h3><i class="fa-solid fa-wrench"></i> Giải pháp hiện đại</h3>
+                <p><strong>1. Dịch vụ managed:</strong></p>
+                <p>AWS API Gateway V2 ($)</p>
+                <p>Pusher, Socket.io Cloud</p>
+                <p>They handle connections</p>
+                
+                <p><strong>2. Serverless chỉ xử lý:</strong></p>
+                <p>Logic khi có event</p>
+                <p>Lambda được gọi dậy</p>
+                <p>Stateless business logic</p>
+                
+                <p><strong>3. Redis lưu state</strong></p>
+            </div>
+        </div>
+        
+        <div class="slide-number">13</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 14: BẢNG TỔNG SẮP 3 CÔNG NGHỆ
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-trophy"></i> The Big Three - Tổng sắp</h2>
+        
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Tiêu chí</th>
+                    <th>REST</th>
+                    <th>GraphQL</th>
+                    <th>WebSocket</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Mô hình</strong></td>
+                    <td>Request-Response</td>
+                    <td>Query-Response</td>
+                    <td>Persistent Connection</td>
+                </tr>
+                <tr>
+                    <td><strong>Ưu điểm</strong></td>
+                    <td>Cache tốt, Standard</td>
+                    <td>Linh hoạt, Tối ưu BW</td>
+                    <td>Real-time, Low latency</td>
+                </tr>
+                <tr>
+                    <td><strong>Nhược điểm</strong></td>
+                    <td>Over/Under fetching</td>
+                    <td>Complex, Hard cache</td>
+                    <td>Stateful, Hard scale</td>
+                </tr>
+                <tr>
+                    <td><strong>Phù hợp</strong></td>
+                    <td>Đa số Web apps</td>
+                    <td>Mobile apps phức tạp</td>
+                    <td>Chat, Game, Trading</td>
+                </tr>
+                <tr>
+                    <td><strong>Performance</strong></td>
+                    <td>Good for caching</td>
+                    <td>Good for mobile data</td>
+                    <td>Good for real-time</td>
+                </tr>
+                <tr>
+                    <td><strong>Complexity</strong></td>
+                    <td>Low (Beginner)</td>
+                    <td>Medium (Intermediate)</td>
+                    <td>High (Expert)</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="highlight-box" style="margin-top: 20px;">
+            <i class="fa-solid fa-chess-board"></i> MỖI CÔNG NGHỆ CÓ SỨ MỆNH RIÊNG: Không có cái "tốt nhất", chỉ có cái "phù hợp nhất" cho use case.
+        </div>
+        
+        <div class="slide-number">14</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 15: KIẾN TRÚC HYBRID THỰC TẾ
+         ============================================ -->
+<div class="slide-container">
+    <h2><i class="fa-solid fa-puzzle-piece"></i> Kiến trúc Hybrid - Thực tế</h2>
+    
+    <div class="center">
+        <div style="width: 90%; margin: 0 auto;">
+            <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                <div style="text-align: center; margin: 0 5px;">
+                    <p><strong>REST</strong></p>
+                    <p>Đăng nhập</p>
+                </div>
+                
+                <div style="font-size: 24px;">+</div>
+                
+                <div style="text-align: center; margin: 0 20px;">
+                    <p><strong>GraphQL</strong></p>
+                    <p>Load Profile</p>
+                </div>
+                
+                <div style="font-size: 24px;">+</div>
+                
+                <div style="text-align: center; margin: 0 20px;">
+                    <p><strong>WebSocket</strong></p>
+                    <p>Chat real-time</p>
+                </div>
+            </div>
+            
+            <div class="grid-2">
+                <div class="neo-box">
+                    <h3><i class="fa-brands fa-facebook"></i> Facebook</h3>
+                    <p><strong>REST:</strong> Auth, Payments</p>
+                    <p><strong>GraphQL:</strong> News Feed, Profile</p>
+                    <p><strong>WebSocket:</strong> Messenger, Notifications</p>
+                    <p>Full stack combination</p>
+                </div>
+                
+                <div class="neo-box rotate-1">
+                    <h3><i class="fa-solid fa-cart-shopping"></i> Shopee</h3>
+                    <p><strong>REST:</strong> Product catalog</p>
+                    <p><strong>GraphQL:</strong> User dashboard</p>
+                    <p><strong>WebSocket:</strong> Live chat support</p>
+                    <p>Order tracking updates</p>
+                </div>
+            </div>
+            
+            <div class="quote-box" style="margin-top: 20px;">
+                <i class="fa-solid fa-lightbulb"></i> "SỰ THẬT: Không app lớn nào dùng duy nhất 1 công nghệ. Họ phối hợp vũ khí đúng lúc, đúng chỗ."
+            </div>
+        </div>
+    </div>
+    
+    <div class="slide-number">15</div>
+</div>
+
+    <!-- ============================================
+         SLIDE 16: XU HƯỚNG TƯƠNG LAI
+         ============================================ -->
+    <div class="slide-container">
+        
+        <h2><i class="fa-solid fa-crystal-ball"></i> Xu hướng tương lai</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box" style="background: #4285f4; color: white;">
+                <h3><i class="fa-solid fa-bolt"></i> gRPC</h3>
+                <p><strong>Backend-to-Backend</strong></p>
+                <p>Thay thế REST internal</p>
+                <p>Protocol Buffers (binary)</p>
+                <p>Siêu nhanh, type-safe</p>
+                <p>HTTP/2 multiplexing</p>
+                <p>Microservices communication</p>
+            </div>
+            
+            <div class="neo-box rotate-1" style="background: #34a853; color: white;">
+                <h3><i class="fa-solid fa-satellite"></i> HTTP/3 + QUIC</h3>
+                <p><strong>Giao thức web mới</strong></p>
+                <p>Chạy trên UDP (không TCP)</p>
+                <p>Giảm latency 30-50%</p>
+                <p>Better mobile performance</p>
+                <p>Built-in encryption</p>
+                <p>Future of web transport</p>
+            </div>
+        </div>
+        
+        <div class="highlight-box" style="margin-top: 20px;">
+            <i class="fa-solid fa-arrow-trend-up"></i> XU HƯỚNG: Từ text-based (JSON) → binary (Protobuf). Từ high latency → ultra low latency.
+        </div>
+        
+        <div class="slide-number">16</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 17: CASE STUDY - UBER/GRAB
+         ============================================ -->
+    <div class="slide-container">
+        
+        <h2><i class="fa-solid fa-car"></i> Case Study: Uber/Grab</h2>
+        
+        <div class="grid-3">
+            <div class="neo-box">
+                <h3><i class="fa-solid fa-magnifying-glass"></i> Tìm xe & Đặt chuyến</h3>
+                <p><strong>Dùng REST API</strong></p>
+                <p>Simple CRUD operations</p>
+                <p>Cache-friendly</p>
+                <p>Stateless requests</p>
+                <p>Standard HTTP flow</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3><i class="fa-solid fa-map-marker"></i> Vị trí tài xế real-time</h3>
+                <p><strong>Dùng WebSocket</strong></p>
+                <p>Live location updates</p>
+                <p>Every 2-3 seconds</p>
+                <p>Low latency critical</p>
+                <p>Driver tracking</p>
+            </div>
+            
+            <div class="neo-box rotate-neg-1">
+                <h3><i class="fa-solid fa-history"></i> Lịch sử chuyến đi</h3>
+                <p><strong>Dùng GraphQL</strong></p>
+                <p>Complex data relations</p>
+                <p>User + Trip + Payment</p>
+                <p>Mobile app optimization</p>
+                <p>Reduce over-fetching</p>
+            </div>
+        </div>
+        
+        <div class="quote-box" style="margin-top: 30px;">
+            <i class="fa-solid fa-graduation-cap"></i> "BÀI HỌC: Uber/Grab dùng cả 3 công nghệ trong 1 app. Mỗi tính năng chọn đúng công cụ - đó là nghệ thuật kiến trúc hệ thống."
+        </div>
+        
+        <div class="slide-number">17</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 18: 3 NGUYÊN TẮC VÀNG
+         ============================================ -->
+    <div class="slide-container">
+        
+        <h2><i class="fa-solid fa-crown"></i> 3 Nguyên tắc vàng cho BE</h2>
+        
+        <div class="grid-3">
+            <div class="neo-box rotate-neg-1">
+                <h3><i class="fa-solid fa-brain"></i> #1: Hiểu rõ nhu cầu</h3>
+                <p><strong>Đừng dùng búa vặn ốc</strong></p>
+                <p>Web tin tức → Không cần WebSocket</p>
+                <p>Simple CRUD → REST là đủ</p>
+                <p>Mobile app → Xem xét GraphQL</p>
+                <p>Real-time → WebSocket</p>
+            </div>
+            
+            <div class="neo-box">
+                <h3><i class="fa-solid fa-heart"></i> #2: Đơn giản là nhất (KISS)</h3>
+                <p><strong>Start with Monolith & REST</strong></p>
+                <p>Đừng over-engineering</p>
+                <p>Chỉ phức tạp hóa khi cần</p>
+                <p>Measure before optimize</p>
+                <p>Keep it simple, stupid</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3><i class="fa-solid fa-shield"></i> #3: Lường trước rủi ro</h3>
+                <p><strong>Think about worst case</strong></p>
+                <p>Server sập thì sao?</p>
+                <p>Mạng lag thì sao?</p>
+                <p>Database quá tải?</p>
+                <p>Plan for failure</p>
+            </div>
+        </div>
+        
+        <div class="slide-number">18</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 19: LỜI KẾT
+         ============================================ -->
+    <div class="slide-container">
+        
+        <div class="center">
+            <h1>Final Words</h1>
+            
+            <div class="quote-box" style="width: 90%; font-size: 22px;">
+                "Hệ thống Web không phải phép thuật. Nó là sự kết hợp của:<br>
+                • Quy tắc vật lý (Network latency)<br>
+                • Logic toán học (Algorithms)<br>
+                • Kiến trúc chúng ta đã học"
+            </div>
+            
+            <div style="margin-top: 40px; font-size: 20px; line-height: 1.8;">
+                <p><strong>Từ Client-Server cơ bản</strong> → Microservices phức tạp</p>
+                <p><strong>Qua REST/GraphQL</strong> cho data fetching</p>
+                <p><strong>Đến Real-time</strong> với WebSocket</p>
+                <p><strong>Và Scaling</strong> challenges của distributed systems</p>
+            </div>
+            
+            <div class="highlight-box rotate-1" style="margin-top: 40px;">
+                <i class="fa-solid fa-rocket"></i> BẠN ĐÃ HOÀN THÀNH HÀNH TRÌNH BACKEND MASTERY!
+            </div>
+        </div>
+        
+        <div class="slide-number">19</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 20: Q&A & THANK YOU
+         ============================================ -->
+    <div class="slide-container">
+        
+        <div class="center">
+            <h2>Thank You</h2>
+            
+            <div style="margin-top: 40px;">
+                <div class="highlight-box">
+                    <i class="fa-solid fa-hands-clapping"></i> CẢM ƠN ĐÃ THEO DÕI!
+                </div>
+                <p style="margin-top: 20px; font-size: 18px;">
+                    Bechovang
+                </p>
+            </div>
+        </div>
+        
+        <div class="slide-number">20</div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div id="nav-controls">
+        <button id="nav-first" title="First slide (Home)">&#124;&lt;</button>
+        <button id="nav-prev" title="Previous (Left Arrow)">&lt; Prev</button>
+        <span id="slide-counter">1 / 20</span>
+        <button id="nav-next" title="Next (Right Arrow / Space)">Next &gt;</button>
+        <button id="nav-last" title="Last slide (End)">&gt;&#124;</button>
+    </div>
+
+    <style>
+        #nav-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 12px 25px;
+            border-radius: 50px;
+            border: 3px solid var(--accent-pink);
+            z-index: 1000;
+        }
+
+        #nav-controls button {
+            background: var(--accent-black);
+            border: 2px solid var(--accent-yellow);
+            color: var(--accent-yellow);
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Space Mono', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        #nav-controls button:hover {
+            background: var(--accent-pink);
+            border-color: var(--accent-pink);
+            color: white;
+        }
+
+        #nav-controls button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        #nav-controls button:disabled:hover {
+            background: var(--accent-black);
+            border-color: var(--accent-yellow);
+            color: var(--accent-yellow);
+        }
+
+        #slide-counter {
+            color: var(--accent-cyan);
+            font-family: 'Lexend Mega';
+            font-size: 16px;
+            font-weight: 700;
+            min-width: 70px;
+            text-align: center;
+        }
+    </style>
+
+    <script>
+        (function() {
+            let currentSlide = 0;
+            const totalSlides = 20;
+            const slideHeight = 780; // 720px slide + 60px margin
+
+            const counterEl = document.getElementById('slide-counter');
+            const firstBtn = document.getElementById('nav-first');
+            const prevBtn = document.getElementById('nav-prev');
+            const nextBtn = document.getElementById('nav-next');
+            const lastBtn = document.getElementById('nav-last');
+
+            function updateUI() {
+                counterEl.textContent = (currentSlide + 1) + ' / ' + totalSlides;
+                firstBtn.disabled = currentSlide === 0;
+                prevBtn.disabled = currentSlide === 0;
+                nextBtn.disabled = currentSlide === totalSlides - 1;
+                lastBtn.disabled = currentSlide === totalSlides - 1;
+            }
+
+            function goToSlide(index) {
+                if (index < 0) index = 0;
+                if (index >= totalSlides) index = totalSlides - 1;
+                currentSlide = index;
+                window.scrollTo({ top: currentSlide * slideHeight, behavior: 'smooth' });
+                updateUI();
+            }
+
+            function goNext() { goToSlide(currentSlide + 1); }
+            function goPrev() { goToSlide(currentSlide - 1); }
+            function goFirst() { goToSlide(0); }
+            function goLast() { goToSlide(totalSlides - 1); }
+
+            // Button clicks
+            firstBtn.addEventListener('click', goFirst);
+            prevBtn.addEventListener('click', goPrev);
+            nextBtn.addEventListener('click', goNext);
+            lastBtn.addEventListener('click', goLast);
+
+            // Keyboard controls
+            document.addEventListener('keydown', (e) => {
+                switch(e.key) {
+                    case 'ArrowLeft': e.preventDefault(); goPrev(); break;
+                    case 'ArrowRight':
+                    case ' ': e.preventDefault(); goNext(); break;
+                    case 'Home': e.preventDefault(); goFirst(); break;
+                    case 'End': e.preventDefault(); goLast(); break;
+                }
+            });
+
+            // Track scroll position to update current slide
+            let scrollTimeout;
+            window.addEventListener('scroll', () => {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    const slideIndex = Math.round(window.scrollY / slideHeight);
+                    if (slideIndex !== currentSlide) {
+                        currentSlide = slideIndex;
+                        if (currentSlide < 0) currentSlide = 0;
+                        if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+                        updateUI();
+                    }
+                }, 100);
+            });
+
+            // Initialize
+            updateUI();
+        })();
+    </script>
+
+</body>
+</html>

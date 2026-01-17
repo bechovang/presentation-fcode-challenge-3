@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TF Slides - Anatomy of Internet:internet-anatomy.html</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* ============================================
+           CORE SETUP: FIXED SLIDE MODE 
+           ============================================ */
+        
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0;
+        }
+        
+        :root { 
+            --bg-color: #f2f2f2; 
+            --accent-yellow: #fff500; 
+            --accent-pink: #ff00ff; 
+            --accent-cyan: #00ffff; 
+            --accent-green: #00ff00; 
+            --accent-black: #000000; 
+            --border-thickness: 4px; 
+        }
+        
+        body { 
+            background-color: #222; 
+            font-family: 'Space Mono', monospace; 
+            margin: 0; 
+            padding: 40px 0;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+        }
+
+        /* ============================================
+           SLIDE CONTAINER (FIXED 1280x720)
+           ============================================ */
+        
+        .slide-container {
+            width: 1280px; 
+            height: 720px;
+            background-color: var(--bg-color);
+            border: var(--border-thickness) solid var(--accent-black);
+            box-shadow: 12px 12px 0px var(--accent-black);
+            position: relative; 
+            overflow: hidden; 
+            padding: 50px 60px; 
+            margin-bottom: 60px;
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center;
+        }
+
+        /* ============================================
+           MANDATORY HEADER
+           ============================================ */
+        
+        .slide-header {
+            position: absolute; 
+            top: 0; 
+            left: 0;
+            background: var(--accent-black); 
+            color: var(--accent-yellow);
+            padding: 8px 20px; 
+            font-family: 'Lexend Mega'; 
+            font-size: 13px; 
+            font-weight: 700;
+            border-bottom: 4px solid var(--accent-pink); 
+            border-right: 4px solid var(--accent-pink);
+            z-index: 100; 
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ============================================
+           ANTI-OVERFLOW CORE RULES
+           ============================================ */
+        
+        .slide-container * {
+            max-width: 100%; /* Không được vượt quá khung slide */
+            word-wrap: break-word; 
+            overflow-wrap: break-word;
+        }
+
+        /* ============================================
+           TYPOGRAPHY
+           ============================================ */
+        
+        h1, h2, h3 { 
+            font-family: 'Lexend Mega'; 
+            text-transform: uppercase; 
+            color: #000; 
+            margin: 0 0 20px 0;
+        }
+        
+        h1 { 
+            font-size: clamp(48px, 6vw, 72px); /* Tự co từ 48-72px */
+            font-weight: 900; 
+            line-height: 0.95; 
+            text-shadow: 4px 4px 0px var(--accent-pink); 
+            margin-bottom: 30px;
+        }
+        
+        h2 { 
+            font-size: clamp(32px, 4vw, 42px); 
+            font-weight: 700;
+            background: var(--accent-yellow); 
+            border: 4px solid black; 
+            padding: 10px 20px; 
+            display: inline-block; 
+            box-shadow: 6px 6px 0px black;
+            line-height: 1.1;
+            margin-bottom: 25px;
+        }
+
+        h3 { 
+            font-size: clamp(24px, 3vw, 36px); 
+            font-weight: 700;
+            border-bottom: 4px solid var(--accent-cyan);
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        /* Body Text */
+        p { 
+            font-size: 20px; 
+            line-height: 1.5; 
+            margin-bottom: 16px;
+            font-weight: 400;
+        }
+
+        strong, b {
+            font-weight: 700;
+            color: var(--accent-black);
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 0 0 20px 0;
+            padding-left: 35px;
+        }
+
+        li {
+            font-size: 20px;
+            line-height: 1.5;
+            margin-bottom: 14px;
+            font-weight: 400;
+        }
+
+        li strong {
+            color: var(--accent-pink);
+        }
+
+        /* ============================================
+           COMPONENTS
+           ============================================ */
+        
+        /* Neo Box - Khối nội dung với viền đen */
+        .neo-box { 
+            background: white; 
+            border: 4px solid black; 
+            padding: 20px 24px; 
+            box-shadow: 6px 6px 0px black; 
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        /* Code Block */
+        .code-block { 
+            background: #000; 
+            color: #00ff00; 
+            padding: 16px 20px; 
+            border: 4px solid var(--accent-pink); 
+            font-family: 'Space Mono', monospace;
+            font-size: 16px;
+            line-height: 1.4;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+
+        .code-block .comment {
+            color: #888;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: var(--accent-yellow);
+            border: 4px solid black;
+            padding: 16px 20px;
+            box-shadow: 6px 6px 0px black;
+            font-weight: 700;
+            font-size: 22px;
+            margin: 20px 0;
+            transform: rotate(-1deg);
+        }
+
+        /* Quote Box */
+        .quote-box {
+            background: var(--accent-cyan);
+            border: 4px solid black;
+            padding: 20px 24px;
+            box-shadow: 8px 8px 0px black;
+            font-style: italic;
+            font-size: 20px;
+            border-left: 12px solid var(--accent-pink);
+            margin: 20px 0;
+        }
+
+        /* ============================================
+           LAYOUT UTILITIES
+           ============================================ */
+        
+        /* Grid 2 Columns */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        /* Grid 3 Columns */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        /* Flex Row */
+        .flex-row {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        /* Center Content */
+        .center {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+
+        /* ============================================
+           ROTATION UTILITIES
+           ============================================ */
+        
+        .rotate-1 { transform: rotate(1deg); }
+        .rotate-neg-1 { transform: rotate(-1deg); }
+        .rotate-2 { transform: rotate(2deg); }
+        .rotate-neg-2 { transform: rotate(-2deg); }
+
+        /* ============================================
+           ICON STYLING
+           ============================================ */
+        
+        .icon-large {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .icon-accent-yellow { color: var(--accent-yellow); }
+        .icon-accent-pink { color: var(--accent-pink); }
+        .icon-accent-cyan { color: var(--accent-cyan); }
+        .icon-accent-green { color: var(--accent-green); }
+
+        /* Inline Icons */
+        li i, p i {
+            margin-right: 8px;
+            color: var(--accent-pink);
+        }
+
+        /* ============================================
+           SLIDE NUMBERS (Optional)
+           ============================================ */
+        
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 30px;
+            background: var(--accent-black);
+            color: var(--accent-yellow);
+            padding: 6px 14px;
+            font-family: 'Lexend Mega';
+            font-size: 14px;
+            font-weight: 700;
+            border: 3px solid var(--accent-pink);
+        }
+
+        /* ============================================
+           CUSTOM SLIDE-SPECIFIC STYLES
+           ============================================ */
+        
+        /* Iceberg Visualization */
+        .iceberg-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            margin: 30px 0;
+        }
+        
+        .iceberg-top {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 60px;
+            background: var(--accent-cyan);
+            border: 4px solid black;
+            padding: 10px;
+            text-align: center;
+            z-index: 2;
+        }
+        
+        .iceberg-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px;
+            height: 180px;
+            background: var(--accent-pink);
+            border: 4px solid black;
+            padding: 20px;
+            text-align: center;
+            z-index: 1;
+        }
+        
+        /* Network Diagram */
+        .network-node {
+            background: white;
+            border: 4px solid black;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 6px 6px 0px black;
+        }
+        
+        .network-arrow {
+            font-size: 24px;
+            color: black;
+            margin: 0 10px;
+        }
+        
+        /* HTTP Envelope */
+        .http-envelope {
+            background: white;
+            border: 4px solid black;
+            padding: 20px;
+            position: relative;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .http-stamp {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--accent-yellow);
+            padding: 5px 10px;
+            border: 2px solid black;
+            font-weight: 700;
+            transform: rotate(5deg);
+        }
+        
+        /* Status Code Cards */
+        .status-card {
+            background: white;
+            border: 4px solid black;
+            padding: 15px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .status-200 { border-left: 12px solid #00ff00; }
+        .status-404 { border-left: 12px solid #ff9900; }
+        .status-500 { border-left: 12px solid #ff0000; }
+        
+        /* Timeline Flow */
+        .timeline-step {
+            background: white;
+            border: 4px solid black;
+            padding: 15px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            background: black;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            border: 3px solid var(--accent-pink);
+        }
+        
+    </style>
+</head>
+<body>
+
+    <!-- ============================================
+         SLIDE 1: TRANG TIÊU ĐỀ
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <div class="center">
+            <h1>Hành Trình<br>Của Một Request</h1>
+            <h3 style="border: none; margin-bottom: 30px;">
+                Giải phẫu Internet & Mô hình Client-Server
+            </h3>
+            
+            <div class="highlight-box rotate-1">
+                <i class="fas fa-globe"></i> Từ Click chuột đến Dữ liệu phản hồi
+            </div>
+            
+            <div style="margin-top: 40px;">
+                <p style="font-size: 22px; font-weight: 700;">
+                    <i class="fas fa-user-tie"></i> [Tên bạn]
+                </p>
+            </div>
+        </div>
+        
+        <div class="slide-number">01</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 2: ĐIỀU GÌ XẢY RA TRONG 1 GIÂY?
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2>Điều Gì Xảy Ra Trong 1 Giây?</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box rotate-neg-1">
+                <div class="icon-large icon-accent-pink">
+                    <i class="fas fa-mouse-pointer"></i>
+                </div>
+                <h3>Bạn Click</h3>
+                <p>"Đăng nhập", "Mua hàng"</p>
+                <p><small>Nghĩ rằng nó diễn ra ngay lập tức</small></p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <div class="icon-large icon-accent-cyan">
+                    <i class="fas fa-sync-alt fa-spin"></i>
+                </div>
+                <h3>Thực Tế</h3>
+                <p>Dữ liệu đi nửa vòng trái đất</p>
+                <p><small>Qua cáp quang, router, server...</small></p>
+            </div>
+        </div>
+        
+        <div class="quote-box" style="margin-top: 20px;">
+            "Chúng ta ghét chờ đợi. Nhưng để cái vòng tròn này biến mất, 
+            hàng loạt cỗ máy khổng lồ phải làm việc chính xác tuyệt đối."
+        </div>
+        
+        <div class="slide-number">02</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 3: KHÁI NIỆM 'HỘP ĐEN'
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2>Khái Niệm 'Hộp Đen'</h2>
+        
+        <div class="iceberg-container">
+            <img src="tangbang.png"
+                    alt="Iceberg image"
+                    width="400"
+                    style="max-width:100%; height:auto;">
+        </div>
+        
+        <div class="highlight-box" style="margin-top: 40px;">
+            <i class="fas fa-box-open"></i> Hôm nay chúng ta sẽ mở chiếc hộp đen này
+        </div>
+        
+        <div class="slide-number">03</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 4: NHÂN VẬT 1 - CLIENT
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2>Nhân Vật 1: Client (Khách)</h2>
+        
+        <div class="grid-3">
+            <div class="network-node">
+                <div class="icon-large">
+                    <i class="fas fa-laptop"></i>
+                </div>
+                <p><strong>Trình duyệt</strong></p>
+                <p>Chrome, Safari, Firefox</p>
+            </div>
+            
+            <div class="network-node rotate-1">
+                <div class="icon-large">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <p><strong>Mobile App</strong></p>
+                <p>iOS, Android</p>
+            </div>
+            
+            <div class="network-node rotate-neg-1">
+                <div class="icon-large">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <p><strong>Thiết bị IoT</strong></p>
+                <p>Robot hút bụi thông minh</p>
+            </div>
+        </div>
+        
+        <div class="neo-box" style="margin-top: 20px;">
+            <h3>Vai trò</h3>
+            <p><i class="fas fa-bullhorn"></i> Người khởi xướng hội thoại</p>
+            <p><i class="fas fa-tv"></i> Hiển thị kết quả</p>
+        </div>
+        
+        <div class="slide-number">04</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 5: NHÂN VẬT 2 - SERVER
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2>Nhân Vật 2: Server (Chủ)</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box">
+                <h3><i class="fas fa-server"></i> Định nghĩa</h3>
+                <p>Máy tính cấu hình cao</p>
+                <p>Chạy liên tục 24/7</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3><i class="fas fa-tasks"></i> Vai trò</h3>
+                <p>Lắng nghe yêu cầu</p>
+                <p>Xử lý logic</p>
+                <p>Bảo vệ dữ liệu</p>
+            </div>
+        </div>
+        
+        <div class="grid-2" style="margin-top: 20px;">
+            <div class="code-block">
+                <span class="comment"># Web Server</span><br>
+                Nginx, Apache<br>
+                <span class="comment"># Application Server</span><br>
+                Node.js, Java, Python
+            </div>
+            
+            <div class="neo-box rotate-neg-1">
+                <p><strong>Data Center:</strong> Hàng nghìn tủ server nhấp nháy đèn</p>
+                <p><small>Luôn sẵn sàng phục vụ</small></p>
+            </div>
+        </div>
+        
+        <div class="slide-number">05</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 6: NHÂN VẬT 3 - DATABASE
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2>Nhân Vật 3: Database</h2>
+        
+        <div class="center" style="margin-top: 10px;">
+            <div class="icon-large">
+                <i class="fas fa-database" style="font-size: 80px;"></i>
+                <i class="fas fa-database" style="font-size: 70px; margin-left: -20px;"></i>
+                <i class="fas fa-database" style="font-size: 60px; margin-left: -20px;"></i>
+            </div>
+            
+            <div class="neo-box" style="width: 60%; margin-top: 10px;">
+                <h3>Kho dữ liệu vĩnh viễn</h3>
+                <p><i class="fas fa-hdd"></i> Ổ cứng của hệ thống</p>
+                <p><i class="fas fa-users"></i> Chứa username, mật khẩu</p>
+                <p><i class="fas fa-shopping-cart"></i> Danh sách sản phẩm</p>
+            </div>
+        </div>
+        
+        <div class="code-block" style="margin-top: 10px;">
+            <span class="comment"># Các loại Database phổ biến</span><br>
+            MySQL | PostgreSQL | MongoDB
+        </div>
+        
+        <div class="slide-number">06</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 7: DNS & IP - HỆ THỐNG ĐỊNH VỊ
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2>Hệ Thống Định Vị: DNS & IP</h2>
+        
+        <div class="neo-box" style="margin-bottom: 20px;">
+            <h3>Vấn đề</h3>
+            <p>Làm sao Client tìm được nhà của Server giữa biển Internet?</p>
+        </div>
+        
+        <div class="grid-2">
+            <div class="neo-box rotate-1">
+                <h3><i class="fas fa-map-marker-alt"></i> IP Address</h3>
+                <p>Địa chỉ nhà</p>
+                <div class="code-block" style="font-size: 14px; margin: 10px 0;">
+                    192.168.1.1<br>
+                    172.217.194.100 (Google)
+                </div>
+            </div>
+            
+            <div class="neo-box rotate-neg-1">
+                <h3><i class="fas fa-address-book"></i> DNS</h3>
+                <p>Cuốn danh bạ điện thoại</p>
+                <p>Dịch google.com → IP</p>
+                <p><small>Giống như tìm số điện thoại</small></p>
+            </div>
+        </div>
+        
+        <div class="slide-number">07</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 8: TỔNG QUAN HÀNH TRÌNH
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2>Tổng Quan Hành Trình</h2>
+        
+        <div class="center" style="margin-top: 40px;">
+            <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 30px;">
+                <div class="network-node">
+                    <h3>Client</h3>
+                </div>
+                <div class="network-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <div class="network-node rotate-1">
+                    <h3>Internet</h3>
+                </div>
+                <div class="network-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <div class="network-node rotate-neg-1">
+                    <h3>Server</h3>
+                </div>
+                <div class="network-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <div class="network-node">
+                    <h3>Database</h3>
+                </div>
+            </div>
+            
+            <div class="quote-box" style="width: 80%;">
+                <i class="fas fa-utensils"></i> "Hãy tưởng tượng đây là quy trình gọi món tại nhà hàng"
+            </div>
+        </div>
+        
+        <div class="slide-number">08</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 9: BƯỚC 1 - CLIENT GỬI REQUEST
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2>Bước 1: Client Gửi Request</h2>
+        
+        <div class="center">
+            <div class="http-envelope rotate-1">
+                <div class="http-stamp">
+                    HTTP
+                </div>
+                
+                <h3 style="font-size: 20px;">Phong bì thư</h3>
+                
+                <div style="text-align: left; margin-top: 15px;">
+                    <p><strong>To:</strong> https://api.example.com/login</p>
+                    <p><strong>Method:</strong> POST</p>
+                    <p><strong>Body:</strong> {"user": "Tuấn", "password": "***"}</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="grid-3" style="margin-top: 20px;">
+            <div class="neo-box">
+                <p><strong>URL</strong><br>Địa chỉ nhận</p>
+            </div>
+            <div class="neo-box rotate-1">
+                <p><strong>Method</strong><br>Hành động muốn làm</p>
+            </div>
+            <div class="neo-box rotate-neg-1">
+                <p><strong>Body</strong><br>Dữ liệu kèm theo</p>
+            </div>
+        </div>
+        
+        <div class="slide-number">09</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 10: BƯỚC 2 - VẬN CHUYỂN QUA INTERNET
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2>Bước 2: Vận Chuyển Qua Internet</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box">
+                <h3><i class="fas fa-split"></i> Cơ chế</h3>
+                <p>Gói tin được chia nhỏ</p>
+                <p>Truyền qua cáp quang dưới biển</p>
+                <p>Qua các Router định tuyến</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3><i class="fas fa-tachometer-alt"></i> Tốc độ</h3>
+                <div class="highlight-box" style="background: var(--accent-pink); color: white;">
+                    ≈ 299,792 km/s
+                </div>
+                <p>Gần bằng tốc độ ánh sáng</p>
+            </div>
+        </div>
+        
+        <div class="neo-box" style="margin-top: 20px;">
+            <p><strong>Bản đồ:</strong> Các tuyến cáp quang biển thế giới</p>
+            <p><small>Xương sống của Internet toàn cầu</small></p>
+        </div>
+        
+        <div class="slide-number">10</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 11: BƯỚC 3 - SERVER XỬ LÝ
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2>Bước 3: Server Xử Lý</h2>
+        
+        <div class="grid-2">
+            <div class="timeline-step rotate-neg-1">
+                <div class="step-number">1</div>
+                <h3>Web Server</h3>
+                <p><i class="fas fa-concierge-bell"></i> Lễ tân nhận đơn</p>
+                <p>Kiểm tra request có hợp lệ không</p>
+            </div>
+            
+            <div class="timeline-step rotate-1">
+                <div class="step-number">2</div>
+                <h3>App Server</h3>
+                <p><i class="fas fa-chef-hat"></i> Đầu bếp chính</p>
+                <p>Xử lý logic nghiệp vụ</p>
+            </div>
+        </div>
+        
+        <div class="grid-2" style="margin-top: 20px;">
+            <div class="code-block">
+                <span class="comment"># Ví dụ Logic</span><br>
+                if (password == db_password) {<br>
+                &nbsp;&nbsp;return "Login success";<br>
+                } else {<br>
+                &nbsp;&nbsp;return "Wrong password";<br>
+                }
+            </div>
+            
+            <div class="neo-box">
+                <p><i class="fas fa-calculator"></i> Tính tổng tiền giỏ hàng</p>
+                <p><i class="fas fa-user-check"></i> Kiểm tra quyền truy cập</p>
+                <p><i class="fas fa-search"></i> Tìm kiếm sản phẩm</p>
+            </div>
+        </div>
+        
+        <div class="slide-number">11</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 12: BƯỚC 4 - TƯƠNG TÁC DATABASE
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2>Bước 4: Tương Tác Database</h2>
+        
+        <div class="center">
+            <div class="neo-box" style="width: 80%;">
+                <div class="icon-large">
+                    <i class="fas fa-warehouse"></i>
+                </div>
+                <h3>Vào kho lấy đồ</h3>
+            </div>
+        </div>
+        
+        <div class="grid-2" style="margin-top: 20px;">
+            <div class="code-block">
+                <span class="comment"># Ngôn ngữ SQL</span><br>
+                SELECT * FROM users<br>
+                WHERE email = 'tuan@example.com';<br><br>
+                
+                INSERT INTO orders (user_id, total)<br>
+                VALUES (123, 1990000);
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3>Thủ kho Database</h3>
+                <p>Nhận lệnh từ Server</p>
+                <p>Tìm kiếm trong kho</p>
+                <p>Trả về dữ liệu thô (Raw Data)</p>
+            </div>
+        </div>
+        
+        <div class="slide-number">12</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 13: BƯỚC 5 - PHẢN HỒI (RESPONSE)
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2>Bước 5: Phản Hồi (Response)</h2>
+        
+        <div class="center" style="margin-bottom: 20px;">
+            <div class="icon-large black">
+                <i class="fas fa-reply"></i>
+            </div>
+            <p>Server đóng gói kết quả gửi trả lại</p>
+        </div>
+        
+        <div class="grid-3">
+            <div class="status-card status-200">
+                <h3>200 OK</h3>
+                <p>Thành công</p>
+                <p><small>Món ăn đã sẵn sàng</small></p>
+            </div>
+            
+            <div class="status-card status-404 rotate-1">
+                <h3>404 Not Found</h3>
+                <p>Không tìm thấy</p>
+                <p><small>Món không có trong thực đơn</small></p>
+            </div>
+            
+            <div class="status-card status-500 rotate-neg-1">
+                <h3>500 Server Error</h3>
+                <p>Lỗi Server</p>
+                <p><small>Nhà bếp cháy</small></p>
+            </div>
+        </div>
+        
+        <div class="quote-box" style="margin-top: 20px;">
+            <i class="fas fa-concierge-bell"></i> Người bồi bàn bưng món ăn ra 
+            (hoặc bưng ra đĩa rỗng nếu lỗi)
+        </div>
+        
+        <div class="slide-number">13</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 14: BƯỚC 6 - RENDERING
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2>Bước 6: Rendering (Thưởng thức)</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box">
+                <h3><i class="fas fa-paint-brush"></i> Trình duyệt nhận</h3>
+                <div class="code-block" style="font-size: 14px;">
+                    {<br>
+                    &nbsp;&nbsp;"status": "success",<br>
+                    &nbsp;&nbsp;"user": "Tuấn",<br>
+                    &nbsp;&nbsp;"message": "Đăng nhập thành công"<br>
+                    }
+                </div>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3><i class="fas fa-eye"></i> Vẽ lên màn hình</h3>
+                <p>Trang web đổi màu</p>
+                <p>Hiển thị thông báo</p>
+                <p>Chuyển hướng trang</p>
+            </div>
+        </div>
+        
+        <div class="highlight-box" style="margin-top: 20px;">
+            <i class="fas fa-check-circle"></i> Người dùng thấy: "Đăng nhập thành công!"
+        </div>
+        
+        <div class="slide-number">14</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 15: HTTP - NGÔN NGỮ GIAO TIẾP
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2>HTTP - Ngôn Ngữ Chung</h2>
+        
+        <div class="neo-box" style="margin-bottom: 20px;">
+            <h3>HyperText Transfer Protocol</h3>
+            <p>Ngôn ngữ giao tiếp giữa Client và Server</p>
+        </div>
+        
+        <div class="grid-4" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 15px;">
+            <div class="status-card" style="background: var(white);">
+                <h3>GET</h3>
+                <p>Lấy dữ liệu</p>
+                <p><small>Xem tin tức</small></p>
+            </div>
+            
+            <div class="status-card rotate-1" style="background: var(white);">
+                <h3>POST</h3>
+                <p>Gửi dữ liệu mới</p>
+                <p><small>Đăng bài</small></p>
+            </div>
+            
+            <div class="status-card rotate-neg-1" style="background: var(white);">
+                <h3>PUT</h3>
+                <p>Sửa dữ liệu</p>
+                <p><small>Đổi mật khẩu</small></p>
+            </div>
+            
+            <div class="status-card" style="background: var(white);">
+                <h3>DELETE</h3>
+                <p>Xóa dữ liệu</p>
+                <p><small>Xóa bài viết</small></p>
+            </div>
+        </div>
+        
+        <div class="slide-number">15</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 16: TẦM QUAN TRỌNG CỦA HEADERS
+         ============================================ -->
+    <div class="slide-container">
+        
+        <h2>Tầm Quan Trọng Của Headers</h2>
+        
+        <div class="neo-box" style="margin-bottom: 20px;">
+            <h3>Metadata - Thông tin phụ</h3>
+            <p>Nhưng cực kỳ quan trọng!</p>
+        </div>
+        
+        <div class="grid-2">
+            <div class="code-block">
+                <span class="comment"># HTTP Headers Examples</span><br>
+                Content-Type: application/json<br>
+                User-Agent: Chrome/Windows<br>
+                Authorization: Bearer xyz123<br>
+                Accept-Language: vi-VN
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3>Ví dụ thực tế</h3>
+                <p><strong>Content-Type:</strong> Báo server biết tôi gửi tiếng Anh hay tiếng Việt</p>
+                <p><strong>User-Agent:</strong> Tôi đang dùng iPhone hay Laptop</p>
+                <p><strong>Cookie/Token:</strong> Vé thông hành (chứng minh đã đăng nhập)</p>
+            </div>
+        </div>
+        
+        <div class="slide-number">16</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 17: STATELESS - KHÔNG LƯU TRẠNG THÁI
+         ============================================ -->
+    <div class="slide-container">
+        
+        <h2>Stateless (Không Lưu Trạng Thái)</h2>
+        
+        <div class="center" style="margin-bottom: 30px;">
+            <div class="icon-large">
+                <i class="fas fa-fish"></i>
+            </div>
+            <p style="font-size: 24px; font-weight: 700;">Chú cá vàng của Internet</p>
+        </div>
+        
+        <div class="grid-2">
+            <div class="neo-box rotate-neg-1">
+                <h3>Đặc điểm</h3>
+                <p>Server "mất trí nhớ" sau mỗi request</p>
+                <p>Request thứ 2 không liên quan request thứ 1</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3>Ý nghĩa</h3>
+                <p>Muốn Server nhớ, Client phải gửi lại Token mỗi lần</p>
+                <p>Giống như: "Tôi là Tuấn, đã đăng nhập lúc sáng"</p>
+            </div>
+        </div>
+        
+        <div class="highlight-box" style="margin-top: 20px;">
+            <i class="fas fa-brain"></i> Server không có bộ nhớ dài hạn
+        </div>
+        
+        <div class="slide-number">17</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 18: CASE STUDY - THẢM HỌA KNIGHT CAPITAL
+         ============================================ -->
+    <div class="slide-container">
+        
+        <h2>Case Study: Knight Capital (2012)</h2>
+        
+        <div class="neo-box" style="background: #ff0000; color: white; border-color: black;">
+            <h3 style="color: white;">Thảm họa tài chính</h3>
+            <p><i class="fas fa-skull-crossbones"></i> 440 triệu USD trong 45 phút</p>
+            <p><small>Công ty chứng khoán hàng đầu Mỹ</small></p>
+        </div>
+        
+        <div class="grid-2" style="margin-top: 20px;">
+            <div class="neo-box">
+                <h3>Nguyên nhân</h3>
+                <p><i class="fas fa-bug"></i> Lỗi Deploy lên Server</p>
+                <p><i class="fas fa-unlink"></i> Mô hình Client-Server bị lệch pha</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3>Chi tiết</h3>
+                <p><i class="fas fa-check-circle"></i> Client gửi lệnh mua bán đúng</p>
+                <p><i class="fas fa-server"></i> 1 trong 8 Server chứa "Logic cũ"</p>
+                <p><i class="fas fa-times-circle"></i> Xử lý sai lệnh giao dịch</p>
+            </div>
+        </div>
+        
+        <div class="slide-number">18a</div>
+    </div>
+
+    <!-- ============================================
+        SLIDE 18b: CASE STUDY - THẢM HỌA KNIGHT CAPITAL (PHẦN 2)
+        ============================================ -->
+    <div class="slide-container">
+
+        <div class="center">
+            <div class="icon-large" style="color: #ff0000;">
+                <i class="fas fa-robot"></i>
+            </div>
+            
+            <div class="highlight-box" style="background: black; color: white; margin: 20px 0;">
+                Server điên cuồng mua đỉnh bán đáy tự động
+            </div>
+        </div>
+        
+        <div class="grid-2">
+            <div class="neo-box">
+                <h3><i class="fas fa-chart-line"></i> Hậu quả</h3>
+                <p>Mất 440 triệu USD trong 45 phút</p>
+                <p>Công ty suýt phá sản</p>
+                <p>Thị trường chứng khoán Mỹ chấn động</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3><i class="fas fa-code"></i> Bài học kỹ thuật</h3>
+                <p>Testing trước khi deploy</p>
+                <p>Feature flags cho code mới</p>
+                <p>Rollback plan luôn sẵn sàng</p>
+            </div>
+        </div>
+        
+        <div class="quote-box" style="margin-top: 20px;">
+            <i class="fas fa-quote-left"></i> 
+            "Mô hình Client-Server rất mạnh, nhưng chỉ cần sai lệch 1 dòng code 
+            ở phía Server, hậu quả là khôn lường."
+        </div>
+        
+        <div class="slide-number">18b</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 19: TỔNG KẾT
+         ============================================ -->
+    <div class="slide-container">
+        
+        <h2>Tổng Kết</h2>
+        
+        <div class="grid-3">
+            <div class="neo-box">
+                <div class="icon-large icon-accent-pink">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <h3>1. Mô hình</h3>
+                <p>Internet hoạt động dựa trên Hỏi - Trả lời</p>
+                <p>Client-Server là nền tảng</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <div class="icon-large icon-accent-cyan">
+                    <i class="fas fa-language"></i>
+                </div>
+                <h3>2. Ngôn ngữ</h3>
+                <p>HTTP là ngôn ngữ chung</p>
+                <p>Headers & Status Codes quan trọng</p>
+            </div>
+            
+            <div class="neo-box rotate-neg-1">
+                <div class="icon-large icon-accent-green">
+                    <i class="fas fa-project-diagram"></i>
+                </div>
+                <h3>3. Quy trình</h3>
+                <p>Mỗi click chuột kích hoạt chuỗi phức tạp</p>
+                <p>Network → Server → Database</p>
+            </div>
+        </div>
+        
+        <div class="highlight-box" style="margin-top: 20px;">
+            <i class="fas fa-lightbulb"></i> Hiểu để xây dựng hệ thống tốt hơn
+        </div>
+        
+        <div class="slide-number">19</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 20: Q&A - HỎI ĐÁP
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <div class="center">
+            <h1>TKS FOR LISTENING</h1>
+            
+            
+            <div style="margin-top: 40px;">
+                <div class="highlight-box">
+                    <i class="fas fa-handshake"></i> Cảm ơn đã lắng nghe!
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide-number">20</div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div id="nav-controls">
+        <button id="nav-first" title="First slide (Home)">&#124;&lt;</button>
+        <button id="nav-prev" title="Previous (Left Arrow)">&lt; Prev</button>
+        <span id="slide-counter">1 / 20</span>
+        <button id="nav-next" title="Next (Right Arrow / Space)">Next &gt;</button>
+        <button id="nav-last" title="Last slide (End)">&gt;&#124;</button>
+    </div>
+
+    <style>
+        #nav-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 12px 25px;
+            border-radius: 50px;
+            border: 3px solid var(--accent-pink);
+            z-index: 1000;
+        }
+
+        #nav-controls button {
+            background: var(--accent-black);
+            border: 2px solid var(--accent-yellow);
+            color: var(--accent-yellow);
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Space Mono', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        #nav-controls button:hover {
+            background: var(--accent-pink);
+            border-color: var(--accent-pink);
+            color: white;
+        }
+
+        #nav-controls button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        #nav-controls button:disabled:hover {
+            background: var(--accent-black);
+            border-color: var(--accent-yellow);
+            color: var(--accent-yellow);
+        }
+
+        #slide-counter {
+            color: var(--accent-cyan);
+            font-family: 'Lexend Mega';
+            font-size: 16px;
+            font-weight: 700;
+            min-width: 70px;
+            text-align: center;
+        }
+    </style>
+
+    <script>
+        (function() {
+            let currentSlide = 0;
+            const totalSlides = 21;
+            const slideHeight = 780; // 720px slide + 60px margin
+
+            const counterEl = document.getElementById('slide-counter');
+            const firstBtn = document.getElementById('nav-first');
+            const prevBtn = document.getElementById('nav-prev');
+            const nextBtn = document.getElementById('nav-next');
+            const lastBtn = document.getElementById('nav-last');
+
+            function updateUI() {
+                counterEl.textContent = (currentSlide + 1) + ' / ' + totalSlides;
+                firstBtn.disabled = currentSlide === 0;
+                prevBtn.disabled = currentSlide === 0;
+                nextBtn.disabled = currentSlide === totalSlides - 1;
+                lastBtn.disabled = currentSlide === totalSlides - 1;
+            }
+
+            function goToSlide(index) {
+                if (index < 0) index = 0;
+                if (index >= totalSlides) index = totalSlides - 1;
+                currentSlide = index;
+                window.scrollTo({ top: currentSlide * slideHeight, behavior: 'smooth' });
+                updateUI();
+            }
+
+            function goNext() { goToSlide(currentSlide + 1); }
+            function goPrev() { goToSlide(currentSlide - 1); }
+            function goFirst() { goToSlide(0); }
+            function goLast() { goToSlide(totalSlides - 1); }
+
+            // Button clicks
+            firstBtn.addEventListener('click', goFirst);
+            prevBtn.addEventListener('click', goPrev);
+            nextBtn.addEventListener('click', goNext);
+            lastBtn.addEventListener('click', goLast);
+
+            // Keyboard controls
+            document.addEventListener('keydown', (e) => {
+                switch(e.key) {
+                    case 'ArrowLeft': e.preventDefault(); goPrev(); break;
+                    case 'ArrowRight':
+                    case ' ': e.preventDefault(); goNext(); break;
+                    case 'Home': e.preventDefault(); goFirst(); break;
+                    case 'End': e.preventDefault(); goLast(); break;
+                }
+            });
+
+            // Track scroll position to update current slide
+            let scrollTimeout;
+            window.addEventListener('scroll', () => {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    const slideIndex = Math.round(window.scrollY / slideHeight);
+                    if (slideIndex !== currentSlide) {
+                        currentSlide = slideIndex;
+                        if (currentSlide < 0) currentSlide = 0;
+                        if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+                        updateUI();
+                    }
+                }, 100);
+            });
+
+            // Initialize
+            updateUI();
+        })();
+    </script>
+
+</body>
+</html>

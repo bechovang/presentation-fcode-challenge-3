@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TF Slides - Kiến Trúc Backend Evolution</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* ============================================
+           CORE SETUP: FIXED SLIDE MODE 
+           ============================================ */
+        
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0;
+        }
+        
+        :root { 
+            --bg-color: #f2f2f2; 
+            --accent-yellow: #fff500; 
+            --accent-pink: #ff00ff; 
+            --accent-cyan: #00ffff; 
+            --accent-green: #00ff00; 
+            --accent-black: #000000; 
+            --border-thickness: 4px; 
+        }
+        
+        body { 
+            background-color: #222; 
+            font-family: 'Space Mono', monospace; 
+            margin: 0; 
+            padding: 40px 0;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+        }
+
+        /* ============================================
+           SLIDE CONTAINER (FIXED 1280x720)
+           ============================================ */
+        
+        .slide-container {
+            width: 1280px; 
+            height: 720px;
+            background-color: var(--bg-color);
+            border: var(--border-thickness) solid var(--accent-black);
+            box-shadow: 12px 12px 0px var(--accent-black);
+            position: relative; 
+            overflow: hidden; 
+            padding: 50px 60px; 
+            margin-bottom: 60px;
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center;
+        }
+
+        /* ============================================
+           MANDATORY HEADER
+           ============================================ */
+        
+        .slide-header {
+            position: absolute; 
+            top: 0; 
+            left: 0;
+            background: var(--accent-black); 
+            color: var(--accent-yellow);
+            padding: 8px 20px; 
+            font-family: 'Lexend Mega'; 
+            font-size: 13px; 
+            font-weight: 700;
+            border-bottom: 4px solid var(--accent-pink); 
+            border-right: 4px solid var(--accent-pink);
+            z-index: 100; 
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ============================================
+           ANTI-OVERFLOW CORE RULES
+           ============================================ */
+        
+        .slide-container * {
+            max-width: 100%;
+            word-wrap: break-word; 
+            overflow-wrap: break-word;
+        }
+
+        /* ============================================
+           TYPOGRAPHY
+           ============================================ */
+        
+        h1, h2, h3 { 
+            font-family: 'Lexend Mega'; 
+            text-transform: uppercase; 
+            color: #000; 
+            margin: 0 0 20px 0;
+        }
+        
+        h1 { 
+            font-size: clamp(48px, 6vw, 72px);
+            font-weight: 900; 
+            line-height: 0.95; 
+            text-shadow: 4px 4px 0px var(--accent-pink); 
+            margin-bottom: 30px;
+        }
+        
+        h2 { 
+            font-size: clamp(32px, 4vw, 42px); 
+            font-weight: 700;
+            background: var(--accent-yellow); 
+            border: 4px solid black; 
+            padding: 10px 20px; 
+            display: inline-block; 
+            box-shadow: 6px 6px 0px black;
+            line-height: 1.1;
+            margin-bottom: 25px;
+        }
+
+        h3 { 
+            font-size: clamp(24px, 3vw, 36px); 
+            font-weight: 700;
+            border-bottom: 4px solid var(--accent-cyan);
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        /* Body Text */
+        p { 
+            font-size: 20px; 
+            line-height: 1.5; 
+            margin-bottom: 16px;
+            font-weight: 400;
+        }
+
+        strong, b {
+            font-weight: 700;
+            color: var(--accent-black);
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 0 0 20px 0;
+            padding-left: 35px;
+        }
+
+        li {
+            font-size: 20px;
+            line-height: 1.5;
+            margin-bottom: 14px;
+            font-weight: 400;
+        }
+
+        li strong {
+            color: var(--accent-pink);
+        }
+
+        /* ============================================
+           COMPONENTS
+           ============================================ */
+        
+        /* Neo Box */
+        .neo-box { 
+            background: white; 
+            border: 4px solid black; 
+            padding: 20px 24px; 
+            box-shadow: 6px 6px 0px black; 
+            margin-bottom: 20px;
+            font-size: 18px;
+            height: 100%;
+        }
+
+        /* Code Block */
+        .code-block { 
+            background: #000; 
+            color: #00ff00; 
+            padding: 16px 20px; 
+            border: 4px solid var(--accent-pink); 
+            font-family: 'Space Mono', monospace;
+            font-size: 16px;
+            line-height: 1.4;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+
+        .code-block .comment {
+            color: #888;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: var(--accent-yellow);
+            border: 4px solid black;
+            padding: 16px 20px;
+            box-shadow: 6px 6px 0px black;
+            font-weight: 700;
+            font-size: 22px;
+            margin: 20px 0;
+            transform: rotate(-1deg);
+        }
+
+        /* Quote Box */
+        .quote-box {
+            background: var(--accent-cyan);
+            border: 4px solid black;
+            padding: 20px 24px;
+            box-shadow: 8px 8px 0px black;
+            font-style: italic;
+            font-size: 20px;
+            border-left: 12px solid var(--accent-pink);
+            margin: 20px 0;
+        }
+
+        /* ============================================
+           LAYOUT UTILITIES
+           ============================================ */
+        
+        /* Grid 2 Columns */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        /* Grid 3 Columns */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        /* Flex Row */
+        .flex-row {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        /* Center Content */
+        .center {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+
+        /* ============================================
+           ROTATION UTILITIES
+           ============================================ */
+        
+        .rotate-1 { transform: rotate(1deg); }
+        .rotate-neg-1 { transform: rotate(-1deg); }
+        .rotate-2 { transform: rotate(2deg); }
+        .rotate-neg-2 { transform: rotate(-2deg); }
+
+        /* ============================================
+           ICON STYLING
+           ============================================ */
+        
+        .icon-large {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .icon-accent-yellow { color: var(--accent-yellow); }
+        .icon-accent-pink { color: var(--accent-pink); }
+        .icon-accent-cyan { color: var(--accent-cyan); }
+        .icon-accent-green { color: var(--accent-green); }
+
+        /* Inline Icons */
+        li i, p i {
+            margin-right: 8px;
+            color: var(--accent-pink);
+        }
+
+        /* ============================================
+           SLIDE NUMBERS
+           ============================================ */
+        
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 30px;
+            background: var(--accent-black);
+            color: var(--accent-yellow);
+            padding: 6px 14px;
+            font-family: 'Lexend Mega';
+            font-size: 14px;
+            font-weight: 700;
+            border: 3px solid var(--accent-pink);
+        }
+
+        /* ============================================
+           CUSTOM STYLES
+           ============================================ */
+        
+        .architecture-icon {
+            width: 120px;
+            height: 120px;
+            border: 4px solid black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 48px;
+            box-shadow: 6px 6px 0px black;
+        }
+        
+        .monolith-icon {
+            background: #ff6b6b;
+            color: black;
+        }
+        
+        .microservices-icon {
+            background: #4ecdc4;
+            color: black;
+        }
+        
+        .serverless-icon {
+            background: #ffe66d;
+            color: black;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border: 4px solid black;
+        }
+        
+        .comparison-table th {
+            background: var(--accent-black);
+            color: var(--accent-yellow);
+            padding: 12px;
+            font-family: 'Lexend Mega';
+            text-transform: uppercase;
+            border: 3px solid var(--accent-pink);
+            text-align: center;
+        }
+        
+        .comparison-table td {
+            padding: 12px;
+            border: 2px solid black;
+            vertical-align: top;
+            font-size: 18px;
+        }
+        
+        .warning-box {
+            background: var(--accent-pink);
+            color: black;
+            border: 4px solid black;
+            padding: 16px 20px;
+            box-shadow: 6px 6px 0px black;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <!-- ============================================
+         SLIDE 1: TRANG TIÊU ĐỀ
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <div class="center">
+            <h1>TỪ NGUYÊN KHỐI<br>ĐẾN ĐÁM MÂY</h1>
+            <div class="highlight-box rotate-neg-1">
+                Sự tiến hóa của các Kiến trúc Backend
+            </div>
+            <p style="font-size: 24px; font-weight: 700; margin-top: 30px;">
+                <i class="fa-solid fa-user"></i> Người trình bày: [Tên bạn]
+            </p>
+            <p style="margin-top: 10px; font-style: italic;">
+                Một hòn đá tảng khổng lồ đang vỡ ra<br>thành những mảnh ghép Lego bay lên trời
+            </p>
+        </div>
+        
+        <div class="slide-number">01</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 2: RECAP & ĐẶT VẤN ĐỀ
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-rotate-left"></i> Recap & Vấn Đề</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box rotate-1">
+                <h3>Đã biết</h3>
+                <p><strong>Server xử lý Request</strong></p>
+                <p>1 người dùng → dễ</p>
+                <p>Simple architecture works</p>
+            </div>
+            
+            <div class="neo-box rotate-neg-1">
+                <h3>Vấn đề mới</h3>
+                <p><strong>1 TRIỆU người dùng</strong></p>
+                <p>Cách sắp xếp code<br>= Sống hay Chết</p>
+                <p>Organization matters</p>
+            </div>
+        </div>
+        
+        <div class="warning-box" style="margin-top: 20px;">
+            <i class="fa-solid fa-question"></i> Tại sao Facebook, Netflix phục vụ cả tỷ người mà không sập?
+        </div>
+        
+        <div class="slide-number">02</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 3: ẨN DỤ KIẾN TRÚC
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2>The Architecture Metaphor</h2>
+        
+        <div class="grid-2">
+            <div class="center">
+                <div class="architecture-icon monolith-icon">
+                    <i class="fa-solid fa-building"></i>
+                </div>
+                <h3>Monolithic</h3>
+                <p><strong>Lâu đài đá khổng lồ</strong></p>
+                <p>Tất cả trong một</p>
+                <p>Khó mở rộng</p>
+            </div>
+            
+            <div class="center">
+                <div class="architecture-icon microservices-icon">
+                    <i class="fa-solid fa-city"></i>
+                </div>
+                <h3>Microservices</h3>
+                <p><strong>Thành phố chuyên biệt</strong></p>
+                <p>Bệnh viện, Trường học</p>
+                <p>Siêu thị riêng biệt</p>
+            </div>
+        </div>
+        
+        <div class="quote-box" style="margin-top: 30px;">
+            "Cả hai đều để ở, nhưng cách xây dựng và mở rộng hoàn toàn khác nhau"
+        </div>
+        
+        <div class="slide-number">03</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 4: MONOLITHIC LÀ GÌ?
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-cube"></i> Monolithic Architecture</h2>
+        
+        <div class="code-block" style="margin-bottom: 20px;">
+📁 monolithic-app/<br>
+├── 📁 controllers/    # UI Logic<br>
+├── 📁 services/       # Business Logic<br>
+├── 📁 models/         # Database Logic<br>
+└── 📁 utils/          # Everything else<br>
+        </div>
+        
+        <div class="grid-2">
+            <div class="neo-box">
+                <h3>Định nghĩa</h3>
+                <p><strong>"Tất cả trong một"</strong></p>
+                <p>UI + Logic + DB<br>chung 1 project</p>
+                <p>1 codebase to đùng</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3>Deploy</h3>
+                <p><strong>1 file duy nhất</strong></p>
+                <p>.jar (Java) hoặc .exe</p>
+                <p>Chạy trên 1 server</p>
+                <p>Simple deployment</p>
+            </div>
+        </div>
+        
+        <div class="slide-number">04</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 5: ƯU ĐIỂM MONOLITHIC
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-thumbs-up"></i> Ưu điểm - Vì sao phổ biến?</h2>
+        
+        <ul>
+            <li><i class="fa-solid fa-brain"></i> <strong>Đơn giản:</strong> Dễ viết, dễ setup ban đầu</li>
+            <li><i class="fa-solid fa-bug"></i> <strong>Debug dễ:</strong> Code chạy từ trên xuống, trong 1 bộ nhớ</li>
+            <li><i class="fa-solid fa-bolt"></i> <strong>Tốc độ cao:</strong> Gọi hàm nội bộ (Function call) cực nhanh</li>
+            <li><i class="fa-solid fa-rocket"></i> <strong>Dev nhanh:</strong> MVP trong vài ngày</li>
+        </ul>
+        
+        <div class="highlight-box rotate-neg-1" style="margin-top: 20px;">
+            <i class="fa-solid fa-circle-check"></i> Perfect cho startup & team nhỏ
+        </div>
+        
+        <div class="slide-number">05</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 6: NHƯỢC ĐIỂM MONOLITHIC
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-skull-crossbones"></i> Cơn ác mộng khi Scale</h2>
+        
+        <div class="grid-3">
+            <div class="neo-box rotate-neg-1">
+                <h3><i class="fa-solid fa-bomb"></i> Điểm chết</h3>
+                <p>1 lỗi nhỏ ở module Báo cáo → Kéo sập CẢ HỆ THỐNG</p>
+                <p>Single point of failure</p>
+            </div>
+            
+            <div class="neo-box">
+                <h3><i class="fa-solid fa-snail"></i> Khó thay đổi</h3>
+                <p>Sửa 1 dòng code → Build lại cả "cục" to</p>
+                <p>Deploy mất hàng giờ</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3><i class="fa-solid fa-lock"></i> Tech lock-in</h3>
+                <p>Bị dính 1 ngôn ngữ</p>
+                <p>Java → Java hết</p>
+                <p>Khó đổi công nghệ</p>
+            </div>
+        </div>
+        
+        <div class="warning-box" style="margin-top: 20px;">
+            <i class="fa-solid fa-spaghetti-monster-flying"></i> Spaghetti Code - Một bát mì Ý rối rắm
+        </div>
+        
+        <div class="slide-number">06</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 7: CASE STUDY - TWITTER
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-brands fa-twitter"></i> Case Study: Twitter Fail Whale</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box">
+                <h3>2008-2010</h3>
+                <p><strong>Monolithic Ruby on Rails</strong></p>
+                <p>User tăng đột biến</p>
+                <p>Hệ thống sập liên tục</p>
+                <p>The Fail Whale trở thành meme</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3>Vấn đề</h3>
+                <p><strong>Không scale được</strong></p>
+                <p>Muốn mở rộng Timeline → Phải nhân bản CẢ HỆ THỐNG</p>
+                <p>Quá cồng kềnh, tốn kém</p>
+            </div>
+        </div>
+        
+        <div class="quote-box" style="margin-top: 20px;">
+            "Monolithic có giới hạn chịu đựng. Khi vượt qua scale đó, bạn phải thay đổi hoặc chết."
+        </div>
+        
+        <div class="slide-number">07</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 8: KHI NÀO BỎ MONOLITHIC?
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-hourglass-end"></i> Time to say goodbye?</h2>
+        
+        <div class="grid-2">
+            <div>
+                <h3><i class="fa-solid fa-users"></i> Dấu hiệu cảnh báo</h3>
+                <ul>
+                    <li>Team quá đông (100+ dev)</li>
+                    <li>Deploy mất hàng tiếng</li>
+                    <li>Git conflict mỗi ngày</li>
+                    <li>Codebase 1 triệu dòng</li>
+                </ul>
+            </div>
+            
+            <div>
+                <h3><i class="fa-solid fa-gears"></i> Nhu cầu mới</h3>
+                <ul>
+                    <li>Cần công nghệ khác nhau</li>
+                    <li>Scale riêng từng phần</li>
+                    <li>Độc lập team/dev</li>
+                    <li>Zero downtime deploy</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="highlight-box rotate-1" style="margin-top: 20px;">
+            <i class="fa-solid fa-arrow-right"></i> Nếu có 3/4 dấu hiệu trên → Đã đến lúc chuyển đổi
+        </div>
+        
+        <div class="slide-number">08</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 9: MICROSERVICES LÀ GÌ?
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-puzzle-piece"></i> Microservices Architecture</h2>
+        
+        <div class="code-block" style="margin-bottom: 20px;">
+📁 ecommerce-system/<br>
+├── 📁 user-service/      # Auth, Profile<br>
+├── 📁 order-service/     # Orders, Cart<br>
+├── 📁 payment-service/   # Payments, Invoice<br>
+├── 📁 inventory-service/ # Stock, Warehouse<br>
+└── 📁 notification-srv/  # Email, SMS<br>
+        </div>
+        
+        <div class="grid-2">
+            <div class="neo-box">
+                <h3>Định nghĩa</h3>
+                <p><strong>"Chia để trị"</strong></p>
+                <p>Tách hệ thống lớn → Dịch vụ nhỏ độc lập</p>
+                <p>Mỗi service có DB riêng</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3>Đặc điểm</h3>
+                <p><strong>Loosely coupled</strong></p>
+                <p>Chạy trên server riêng</p>
+                <p>Có thể dùng ngôn ngữ khác nhau</p>
+            </div>
+        </div>
+        
+        <div class="slide-number">09</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 10: GIAO TIẾP MICROSERVICES
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-comments"></i> Cách chúng "nói chuyện"</h2>
+        
+        <div>
+            <!-- <div class="architecture-icon microservices-icon" style="margin-bottom: 30px;">
+                <i class="fa-solid fa-network-wired"></i>
+            </div> -->
+            
+            <div class="grid-2" style="width: 100%;">
+                <div class="neo-box">
+                    <h3>REST API</h3>
+                    <p><strong>HTTP/HTTPS</strong></p>
+                    <p>JSON format</p>
+                    <p>Simple & universal</p>
+                </div>
+                
+                <div class="neo-box rotate-neg-1">
+                    <h3>gRPC</h3>
+                    <p><strong>Protocol Buffers</strong></p>
+                    <p>Binary format</p>
+                    <p>Siêu nhanh</p>
+                </div>
+            </div>
+            
+            <div class="code-block" style="margin-top: 20px; width: 80%;">
+            // Order Service gọi Inventory Service<br>
+            POST /api/inventory/update<br>
+            {<br>
+            "productId": "123",<br>
+            "quantity": -1<br>
+            }<br>
+            </div>
+        </div>
+        
+        <div class="slide-number">10</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 11: SỨC MẠNH MICROSERVICES
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-dumbbell"></i> Sức mạnh thực sự</h2>
+        
+        <div class="grid-3">
+            <div class="neo-box rotate-1">
+                <h3><i class="fa-solid fa-expand"></i> Scale linh hoạt</h3>
+                <p><strong>Sale 11.11</strong></p>
+                <p>Tăng server Payment → Không động đến Auth</p>
+                <p>Pay-per-use scaling</p>
+            </div>
+            
+            <div class="neo-box">
+                <h3><i class="fa-solid fa-shield"></i> Cô lập lỗi</h3>
+                <p><strong>Service Email chết</strong></p>
+                <p>→ Hệ thống vẫn chạy</p>
+                <p>→ User vẫn mua hàng</p>
+                <p>Fault isolation</p>
+            </div>
+            
+            <div class="neo-box rotate-neg-1">
+                <h3><i class="fa-solid fa-language"></i> Đa công nghệ</h3>
+                <p><strong>Team A: Java</strong></p>
+                <p><strong>Team B: Python</strong></p>
+                <p><strong>Team C: Go</strong></p>
+                <p>Không ảnh hưởng nhau</p>
+            </div>
+        </div>
+        
+        <div class="highlight-box" style="margin-top: 20px;">
+            <i class="fa-solid fa-lego"></i> Các mảnh ghép Lego - Ráp lại thành hệ thống lớn
+        </div>
+        
+        <div class="slide-number">11</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 12: CÁI GIÁ PHẢI TRẢ
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-money-bill-wave"></i> The Trade-off - Cái giá</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box rotate-neg-1">
+                <h3><i class="fa-solid fa-brain"></i> Phức tạp</h3>
+                <p><strong>Quản lý 100 services</strong></p>
+                <p>Khó hơn 1 cục to</p>
+                <p>Cần DevOps giỏi</p>
+                <p>Monitoring phức tạp</p>
+            </div>
+            
+            <div class="neo-box">
+                <h3><i class="fa-solid fa-clock"></i> Độ trễ</h3>
+                <p><strong>Network latency</strong></p>
+                <p>Gọi qua mạng chậm hơn function call</p>
+                <p>Thêm 10-100ms mỗi request</p>
+            </div>
+        </div>
+        
+        <div class="warning-box" style="margin-top: 20px;">
+            <i class="fa-solid fa-database"></i> Distributed Transactions - Dữ liệu ở 2 nơi khác nhau, khó đảm bảo nhất quán
+        </div>
+        
+        <div class="slide-number">12</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 13: CASE STUDY - AMAZON
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-brands fa-aws"></i> Case Study: Amazon API Mandate</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box">
+                <h3>2002 - Bezos ra lệnh</h3>
+                <p><strong>CẤM truy cập DB của nhau</strong></p>
+                <p>Bắt buộc giao tiếp qua API</p>
+                <p>Tất cả services có interface</p>
+                <p>No direct DB access</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3>Kết quả</h3>
+                <p><strong>Biến mớ hỗn độn → Microservices vĩ đại</strong></p>
+                <p>Tiền đề của AWS</p>
+                <p>Công ty trị giá nghìn tỷ</p>
+                <p>Culture change success</p>
+            </div>
+        </div>
+        
+        <div class="quote-box" style="margin-top: 20px;">
+            "Microservices không chỉ là code, nó là văn hóa tổ chức. Không có văn hóa đúng → Chắc chắn thất bại."
+        </div>
+        
+        <div class="slide-number">13</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 14: SERVERLESS LÀ GÌ?
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-cloud"></i> Serverless Architecture</h2>
+        
+        <div>
+            <!-- <div class="architecture-icon serverless-icon" style="margin-bottom: 30px;">
+                <i class="fa-solid fa-bolt"></i>
+            </div> -->
+            
+            <div class="grid-2" style="width: 100%;">
+                <div class="neo-box">
+                    <h3>Sự thật</h3>
+                    <p><strong>Vẫn có server</strong></p>
+                    <p>Nhưng bạn không quản lý</p>
+                    <p>Cloud provider lo hết</p>
+                </div>
+                
+                <div class="neo-box rotate-1">
+                    <h3>FaaS</h3>
+                    <p><strong>Function as a Service</strong></p>
+                    <p>Viết 1 hàm duy nhất</p>
+                    <p>Cloud tự chạy, scale</p>
+                </div>
+            </div>
+            
+            <div class="code-block" style="margin-top: 20px; width: 60%;">
+                // AWS Lambda Function<br>
+                exports.handler = async (event) =&gt; {<br>
+                &nbsp;&nbsp;const image = event.image;<br>
+                &nbsp;&nbsp;return resizeImage(image); // Chỉ làm 1 việc<br>
+                };<br>
+            </div>
+        </div>
+        
+        <div class="slide-number">14</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 15: CƠ CHẾ "DÙNG XONG VỨT"
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-recycle"></i> Event-driven & Pay-per-use</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box rotate-neg-1">
+                <h3><i class="fa-solid fa-calendar-check"></i> Event-driven</h3>
+                <p><strong>Chỉ chạy khi có event</strong></p>
+                <p>User upload ảnh → Hàm chạy</p>
+                <p>Xong → Tắt</p>
+                <p>Không chạy = Không tốn tiền</p>
+            </div>
+            
+            <div class="neo-box">
+                <h3><i class="fa-solid fa-money-bill"></i> Chi phí</h3>
+                <p><strong>Trả theo mili-giây</strong></p>
+                <p>100ms chạy = $0.0000002</p>
+                <p>Siêu rẻ cho startup</p>
+                <p>No idle cost</p>
+            </div>
+        </div>
+        
+        <div class="highlight-box rotate-1" style="margin-top: 20px;">
+            <i class="fa-solid fa-lightbulb"></i> Giống bóng đèn cảm ứng - Chỉ sáng khi có người đi qua
+        </div>
+        
+        <div class="slide-number">15</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 16: ƯU & NHƯỢC ĐIỂM SERVERLESS
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-scale-balanced"></i> Ưu vs. Nhược</h2>
+        
+        <div class="grid-2">
+            <div>
+                <h3><i class="fa-solid fa-thumbs-up"></i> Ưu điểm</h3>
+                <ul>
+                    <li><strong>Zero ops:</strong> Không cần DevOps</li>
+                    <li><strong>Siêu rẻ:</strong> Startup friendly</li>
+                    <li><strong>Auto scale:</strong> Từ 0 → 1000 requests</li>
+                    <li><strong>Focus code:</strong> Chỉ viết business logic</li>
+                </ul>
+            </div>
+            
+            <div>
+                <h3><i class="fa-solid fa-thumbs-down"></i> Nhược điểm</h3>
+                <ul>
+                    <li><strong>Cold start:</strong> Mất vài giây khởi động</li>
+                    <li><strong>Vendor lock-in:</strong> Phụ thuộc AWS/Google</li>
+                    <li><strong>Debug khó:</strong> Distributed tracing phức tạp</li>
+                    <li><strong>Timeout limit:</strong> Max 15 phút (AWS Lambda)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="slide-number">16</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 17: BẢNG SO SÁNH "TAM QUỐC"
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-table"></i> Bảng so sánh</h2>
+        
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Tiêu chí</th>
+                    <th>Monolithic</th>
+                    <th>Microservices</th>
+                    <th>Serverless</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Chi phí</strong></td>
+                    <td>Trung bình</td>
+                    <td>Cao (phức tạp)</td>
+                    <td>Siêu thấp (pay-per-use)</td>
+                </tr>
+                <tr>
+                    <td><strong>Độ khó</strong></td>
+                    <td>Dễ</td>
+                    <td>Rất khó</td>
+                    <td>Trung bình</td>
+                </tr>
+                <tr>
+                    <td><strong>Scale</strong></td>
+                    <td>Vertical only</td>
+                    <td>Horizontal (linh hoạt)</td>
+                    <td>Auto (0 → +vc)</td>
+                </tr>
+                <tr>
+                    <td><strong>Dev speed</strong></td>
+                    <td>Nhanh ban đầu</td>
+                    <td>Chậm ban đầu</td>
+                    <td>Rất nhanh (MVP)</td>
+                </tr>
+                <tr>
+                    <td><strong>Ops needed</strong></td>
+                    <td>Ít</td>
+                    <td>Nhiều (DevOps team)</td>
+                    <td>Zero (NoOps)</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="slide-number">17</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 18: CHIẾN LƯỢC LỰA CHỌN
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-chess-board"></i> Chiến lược - Khi nào dùng gì?</h2>
+        
+        <div class="grid-3">
+            <div class="neo-box rotate-1">
+                <h3><i class="fa-solid fa-seedling"></i> Startup / MVP</h3>
+                <p><strong>Chọn Monolithic</strong></p>
+                <p>Team nhỏ</p>
+                <p>Time to market</p>
+                <p>Đừng over-engineering</p>
+                <p>"Chạy được là được"</p>
+            </div>
+            
+            <div class="neo-box">
+                <h3><i class="fa-solid fa-building"></i> Enterprise</h3>
+                <p><strong>Chọn Microservices</strong></p>
+                <p>Team lớn</p>
+                <p>Scale lớn</p>
+                <p>Cần ổn định</p>
+                <p>Multiple teams</p>
+            </div>
+            
+            <div class="neo-box rotate-neg-1">
+                <h3><i class="fa-solid fa-tasks"></i> Background Jobs</h3>
+                <p><strong>Chọn Serverless</strong></p>
+                <p>Resize ảnh</p>
+                <p>Gửi thông báo</p>
+                <p>Xử lý file</p>
+                <p>Tiết kiệm chi phí</p>
+            </div>
+        </div>
+        
+        <div class="slide-number">18</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 19: KILLER QUESTION
+         ============================================ -->
+    <!-- <div class="slide-container">
+        
+        <h2><i class="fa-solid fa-question-circle"></i> Killer Question</h2>
+        
+        <div class="warning-box" style="font-size: 24px; padding: 20px;">
+            <i class="fa-solid fa-triangle-exclamation"></i> 
+            "Trong Microservices, nếu Service A trừ tiền xong mà Service B không giao hàng được thì sao?"
+        </div>
+        
+        <div class="grid-2" style="margin-top: 30px;">
+            <div class="neo-box">
+                <h3><i class="fa-solid fa-bug"></i> Vấn đề</h3>
+                <p><strong>Distributed Transactions</strong></p>
+                <p>Dữ liệu ở 2 nơi khác nhau</p>
+                <p>Không có global lock</p>
+                <p>Consistency challenge</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3><i class="fa-solid fa-wand-magic-sparkles"></i> Giải pháp</h3>
+                <p><strong>Saga Pattern</strong></p>
+                <p>Cơ chế bù trừ lỗi</p>
+                <p>Event-driven compensation</p>
+                <p>Advanced microservices</p>
+            </div>
+        </div>
+        
+        <div class="highlight-box" style="margin-top: 20px;">
+            <i class="fa-solid fa-graduation-cap"></i> Saga Pattern là keyword thể hiện trình độ cao trong system design
+        </div>
+        
+        <div class="slide-number">19</div>
+    </div> -->
+
+    <!-- ============================================
+         SLIDE 20: KẾT LUẬN & Q&A
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <div class="center">
+            <h1>Key Takeaways</h1>
+            
+            <div class="quote-box" style="width: 90%;">
+                "Không có kiến trúc tốt nhất, chỉ có kiến trúc phù hợp nhất với giai đoạn phát triển của công ty."
+            </div>
+            
+            <div class="grid-3" style="width: 100%; margin-top: 40px;">
+                <div>
+                    <h3>Monolithic</h3>
+                    <p>Start với cái này</p>
+                    <p>KISS principle</p>
+                </div>
+                
+                <div>
+                    <h3>Microservices</h3>
+                    <p>Khi cần scale</p>
+                    <p>Prepare for complexity</p>
+                </div>
+                
+                <div>
+                    <h3>Serverless</h3>
+                    <p>Tiết kiệm chi phí</p>
+                    <p>Event-driven tasks</p>
+                </div>
+            </div>
+            
+            <div class="highlight-box rotate-neg-1" style="margin-top: 40px;">
+                <i class="fa-solid fa-microphone"></i> Q&A Session - Hỏi gì cũng được!
+            </div>
+        </div>
+        
+        <div class="slide-number">20</div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div id="nav-controls">
+        <button id="nav-first" title="First slide (Home)">&#124;&lt;</button>
+        <button id="nav-prev" title="Previous (Left Arrow)">&lt; Prev</button>
+        <span id="slide-counter">1 / 20</span>
+        <button id="nav-next" title="Next (Right Arrow / Space)">Next &gt;</button>
+        <button id="nav-last" title="Last slide (End)">&gt;&#124;</button>
+    </div>
+
+    <style>
+        #nav-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 12px 25px;
+            border-radius: 50px;
+            border: 3px solid var(--accent-pink);
+            z-index: 1000;
+        }
+
+        #nav-controls button {
+            background: var(--accent-black);
+            border: 2px solid var(--accent-yellow);
+            color: var(--accent-yellow);
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Space Mono', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        #nav-controls button:hover {
+            background: var(--accent-pink);
+            border-color: var(--accent-pink);
+            color: white;
+        }
+
+        #nav-controls button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        #nav-controls button:disabled:hover {
+            background: var(--accent-black);
+            border-color: var(--accent-yellow);
+            color: var(--accent-yellow);
+        }
+
+        #slide-counter {
+            color: var(--accent-cyan);
+            font-family: 'Lexend Mega';
+            font-size: 16px;
+            font-weight: 700;
+            min-width: 70px;
+            text-align: center;
+        }
+    </style>
+
+    <script>
+        (function() {
+            let currentSlide = 0;
+            const totalSlides = 20;
+            const slideHeight = 780; // 720px slide + 60px margin
+
+            const counterEl = document.getElementById('slide-counter');
+            const firstBtn = document.getElementById('nav-first');
+            const prevBtn = document.getElementById('nav-prev');
+            const nextBtn = document.getElementById('nav-next');
+            const lastBtn = document.getElementById('nav-last');
+
+            function updateUI() {
+                counterEl.textContent = (currentSlide + 1) + ' / ' + totalSlides;
+                firstBtn.disabled = currentSlide === 0;
+                prevBtn.disabled = currentSlide === 0;
+                nextBtn.disabled = currentSlide === totalSlides - 1;
+                lastBtn.disabled = currentSlide === totalSlides - 1;
+            }
+
+            function goToSlide(index) {
+                if (index < 0) index = 0;
+                if (index >= totalSlides) index = totalSlides - 1;
+                currentSlide = index;
+                window.scrollTo({ top: currentSlide * slideHeight, behavior: 'smooth' });
+                updateUI();
+            }
+
+            function goNext() { goToSlide(currentSlide + 1); }
+            function goPrev() { goToSlide(currentSlide - 1); }
+            function goFirst() { goToSlide(0); }
+            function goLast() { goToSlide(totalSlides - 1); }
+
+            // Button clicks
+            firstBtn.addEventListener('click', goFirst);
+            prevBtn.addEventListener('click', goPrev);
+            nextBtn.addEventListener('click', goNext);
+            lastBtn.addEventListener('click', goLast);
+
+            // Keyboard controls
+            document.addEventListener('keydown', (e) => {
+                switch(e.key) {
+                    case 'ArrowLeft': e.preventDefault(); goPrev(); break;
+                    case 'ArrowRight':
+                    case ' ': e.preventDefault(); goNext(); break;
+                    case 'Home': e.preventDefault(); goFirst(); break;
+                    case 'End': e.preventDefault(); goLast(); break;
+                }
+            });
+
+            // Track scroll position to update current slide
+            let scrollTimeout;
+            window.addEventListener('scroll', () => {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    const slideIndex = Math.round(window.scrollY / slideHeight);
+                    if (slideIndex !== currentSlide) {
+                        currentSlide = slideIndex;
+                        if (currentSlide < 0) currentSlide = 0;
+                        if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+                        updateUI();
+                    }
+                }, 100);
+            });
+
+            // Initialize
+            updateUI();
+        })();
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ====== MVC ====
+
+==========================================
+     SLIDE 4.5: LAYERED ARCHITECTURE
+     ======================================
+<div class="slide-container">
+    <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+    
+    <h2><i class="fa-solid fa-layer-group"></i> Layered Architecture</h2>
+    
+    <div class="code-block" style="margin-bottom: 20px;">
+📁 layered-app/<br>
+├── 📁 presentation/    # UI Layer (Controllers)<br>
+├── 📁 business/        # Business Logic Layer<br>
+├── 📁 persistence/     # Data Access Layer<br>
+└── 📁 database/        # Database Layer<br>
+    </div>
+    
+    <div class="grid-2">
+        <div class="neo-box">
+            <h3><i class="fa-solid fa-arrow-down"></i> Flow một chiều</h3>
+            <p><strong>Presentation → Business → Persistence → DB</strong></p>
+            <p>Không được đi ngược lại</p>
+            <p>Separation of concerns</p>
+        </div>
+        
+        <div class="neo-box rotate-1">
+            <h3><i class="fa-solid fa-shield"></i> Ưu điểm</h3>
+            <p><strong>Dễ test từng layer</strong></p>
+            <p>Dễ maintain</p>
+            <p>Team chuyên biệt</p>
+            <p>Standard pattern</p>
+        </div>
+    </div>
+    
+    <div class="slide-number">04.5</div>
+</div>
+
+==========================================
+     SLIDE 4.6: MVC PATTERN
+     ========================================
+<div class="slide-container">
+    <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+    
+    <h2><i class="fa-solid fa-diagram-project"></i> MVC Pattern</h2>
+    
+    <div class="grid-3">
+        <div class="neo-box rotate-neg-1">
+            <h3><i class="fa-solid fa-eye"></i> Model</h3>
+            <p><strong>Data + Business Logic</strong></p>
+            <p>Quản lý dữ liệu</p>
+            <p>Validation rules</p>
+            <p>Core business logic</p>
+        </div>
+        
+        <div class="neo-box">
+            <h3><i class="fa-solid fa-display"></i> View</h3>
+            <p><strong>Hiển thị UI</strong></p>
+            <p>HTML, CSS, Templates</p>
+            <p>Chỉ hiển thị</p>
+            <p>Không chứa logic</p>
+        </div>
+        
+        <div class="neo-box rotate-1">
+            <h3><i class="fa-solid fa-hand-pointer"></i> Controller</h3>
+            <p><strong>Trung gian</strong></p>
+            <p>Nhận input từ user</p>
+            <p>Gọi Model xử lý</p>
+            <p>Trả về View hiển thị</p>
+        </div>
+    </div>
+    
+    <div class="code-block" style="margin-top: 20px;">
+// Ví dụ: User đăng nhập<br>
+1. Controller nhận email/password<br>
+2. Gọi Model kiểm tra credentials<br>
+3. Model trả về user data<br>
+4. Controller render View "dashboard"<br>
+    </div>
+    
+    <div class="slide-number">04.6</div>
+</div>
+
+========================================
+     SLIDE 4.7: LAYERED/MVC VS MONOLITHIC
+     ==========================================
+<div class="slide-container">
+    <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+    
+    <h2><i class="fa-solid fa-code-compare"></i> Layered/MVC vs Monolithic</h2>
+    
+    <div class="grid-2">
+        <div class="neo-box">
+            <h3><i class="fa-solid fa-link"></i> Quan hệ</h3>
+            <p><strong>Layered/MVC là CÁCH TỔ CHỨC code bên trong</strong></p>
+            <p>Monolithic là CÁCH DEPLOY hệ thống</p>
+            <p>Bạn có thể có Monolithic với Layered Architecture</p>
+            <p>Hoặc Microservices với Layered Architecture</p>
+        </div>
+        
+        <div class="neo-box rotate-1">
+            <h3><i class="fa-solid fa-lightbulb"></i> Hiểu lầm phổ biến</h3>
+            <p><strong>"Monolithic = MVC" → SAI!</strong></p>
+            <p>Monolithic chỉ nói về deployment</p>
+            <p>MVC chỉ nói về code organization</p>
+            <p>Có thể dùng MVC trong microservices</p>
+        </div>
+    </div>
+    
+    <div class="highlight-box" style="margin-top: 20px;">
+        <i class="fa-solid fa-arrows-to-circle"></i> Layered/MVC là về INTERNAL STRUCTURE, không phải về SCALING STRATEGY
+    </div>
+    
+    <div class="slide-number">04.7</div>
+</div>
+
+===========================================
+     SLIDE 4.8: KHI NÀO DÙNG LAYERED/MVC
+     =========================================
+<div class="slide-container">
+    <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+    
+    <h2><i class="fa-solid fa-check-circle"></i> Khi nào chọn Layered/MVC?</h2>
+    
+    <div class="grid-3">
+        <div class="neo-box rotate-neg-1">
+            <h3><i class="fa-solid fa-thumbs-up"></i> Nên dùng khi</h3>
+            <p>Team nhỏ/trung bình</p>
+            <p>Dự án CRUD đơn giản</p>
+            <p>Cần structure rõ ràng</p>
+            <p>Dễ onboard new devs</p>
+        </div>
+        
+        <div class="neo-box">
+            <h3><i class="fa-solid fa-thumbs-down"></i> Không nên khi</h3>
+            <p>Hệ thống cực phức tạp</p>
+            <p>Performance critical</p>
+            <p>Cần scale độc lập</p>
+            <p>Microservices needed</p>
+        </div>
+        
+        <div class="neo-box rotate-1">
+            <h3><i class="fa-solid fa-gem"></i> Best Practice</h3>
+            <p>Start với MVC</p>
+            <p>Khi phức tạp → Clean Architecture</p>
+            <p>Khi scale lớn → Microservices</p>
+            <p>Evolutionary design</p>
+        </div>
+    </div>
+    
+    <div class="slide-number">04.8</div>
+</div>
+
+=========================================
+     SLIDE 17: BẢNG SO SÁNH "TAM QUỐC" (ĐÃ CẬP NHẬT)
+     ========================================
+<div class="slide-container">
+    <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+    
+    <h2><i class="fa-solid fa-table"></i> Bảng so sánh 4 Kiến trúc</h2>
+    
+    <table class="comparison-table">
+        <thead>
+            <tr>
+                <th>Tiêu chí</th>
+                <th>Layered/MVC</th>
+                <th>Monolithic</th>
+                <th>Microservices</th>
+                <th>Serverless</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Mục đích</strong></td>
+                <td>Tổ chức code</td>
+                <td>Deploy đơn giản</td>
+                <td>Scale độc lập</td>
+                <td>Tiết kiệm chi phí</td>
+            </tr>
+            <tr>
+                <td><strong>Chi phí</strong></td>
+                <td>Thấp (dev only)</td>
+                <td>Trung bình</td>
+                <td>Cao (phức tạp)</td>
+                <td>Siêu thấp (pay-per-use)</td>
+            </tr>
+            <tr>
+                <td><strong>Độ khó</strong></td>
+                <td>Dễ (beginner)</td>
+                <td>Trung bình</td>
+                <td>Rất khó (expert)</td>
+                <td>Trung bình</td>
+            </tr>
+            <tr>
+                <td><strong>Scale</strong></td>
+                <td>Vertical only</td>
+                <td>Vertical only</td>
+                <td>Horizontal (linh hoạt)</td>
+                <td>Auto (0→∞)</td>
+            </tr>
+            <tr>
+                <td><strong>Team size</strong></td>
+                <td>1-10 devs</td>
+                <td>1-20 devs</td>
+                <td>20+ devs (multiple teams)</td>
+                <td>1-5 devs</td>
+            </tr>
+            <tr>
+                <td><strong>Phù hợp</strong></td>
+                <td>CRUD apps, MVP</td>
+                <td>Startups, small biz</td>
+                <td>Enterprise, large scale</td>
+                <td>Event-driven tasks</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div class="highlight-box" style="margin-top: 20px;">
+        <i class="fa-solid fa-arrow-up-right-dots"></i> Layered/MVC thường được dùng BÊN TRONG Monolithic hoặc từng Service của Microservices
+    </div>
+    
+    <div class="slide-number">17</div>
+</div>
+
+=========================================
+     SLIDE 18: CHIẾN LƯỢC LỰA CHỌN (ĐÃ CẬP NHẬT)
+     =========================================
+<div class="slide-container">
+    <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+    
+    <h2><i class="fa-solid fa-chess-board"></i> Chiến lược - Khi nào dùng gì?</h2>
+    
+    <div class="grid-4" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 20px;">
+        <div class="neo-box rotate-1">
+            <h3><i class="fa-solid fa-code"></i> Layered/MVC</h3>
+            <p><strong>Tổ chức code</strong></p>
+            <p>CRUD apps</p>
+            <p>Simple structure</p>
+            <p>Beginner friendly</p>
+        </div>
+        
+        <div class="neo-box">
+            <h3><i class="fa-solid fa-seedling"></i> Monolithic</h3>
+            <p><strong>Startup / MVP</strong></p>
+            <p>Team nhỏ</p>
+            <p>Time to market</p>
+            <p>Đơn giản hóa</p>
+        </div>
+        
+        <div class="neo-box rotate-neg-1">
+            <h3><i class="fa-solid fa-building"></i> Microservices</h3>
+            <p><strong>Enterprise</strong></p>
+            <p>Team lớn</p>
+            <p>Scale lớn</td>
+            <p>Complex systems</p>
+        </div>
+        
+        <div class="neo-box rotate-2">
+            <h3><i class="fa-solid fa-cloud"></i> Serverless</h3>
+            <p><strong>Background Jobs</strong></p>
+            <p>Resize ảnh</p>
+            <p>Gửi thông báo</p>
+            <p>Tiết kiệm chi phí</p>
+        </div>
+    </div>
+    
+    <div class="grid-2" style="margin-top: 10px;">
+        <div class="neo-box">
+            <h3><i class="fa-solid fa-road"></i> Lộ trình phát triển</h3>
+            <p><strong>Start với Layered/MVC trong Monolithic</strong></p>
+            <p>Khi phức tạp → Thêm Clean Architecture</p>
+            <p>Khi cần scale → Tách thành Microservices</p>
+            <p>Background tasks → Dùng Serverless</p>
+        </div>
+        
+        <div class="neo-box rotate-1">
+            <h3><i class="fa-solid fa-triangle-exclamation"></i> Cảnh báo</h3>
+            <p><strong>Đừng over-engineering!</strong></p>
+            <p>Startup dùng Microservices = Tự sát</p>
+            <p>Enterprise dùng Monolithic = Không scale được</p>
+            <p>Chọn đúng tool cho đúng job</p>
+        </div>
+    </div>
+    
+    <div class="slide-number">18</div>
+</div> -->

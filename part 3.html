@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TF Slides - REST vs GraphQL Battle</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        /* ============================================
+           CORE SETUP: FIXED SLIDE MODE 
+           ============================================ */
+        
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0;
+        }
+        
+        :root { 
+            --bg-color: #f2f2f2; 
+            --accent-yellow: #fff500; 
+            --accent-pink: #ff00ff; 
+            --accent-cyan: #00ffff; 
+            --accent-green: #00ff00; 
+            --accent-black: #000000; 
+            --border-thickness: 4px; 
+        }
+        
+        body { 
+            background-color: #222; 
+            font-family: 'Space Mono', monospace; 
+            margin: 0; 
+            padding: 40px 0;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center;
+        }
+
+        /* ============================================
+           SLIDE CONTAINER (FIXED 1280x720)
+           ============================================ */
+        
+        .slide-container {
+            width: 1280px; 
+            height: 720px;
+            background-color: var(--bg-color);
+            border: var(--border-thickness) solid var(--accent-black);
+            box-shadow: 12px 12px 0px var(--accent-black);
+            position: relative; 
+            overflow: hidden; 
+            padding: 50px 60px; 
+            margin-bottom: 60px;
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center;
+        }
+
+        /* ============================================
+           MANDATORY HEADER
+           ============================================ */
+        
+        .slide-header {
+            position: absolute; 
+            top: 0; 
+            left: 0;
+            background: var(--accent-black); 
+            color: var(--accent-yellow);
+            padding: 8px 20px; 
+            font-family: 'Lexend Mega'; 
+            font-size: 13px; 
+            font-weight: 700;
+            border-bottom: 4px solid var(--accent-pink); 
+            border-right: 4px solid var(--accent-pink);
+            z-index: 100; 
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ============================================
+           ANTI-OVERFLOW CORE RULES
+           ============================================ */
+        
+        .slide-container * {
+            max-width: 100%;
+            word-wrap: break-word; 
+            overflow-wrap: break-word;
+        }
+
+        /* ============================================
+           TYPOGRAPHY
+           ============================================ */
+        
+        h1, h2, h3 { 
+            font-family: 'Lexend Mega'; 
+            text-transform: uppercase; 
+            color: #000; 
+            margin: 0 0 20px 0;
+        }
+        
+        h1 { 
+            font-size: clamp(48px, 6vw, 72px);
+            font-weight: 900; 
+            line-height: 0.95; 
+            text-shadow: 4px 4px 0px var(--accent-pink); 
+            margin-bottom: 30px;
+        }
+        
+        h2 { 
+            font-size: clamp(32px, 4vw, 42px); 
+            font-weight: 700;
+            background: var(--accent-yellow); 
+            border: 4px solid black; 
+            padding: 10px 20px; 
+            display: inline-block; 
+            box-shadow: 6px 6px 0px black;
+            line-height: 1.1;
+            margin-bottom: 25px;
+        }
+
+        h3 { 
+            font-size: clamp(24px, 3vw, 36px); 
+            font-weight: 700;
+            border-bottom: 4px solid var(--accent-cyan);
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        /* Body Text */
+        p { 
+            font-size: 20px; 
+            line-height: 1.5; 
+            margin-bottom: 16px;
+            font-weight: 400;
+        }
+
+        strong, b {
+            font-weight: 700;
+            color: var(--accent-black);
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 0 0 20px 0;
+            padding-left: 35px;
+        }
+
+        li {
+            font-size: 20px;
+            line-height: 1.5;
+            margin-bottom: 14px;
+            font-weight: 400;
+        }
+
+        li strong {
+            color: var(--accent-pink);
+        }
+
+        /* ============================================
+           COMPONENTS
+           ============================================ */
+        
+        /* Neo Box */
+        .neo-box { 
+            background: white; 
+            border: 4px solid black; 
+            padding: 20px 24px; 
+            box-shadow: 6px 6px 0px black; 
+            margin-bottom: 20px;
+            font-size: 18px;
+            height: 100%;
+        }
+
+        /* Code Block */
+        .code-block { 
+            background: #000; 
+            color: #00ff00; 
+            padding: 16px 20px; 
+            border: 4px solid var(--accent-pink); 
+            font-family: 'Space Mono', monospace;
+            font-size: 16px;
+            line-height: 1.4;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+
+        .code-block .comment {
+            color: #888;
+        }
+
+        /* Highlight Box */
+        .highlight-box {
+            background: var(--accent-yellow);
+            border: 4px solid black;
+            padding: 16px 20px;
+            box-shadow: 6px 6px 0px black;
+            font-weight: 700;
+            font-size: 22px;
+            margin: 20px 0;
+            transform: rotate(-1deg);
+        }
+
+        /* Quote Box */
+        .quote-box {
+            background: var(--accent-cyan);
+            border: 4px solid black;
+            padding: 20px 24px;
+            box-shadow: 8px 8px 0px black;
+            font-style: italic;
+            font-size: 20px;
+            border-left: 12px solid var(--accent-pink);
+            margin: 20px 0;
+        }
+
+        /* ============================================
+           LAYOUT UTILITIES
+           ============================================ */
+        
+        /* Grid 2 Columns */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        /* Grid 3 Columns */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        /* Flex Row */
+        .flex-row {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        /* Center Content */
+        .center {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+
+        /* ============================================
+           ROTATION UTILITIES
+           ============================================ */
+        
+        .rotate-1 { transform: rotate(1deg); }
+        .rotate-neg-1 { transform: rotate(-1deg); }
+        .rotate-2 { transform: rotate(2deg); }
+        .rotate-neg-2 { transform: rotate(-2deg); }
+
+        /* ============================================
+           ICON STYLING
+           ============================================ */
+        
+        .icon-large {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .icon-accent-yellow { color: var(--accent-yellow); }
+        .icon-accent-pink { color: var(--accent-pink); }
+        .icon-accent-cyan { color: var(--accent-cyan); }
+        .icon-accent-green { color: var(--accent-green); }
+
+        /* Inline Icons */
+        li i, p i {
+            margin-right: 8px;
+            color: var(--accent-pink);
+        }
+
+        /* ============================================
+           SLIDE NUMBERS
+           ============================================ */
+        
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 30px;
+            background: var(--accent-black);
+            color: var(--accent-yellow);
+            padding: 6px 14px;
+            font-family: 'Lexend Mega';
+            font-size: 14px;
+            font-weight: 700;
+            border: 3px solid var(--accent-pink);
+        }
+
+        /* ============================================
+           CUSTOM STYLES
+           ============================================ */
+        
+        .versus-box {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 30px 0;
+        }
+        
+        .rest-box {
+            background: #00ffff;
+            border: 4px solid black;
+            padding: 20px;
+            width: 45%;
+            text-align: center;
+            box-shadow: 8px 8px 0px black;
+        }
+        
+        .graphql-box {
+            background: #c77dff;
+            border: 4px solid black;
+            padding: 20px;
+            width: 45%;
+            text-align: center;
+            box-shadow: 8px 8px 0px black;
+        }
+        
+        .vs-badge {
+            background: var(--accent-yellow);
+            border: 4px solid black;
+            padding: 10px 20px;
+            font-family: 'Lexend Mega';
+            font-weight: 900;
+            font-size: 24px;
+            transform: rotate(-5deg);
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border: 4px solid black;
+        }
+        
+        .comparison-table th {
+            background: var(--accent-black);
+            color: var(--accent-yellow);
+            padding: 12px;
+            font-family: 'Lexend Mega';
+            text-transform: uppercase;
+            border: 3px solid var(--accent-pink);
+            text-align: center;
+        }
+        
+        .comparison-table td {
+            padding: 12px;
+            border: 2px solid black;
+            vertical-align: top;
+            font-size: 18px;
+        }
+        
+        .rest-win {
+            background: rgba(0, 255, 255, 0.2);
+        }
+        
+        .graphql-win {
+            background: rgba(255, 0, 255, 0.2);
+        }
+        
+        .draw {
+            background: rgba(255, 255, 0, 0.2);
+        }
+        
+        .warning-box {
+            background: var(--accent-pink);
+            color: black;
+            border: 4px solid black;
+            padding: 16px 20px;
+            box-shadow: 6px 6px 0px black;
+            font-weight: 700;
+            margin: 20px 0;
+        }
+        
+        .problem-box {
+            background: #ff6b6b;
+            border: 4px solid black;
+            padding: 16px 20px;
+            box-shadow: 6px 6px 0px black;
+            margin: 20px 0;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <!-- ============================================
+         SLIDE 1: TRANG TIÊU ĐỀ
+         ============================================ -->
+    <div class="slide-container">
+
+        
+        <div class="center">
+            <h1>NGHỆ THUẬT<br>LẤY DỮ LIỆU</h1>
+            <div class="versus-box">
+                <div class="rest-box rotate-neg-1">
+                    <h3 style="color: black;">RESTful API</h3>
+                    <p><strong>Kẻ thống trị</strong></p>
+                    <p>Tiêu chuẩn công nghiệp</p>
+                </div>
+                
+                <div class="vs-badge">VS</div>
+                
+                <div class="graphql-box rotate-1">
+                    <h3 style="color: black;">GraphQL</h3>
+                    <p><strong>Kẻ thách thức</strong></p>
+                    <p>Linh hoạt, hiện đại</p>
+                </div>
+            </div>
+            
+            <p style="font-size: 24px; font-weight: 700; margin-top: 30px;">
+                <i class="fa-solid fa-user"></i> Người trình bày: [Tên bạn]
+            </p>
+            <p style="margin-top: 10px; font-style: italic;">
+                Hai võ sĩ quyền anh trên sàn đấu API
+            </p>
+        </div>
+        
+        <div class="slide-number">01</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 2: API LÀ GÌ?
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-utensils"></i> API: Người Bồi Bàn</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box rotate-1">
+                <h3>Định nghĩa</h3>
+                <p><strong>Application Programming Interface</strong></p>
+                <p>Người trung gian</p>
+                <p>Client ↔ Server</p>
+                <p>Giao tiếp chuẩn hóa</p>
+            </div>
+            
+            <div class="neo-box rotate-neg-1">
+                <h3>Ẩn dụ nhà hàng</h3>
+                <p><strong>Khách (Client)</strong> → Đưa order</p>
+                <p><strong>Bồi bàn (API)</strong> → Chuyển xuống bếp</p>
+                <p><strong>Bếp (Server)</strong> → Nấu đồ ăn</p>
+                <p><strong>Bồi bàn</strong> → Mang lên cho khách</p>
+            </div>
+        </div>
+        
+        <div class="highlight-box" style="margin-top: 20px;">
+            <i class="fa-solid fa-book-open"></i> REST và GraphQL là 2 cách viết "Thực đơn" (Menu) khác nhau!
+        </div>
+        
+        <div class="slide-number">02</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 3: ẨN DỤ CỐT LÕI
+         ============================================ -->
+    <div class="slide-container">
+        
+        <h2>The Core Metaphor</h2>
+        
+        <div class="grid-2">
+            <div class="center">
+                <div class="icon-large icon-accent-cyan">
+                    <i class="fa-solid fa-bus"></i>
+                </div>
+                <h3>REST = Xe Buýt</h3>
+                <p><strong>Các trạm cố định (URL)</strong></p>
+                <p>/users/1</p>
+                <p>/posts/99</p>
+                <p>Xuống đúng trạm</p>
+                <p>Fixed routes</p>
+            </div>
+            
+            <div class="center">
+                <div class="icon-large icon-accent-pink">
+                    <i class="fa-solid fa-taxi"></i>
+                </div>
+                <h3>GraphQL = Grab/Taxi</h3>
+                <p><strong>Nói chính xác đích đến</strong></p>
+                <p>"Cho tôi name và posts"</p>
+                <p>Đi thẳng đến đó</p>
+                <p>Custom routes</p>
+            </div>
+        </div>
+        
+        <div class="quote-box" style="margin-top: 30px;">
+            "REST: Bạn thích ăn gì? Có combo A, B, C thôi.<br>
+            GraphQL: Bạn muốn gì? Tôi làm đúng món đó cho bạn."
+        </div>
+        
+        <div class="slide-number">03</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 4: REST LÀ GÌ?
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-chess-rook"></i> RESTful API</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box">
+                <h3>Representational State Transfer</h3>
+                <p><strong>Mọi thứ là Tài nguyên</strong></p>
+                <p>Resource-oriented</p>
+                <p>Mỗi resource có URL riêng</p>
+                <p>Standard HTTP</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3>Định danh</h3>
+                <p><strong>"Địa chỉ nhà" của dữ liệu</strong></p>
+                <div class="code-block" style="font-size: 14px; margin: 10px 0;">
+GET    /users/1<br>
+GET    /posts/99<br>
+POST   /users<br>
+PUT    /users/1<br>
+DELETE /users/1<br>
+                </div>
+                <p>CRUD operations</p>
+            </div>
+        </div>
+        
+        <div class="slide-number">04</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 5: CÁCH REST HOẠT ĐỘNG
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-arrows-turn-to-dots"></i> REST Verbs (HTTP Methods)</h2>
+        
+        <div class="grid-4" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 20px;">
+            <div class="neo-box">
+                <h3><i class="fa-solid fa-download"></i> GET</h3>
+                <p><strong>Lấy dữ liệu</strong></p>
+                <p>Read-only</p>
+                <p>Safe operation</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3><i class="fa-solid fa-plus"></i> POST</h3>
+                <p><strong>Tạo mới</strong></p>
+                <p>Create resource</p>
+                <p>Thêm vào DB</p>
+            </div>
+            
+            <div class="neo-box rotate-neg-1">
+                <h3><i class="fa-solid fa-pen"></i> PUT</h3>
+                <p><strong>Sửa toàn bộ</strong></p>
+                <p>Update resource</p>
+                <p>Replace data</p>
+            </div>
+            
+            <div class="neo-box rotate-2">
+                <h3><i class="fa-solid fa-trash"></i> DELETE</h3>
+                <p><strong>Xóa</strong></p>
+                <p>Remove resource</p>
+                <p>Delete from DB</p>
+            </div>
+        </div>
+        
+        <div class="warning-box">
+            <i class="fa-solid fa-triangle-exclamation"></i> QUY TẮC: Server quy định trả về gì → Client nhận cái đó. Không được đòi hỏi thêm bớt!
+        </div>
+        
+        <div class="slide-number">05</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 6: OVER-FETCHING VẤN ĐỀ 1
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-weight-scale"></i> Over-fetching (Lấy thừa)</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box">
+                <h3>Tình huống</h3>
+                <p><strong>Chỉ cần "Tên" của User</strong></p>
+                <p>Hiển thị trên UI</p>
+                <p>Không cần email, địa chỉ</p>
+                <p>Minimal data needed</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3>Thực tế REST</h3>
+                <p><strong>GET /users/1 trả về:</strong></p>
+                <div class="code-block" style="font-size: 14px; margin: 10px 0;">
+{<br>
+  "id": 1,<br>
+  "name": "Tony",<br>
+  "email": "tony@...",<br>
+  "address": "...",<br>
+  "phone": "...",<br>
+  "created_at": "...",<br>
+  "updated_at": "..."<br>
+}<br>
+                </div>
+                <p>Wasted bandwidth</p>
+            </div>
+        </div>
+        
+        <div class="problem-box">
+            <i class="fa-solid fa-banana"></i> HẬU QUẢ: Mua cả nải chuối chỉ để ăn 1 quả. Tốn băng thông 3G/4G, làm chậm Mobile App.
+        </div>
+        
+        <div class="slide-number">06</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 7: UNDER-FETCHING VẤN ĐỀ 2
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-cart-shopping"></i> Under-fetching (Lấy thiếu)</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box">
+                <h3>Yêu cầu</h3>
+                <p><strong>"Tên User" + "Bài viết" của họ</strong></p>
+                <p>Dashboard cần cả 2</p>
+                <p>User profile page</p>
+                <p>Social media feed</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3>REST phải làm</h3>
+                <p><strong>2 Request riêng biệt:</strong></p>
+                <div class="code-block" style="font-size: 14px; margin: 10px 0;">
+// Request 1<br>
+GET /users/1 → {name: "Tony"}<br><br>
+// Request 2<br>
+GET /users/1/posts → [{...}, {...}]<br>
+                </div>
+                <p>2 round-trips</p>
+            </div>
+        </div>
+        
+        <div class="highlight-box">
+            <i class="fa-solid fa-clock"></i> HẬU QUẢ: Phải gọi 2 lần, mất thời gian chờ đợi (Latency). Mobile mạng chậm → trải nghiệm tệ.
+        </div>
+        
+        <div class="slide-number">07</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 8: N+1 PROBLEM - CƠN ÁC MỘNG
+         ============================================ -->
+    <div class="slide-container">
+        
+        <h2><i class="fa-solid fa-bug"></i> N+1 Problem</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box">
+                <h3>Mô tả</h3>
+                <p><strong>10 bài viết + Tên tác giả từng bài</strong></p>
+                <p>News feed</p>
+                <p>Social network</p>
+                <p>Complex relationships</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3>REST phải gọi</h3>
+                <p><strong>1 request: GET /posts</strong></p>
+                <p>→ Lấy 10 bài viết</p>
+                <p><strong>10 requests: GET /users/{id}</strong></p>
+                <p>→ Lấy 10 tên tác giả</p>
+            </div>
+        </div>
+        
+        <div class="warning-box" style="font-size: 24px; text-align: center;">
+            <i class="fa-solid fa-calculator"></i> TỔNG: 11 REQUESTS CHO 1 MÀN HÌNH!
+        </div>
+        
+        <div class="quote-box" style="margin-top: 20px;">
+            "REST trở nên cồng kềnh khi dữ liệu có quan hệ phức tạp. Mỗi mối quan hệ = Thêm 1 request."
+        </div>
+        
+        <div class="slide-number">08</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 9: GRAPHQL LÀ GÌ?
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-diagram-project"></i> GraphQL - Kẻ Thách Thức</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box">
+                <h3>Định nghĩa</h3>
+                <p><strong>Graph Query Language</strong></p>
+                <p>Ngôn ngữ truy vấn đồ thị</p>
+                <p>Client định nghĩa data cần lấy</p>
+                <p>Lớp trước Database</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3>QUAN TRỌNG!</h3>
+                <p><strong>KHÔNG PHẢI DATABASE!</strong></p>
+                <p>Chỉ là query language</p>
+                <p>1 endpoint duy nhất:</p>
+                <p><code>/graphql</code></p>
+                <p>Mọi query đều POST đến đây</p>
+            </div>
+        </div>
+        
+        <div class="slide-number">09</div>
+    </div>
+
+    <!-- ============================================
+        SLIDE 10: TRIẾT LÝ "ASK FOR WHAT YOU NEED"
+        ============================================ -->
+    <div class="slide-container">
+        
+        <h2><i class="fa-solid fa-magnifying-glass"></i> Client-Driven Queries</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box">
+                <h3>Client gửi Query</h3>
+                <div class="code-block" style="font-size: 14px; margin: 10px 0;">
+                    query {<br>
+                    &nbsp;&nbsp;user(id: 1) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;name<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;posts {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;title<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;createdAt<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;}<br>
+                    }<br>
+                </div>
+                <p>"Cho tôi name và posts"</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3>Server trả về</h3>
+                <div class="code-block" style="font-size: 14px; margin: 10px 0;">
+                    {<br>
+                    &nbsp;&nbsp;"data": {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;"user": {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"name": "Tony",<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"posts": [<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{ "title": "Hello", "createdAt": "..." }<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                    &nbsp;&nbsp;}<br>
+                    }<br>
+                </div>
+                <p>ĐÚNG cấu trúc query</p>
+            </div>
+        </div>
+        
+        <div class="highlight-box">
+            <i class="fa-solid fa-bullseye"></i> TRIẾT LÝ: "Ask for what you need, get exactly that" - Hỏi cái gì, nhận đúng cái đó
+        </div>
+        
+        <div class="slide-number">10</div>
+    </div>
+
+
+    <!-- ============================================
+     SLIDE 11: GIẢI QUYẾT OVER & UNDER-FETCHING
+     ============================================ -->
+    <div class="slide-container">
+        
+        <h2><i class="fa-solid fa-scissors"></i> Fix Over & Under-fetching</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box">
+                <h3><i class="fa-solid fa-box-open"></i> Over-fetching → GONE</h3>
+                <p><strong>Chỉ hỏi name</strong></p>
+                <div class="code-block" style="font-size: 12px;">
+    query { user(id: 1) { name } }
+                </div>
+                <p>→ Chỉ nhận name</p>
+                <p>Không có email, address</p>
+                <p>No wasted data</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3><i class="fa-solid fa-layer-group"></i> Under-fetching → GONE</h3>
+                <p><strong>Lồng ghép trong 1 query</strong></p>
+                <div class="code-block" style="font-size: 12px;">
+                    query {<br>
+                    &nbsp;&nbsp;user(id: 1) {<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;name<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;posts { title }<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;comments { content }<br>
+                    &nbsp;&nbsp;}<br>
+                    }<br>
+                </div>
+                <p>→ 1 request, đầy đủ data</p>
+            </div>
+        </div>
+        
+        <div class="quote-box" style="margin-top: 20px;">
+            <i class="fa-solid fa-cart-shopping"></i> Giống đi siêu thị: Chọn từng món bỏ vào giỏ (Query), thay vì mua combo ép buộc (REST endpoints)
+        </div>
+        
+        <div class="slide-number">11</div>
+    </div>
+
+
+    <!-- ============================================
+         SLIDE 12: SCHEMA & TYPE SYSTEM
+         ============================================ -->
+    <div class="slide-container">
+        
+        <h2><i class="fa-solid fa-puzzle-piece"></i> Strong Type System</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box">
+                <h3>Schema</h3>
+                <div class="code-block" style="font-size: 14px; margin: 10px 0;">
+                    type User {<br>
+                    id: ID!<br>
+                    &nbsp;name: String!<br>
+                    &nbsp;email: String<br>
+                    &nbsp;posts: [Post]!<br>
+                    }<br><br>
+                    type Post {<br>
+                    &nbsp;id: ID!<br>
+                    &nbsp;title: String!<br>
+                    &nbsp;content: String<br>
+                    &nbsp;author: User!<br>
+                    }<br>
+                </div>
+                <p>Blueprint rõ ràng</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3>Lợi ích</h3>
+                <p><strong>Frontend + Backend khớp nhau</strong></p>
+                <p>Tự động sinh docs</p>
+                <p>Type safety</p>
+                <p>Auto-completion</p>
+                <p>Validation</p>
+                <p>No more API contract conflicts</p>
+            </div>
+        </div>
+        
+        <div class="highlight-box">
+            <i class="fa-solid fa-file-contract"></i> GraphQL Schema là "Hợp đồng" giữa Frontend và Backend. Cả 2 đều biết chính xác dữ liệu trao đổi.
+        </div>
+        
+        <div class="slide-number">12</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 13: CASE STUDY - FACEBOOK
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-brands fa-facebook"></i> Case Study: Facebook (2012-2015)</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box">
+                <h3>2012 - Vấn đề</h3>
+                <p><strong>App Mobile chạy tệ</strong></p>
+                <p>REST quá chậm</p>
+                <p>Quá nhiều API calls</p>
+                <p>News Feed load lâu</p>
+                <p>Mobile network slow</p>
+                <p>User experience poor</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3>Giải pháp</h3>
+                <p><strong>Tạo GraphQL nội bộ</strong></p>
+                <p>Facebook Internal</p>
+                <p>Cứu vãn Mobile App</p>
+                <p>2015: Open Source</p>
+                <p>→ Cơn sốt toàn cầu</p>
+                <p>Revolutionary</p>
+            </div>
+        </div>
+        
+        <div class="quote-box" style="margin-top: 20px;">
+            "GraphQL sinh ra để phục vụ Mobile và mạng chậm. Nó giải quyết vấn đề thực tế của Facebook trên di động."
+        </div>
+        
+        <div class="slide-number">13</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 14: TIÊU CHÍ 1 - HIỆU NĂNG
+         ============================================ -->
+    <div class="slide-container">
+        
+        <h2><i class="fa-solid fa-gauge-high"></i> Round 1: Performance</h2>
+        
+        <div class="versus-box">
+            <div class="rest-box">
+                <h3 style="color: black;">REST</h3>
+                <div class="icon-large">
+                    <i class="fa-solid fa-server"></i>
+                </div>
+                <p><strong>Server CPU: THẮNG</strong></p>
+                <p>Đơn giản</p>
+                <p>Ít xử lý</p>
+                <p>Fast processing</p>
+            </div>
+            
+            <div class="graphql-box">
+                <h3 style="color: black;">GraphQL</h3>
+                <div class="icon-large">
+                    <i class="fa-solid fa-network-wired"></i>
+                </div>
+                <p><strong>Network: THẮNG TUYỆT ĐỐI</strong></p>
+                <p>Ít request</p>
+                <p>Gói tin nhỏ</p>
+                <p>Mobile friendly</p>
+            </div>
+        </div>
+        
+        <div class="highlight-box" style="margin-top: 20px;">
+            <i class="fa-solid fa-scale-balanced"></i> TRADE-OFF: GraphQL tốn CPU Server để parse query phức tạp, nhưng tiết kiệm Network bandwidth.
+        </div>
+        
+        <div class="slide-number">14</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 15: TIÊU CHÍ 2 - CACHING
+         ============================================ -->
+    <div class="slide-container">
+        
+        <h2><i class="fa-solid fa-hard-drive"></i> Round 2: Caching</h2>
+        
+        <div class="versus-box">
+            <div class="rest-box" style="background: #00ff00;">
+                <h3 style="color: black;">REST</h3>
+                <div class="icon-large">
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+                <p><strong>THẮNG TUYỆT ĐỐI</strong></p>
+                <p>Browser cache</p>
+                <p>CDN cache</p>
+                <p>HTTP caching headers</p>
+                <p>URL-based caching</p>
+            </div>
+            
+            <div class="graphql-box" style="background: #ff6b6b;">
+                <h3 style="color: black;">GraphQL</h3>
+                <div class="icon-large">
+                    <i class="fa-solid fa-skull-crossbones"></i>
+                </div>
+                <p><strong>RẤT KHÓ CACHE</strong></p>
+                <p>1 URL duy nhất</p>
+                <p>POST requests</p>
+                <p>Phải dùng Apollo Client</p>
+                <p>Client-side cache only</p>
+            </div>
+        </div>
+        
+        <div class="warning-box" style="margin-top: 20px;">
+            <i class="fa-solid fa-triangle-exclamation"></i> CẢNH BÁO: GraphQL không tận dụng được cache của Browser/CDN. Phải implement cache phức tạp.
+        </div>
+        
+        <div class="slide-number">15</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 16: TIÊU CHÍ 3 - ĐỘ KHÓ
+         ============================================ -->
+    <div class="slide-container">
+        
+        <h2><i class="fa-solid fa-graduation-cap"></i> Round 3: Learning Curve</h2>
+        
+        <div class="versus-box">
+            <div class="rest-box" style="background: #00ff00;">
+                <h3 style="color: black;">REST</h3>
+                <div class="icon-large">
+                    <i class="fa-solid fa-face-smile"></i>
+                </div>
+                <p><strong>DỄ HỌC</strong></p>
+                <p>Ai cũng biết HTTP</p>
+                <p>Standard CRUD</p>
+                <p>Simple concepts</p>
+                <p>Beginner friendly</p>
+            </div>
+            
+            <div class="graphql-box" style="background: #ff6b6b;">
+                <h3 style="color: black;">GraphQL</h3>
+                <div class="icon-large">
+                    <i class="fa-solid fa-face-dizzy"></i>
+                </div>
+                <p><strong>ĐƯỜNG CONG HỌC TẬP CAO</strong></p>
+                <p>Phải học query language</p>
+                <p>Schema design</p>
+                <p>Resolvers</p>
+                <p>Complex setup</p>
+            </div>
+        </div>
+        
+        <div class="highlight-box" style="margin-top: 20px;">
+            <i class="fa-solid fa-chart-line"></i> GraphQL yêu cầu team có skill cao hơn. Không phải cho những người mới bắt đầu.
+        </div>
+        
+        <div class="slide-number">16</div>
+    </div>
+
+    <!-- ============================================
+     SLIDE 17: TIÊU CHÍ 4 - BẢO MẬT
+     ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-shield-halved"></i> Round 4: Security</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box">
+                <h3><i class="fa-solid fa-lock"></i> REST</h3>
+                <p><strong>Dễ kiểm soát</strong></p>
+                <p>Rate limiting đơn giản</p>
+                <p>Mỗi endpoint riêng biệt</p>
+                <p>Dễ monitor</p>
+                <p>Predictable requests</p>
+            </div>
+            
+            <div class="neo-box rotate-1">
+                <h3><i class="fa-solid fa-bomb"></i> GraphQL Rủi ro</h3>
+                <p><strong>DoS Attack nguy hiểm</strong></p>
+                <div class="code-block" style="font-size: 12px;">
+    query {<br>
+    &nbsp;&nbsp;user(id: 1) {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;friends {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;friends {<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;friends { /* Infinite loop! */ }<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+    &nbsp;&nbsp;}<br>
+    }<br>
+                </div>
+                <p>Depth limit required</p>
+            </div>
+        </div>
+        
+        <div class="warning-box">
+            <i class="fa-solid fa-user-secret"></i> GIẢI PHÁP: Phải cài đặt Query Complexity Analysis, Depth Limit, Rate Limiting cho GraphQL.
+        </div>
+        
+        <div class="slide-number">17</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 18: BẢNG TỔNG KẾT
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-clipboard-check"></i> Cheat Sheet - So sánh</h2>
+        
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Tiêu chí</th>
+                    <th>REST</th>
+                    <th>GraphQL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Philosophy</strong></td>
+                    <td>Cứng nhắc, Fixed endpoints</td>
+                    <td>Linh hoạt, Client-driven</td>
+                </tr>
+                <tr>
+                    <td><strong>Caching</strong></td>
+                    <td class="rest-win">THẮNG (Browser/CDN)</td>
+                    <td class="graphql-win">Thua (Khó cache)</td>
+                </tr>
+                <tr>
+                    <td><strong>Over-fetching</strong></td>
+                    <td class="graphql-win">Có vấn đề</td>
+                    <td class="rest-win">ĐÃ GIẢI QUYẾT</td>
+                </tr>
+                <tr>
+                    <td><strong>Under-fetching</strong></td>
+                    <td class="graphql-win">N+1 Problem</td>
+                    <td class="rest-win">1 Query giải quyết</td>
+                </tr>
+                <tr>
+                    <td><strong>Learning Curve</strong></td>
+                    <td class="rest-win">Dễ (Beginner)</td>
+                    <td class="graphql-win">Khó (Expert)</td>
+                </tr>
+                <tr>
+                    <td><strong>Mobile Friendly</strong></td>
+                    <td class="graphql-win">Kém (Nhiều request)</td>
+                    <td class="rest-win">Tuyệt vời (Ít data)</td>
+                </tr>
+                <tr>
+                    <td><strong>Ecosystem</strong></td>
+                    <td class="draw">Mature, Standard</td>
+                    <td class="draw">Growing, Modern</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="slide-number">18</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 19: KHI NÀO CHỌN AI?
+         ============================================ -->
+    <div class="slide-container">
+
+        
+        <h2><i class="fa-solid fa-chess-knight"></i> Chiến lược lựa chọn</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box" style="background: #00ffff;">
+                <h3><i class="fa-solid fa-check"></i> CHỌN REST KHI</h3>
+                <ul>
+                    <li>Web tin tức, Blog (cần Cache tốt)</li>
+                    <li>Hệ thống đơn giản, ít quan hệ</li>
+                    <li>Team mới, muốn làm nhanh</li>
+                    <li>Public API cho third-party</li>
+                    <li>E-commerce catalog</li>
+                    <li>KISS principle</li>
+                </ul>
+            </div>
+            
+            <div class="neo-box rotate-1" style="background: #c77dff;">
+                <h3><i class="fa-solid fa-check"></i> CHỌN GraphQL KHI</h3>
+                <ul>
+                    <li>Mobile App (tiết kiệm 3G)</li>
+                    <li>Dữ liệu chằng chịt quan hệ</li>
+                    <li>Dashboard quản lý phức tạp</li>
+                    <li>Frontend thay đổi UI liên tục</li>
+                    <li>Microservices aggregation</li>
+                    <li>Real-time updates needed</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="highlight-box" style="margin-top: 20px;">
+            <i class="fa-solid fa-lightbulb"></i> PRO TIP: Frontend cần thay đổi giao diện liên tục mà không muốn nhờ Backend sửa code → GraphQL là vua!
+        </div>
+        
+        <div class="slide-number">19</div>
+    </div>
+
+    <!-- ============================================
+         SLIDE 20: LỜI KẾT & Q&A
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <div class="center">
+            <h1>Final Verdict</h1>
+            
+            <div class="quote-box" style="width: 90%; font-size: 24px;">
+                "REST chưa chết, GraphQL không phải thuốc tiên.<br>
+                Hãy chọn công cụ đúng cho công việc đúng."
+            </div>
+            
+            <div class="grid-2" style="width: 100%; margin-top: 40px;">
+                <div class="neo-box rotate-neg-1">
+                    <h3><i class="fa-solid fa-helmet-safety"></i> REST</h3>
+                    <p><strong>Tiêu chuẩn công nghiệp</strong></p>
+                    <p>Stable & Predictable</p>
+                    <p>Battle-tested</p>
+                    <p>Still going strong</p>
+                </div>
+                
+                <div class="neo-box rotate-1">
+                    <h3><i class="fa-solid fa-bolt"></i> GraphQL</h3>
+                    <p><strong>Sự linh hoạt</strong></p>
+                    <p>Flexible & Efficient</p>
+                    <p>Modern approach</p>
+                    <p>Growing fast</p>
+                </div>
+            </div>
+            
+        </div>
+        
+        <div class="slide-number">20</div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div id="nav-controls">
+        <button id="nav-first" title="First slide (Home)">&#124;&lt;</button>
+        <button id="nav-prev" title="Previous (Left Arrow)">&lt; Prev</button>
+        <span id="slide-counter">1 / 20</span>
+        <button id="nav-next" title="Next (Right Arrow / Space)">Next &gt;</button>
+        <button id="nav-last" title="Last slide (End)">&gt;&#124;</button>
+    </div>
+
+    <style>
+        #nav-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 12px 25px;
+            border-radius: 50px;
+            border: 3px solid var(--accent-pink);
+            z-index: 1000;
+        }
+
+        #nav-controls button {
+            background: var(--accent-black);
+            border: 2px solid var(--accent-yellow);
+            color: var(--accent-yellow);
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Space Mono', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            transition: all 0.2s;
+        }
+
+        #nav-controls button:hover {
+            background: var(--accent-pink);
+            border-color: var(--accent-pink);
+            color: white;
+        }
+
+        #nav-controls button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        #nav-controls button:disabled:hover {
+            background: var(--accent-black);
+            border-color: var(--accent-yellow);
+            color: var(--accent-yellow);
+        }
+
+        #slide-counter {
+            color: var(--accent-cyan);
+            font-family: 'Lexend Mega';
+            font-size: 16px;
+            font-weight: 700;
+            min-width: 70px;
+            text-align: center;
+        }
+    </style>
+
+    <script>
+        (function() {
+            let currentSlide = 0;
+            const totalSlides = 20;
+            const slideHeight = 780; // 720px slide + 60px margin
+
+            const counterEl = document.getElementById('slide-counter');
+            const firstBtn = document.getElementById('nav-first');
+            const prevBtn = document.getElementById('nav-prev');
+            const nextBtn = document.getElementById('nav-next');
+            const lastBtn = document.getElementById('nav-last');
+
+            function updateUI() {
+                counterEl.textContent = (currentSlide + 1) + ' / ' + totalSlides;
+                firstBtn.disabled = currentSlide === 0;
+                prevBtn.disabled = currentSlide === 0;
+                nextBtn.disabled = currentSlide === totalSlides - 1;
+                lastBtn.disabled = currentSlide === totalSlides - 1;
+            }
+
+            function goToSlide(index) {
+                if (index < 0) index = 0;
+                if (index >= totalSlides) index = totalSlides - 1;
+                currentSlide = index;
+                window.scrollTo({ top: currentSlide * slideHeight, behavior: 'smooth' });
+                updateUI();
+            }
+
+            function goNext() { goToSlide(currentSlide + 1); }
+            function goPrev() { goToSlide(currentSlide - 1); }
+            function goFirst() { goToSlide(0); }
+            function goLast() { goToSlide(totalSlides - 1); }
+
+            // Button clicks
+            firstBtn.addEventListener('click', goFirst);
+            prevBtn.addEventListener('click', goPrev);
+            nextBtn.addEventListener('click', goNext);
+            lastBtn.addEventListener('click', goLast);
+
+            // Keyboard controls
+            document.addEventListener('keydown', (e) => {
+                switch(e.key) {
+                    case 'ArrowLeft': e.preventDefault(); goPrev(); break;
+                    case 'ArrowRight':
+                    case ' ': e.preventDefault(); goNext(); break;
+                    case 'Home': e.preventDefault(); goFirst(); break;
+                    case 'End': e.preventDefault(); goLast(); break;
+                }
+            });
+
+            // Track scroll position to update current slide
+            let scrollTimeout;
+            window.addEventListener('scroll', () => {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(() => {
+                    const slideIndex = Math.round(window.scrollY / slideHeight);
+                    if (slideIndex !== currentSlide) {
+                        currentSlide = slideIndex;
+                        if (currentSlide < 0) currentSlide = 0;
+                        if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+                        updateUI();
+                    }
+                }, 100);
+            });
+
+            // Initialize
+            updateUI();
+        })();
+    </script>
+
+</body>
+</html>
