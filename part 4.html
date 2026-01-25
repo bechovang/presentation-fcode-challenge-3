@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TF Slides - Real-time & Scaling Masterclass</title>
+    <title>TF Slides - REST vs GraphQL Battle</title>
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Lexend+Mega:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -169,12 +169,33 @@
         .neo-box { 
             background: white; 
             border: 4px solid black; 
-            padding: 20px 24px; 
+            /* 1. Giảm padding xuống để hộp gọn hơn */
+            padding: 12px 16px; 
+            
             box-shadow: 6px 6px 0px black; 
-            margin-bottom: 20px;
-            font-size: 18px;
-            height: 100%;
+            margin-bottom: 15px;
+            
+            /* 2. Giảm cỡ chữ trong hộp xuống 1 chút */
+            font-size: 16px; 
+            
+            /* 3. QUAN TRỌNG: Đổi height từ 100% thành auto */
+            /* Để hộp tự co lại theo nội dung, không bị kéo giãn vô lý */
+            height: auto; 
         }
+
+        /* Làm gọn tiêu đề H3 bên trong các loại box */
+        .neo-box h3, .rest-box h3, .graphql-box h3 {
+            font-size: 22px; /* Giảm cỡ chữ tiêu đề */
+            margin-bottom: 10px; /* Giảm khoảng cách dưới */
+            padding-bottom: 5px;
+        }
+
+        /* Giảm khoảng cách giữa các đoạn văn p trong box */
+        .neo-box p, .rest-box p, .graphql-box p {
+            margin-bottom: 8px;
+            font-size: 16px; /* Chữ nội dung nhỏ lại cho vừa vặn */
+        }
+
 
         /* Code Block */
         .code-block { 
@@ -369,15 +390,12 @@
         <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
         
         <div class="center">
-            <h1>KẾT NỐI SIÊU TỐC<br>& BỨC TRANH TOÀN CẢNH</h1>
+            <h1>KẾT NỐI SIÊU TỐC</h1>
             <div class="highlight-box rotate-neg-1">
-                WebSockets & Chiến lược tích hợp công nghệ
+                WebSockets
             </div>
             <p style="font-size: 24px; font-weight: 700; margin-top: 30px;">
-                <i class="fa-solid fa-user"></i> Người trình bày: [Tên bạn]
-            </p>
-            <p style="margin-top: 10px; font-style: italic;">
-                "Trùm cuối" - Tổng hợp toàn bộ series
+                <i class="fa-solid fa-user"></i> Người trình bày: Nguyễn Ngọc Phúc
             </p>
         </div>
         
@@ -390,7 +408,7 @@
     <div class="slide-container">
         <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
         
-        <h2><i class="fa-solid fa-ban"></i> HTTP: Câu Chuyện Cũ</h2>
+        <h2><i class="fa-solid fa-ban"></i> Polling: Kỹ thuật Cũ</h2>
         
         <div class="grid-2">
             <div class="neo-box">
@@ -402,7 +420,7 @@
             </div>
             
             <div class="neo-box rotate-1">
-                <h3>Polling (Kỹ thuật cũ)</h3>
+                <h3>Polling</h3>
                 <p><strong>"Có gì mới không?"</strong></p>
                 <p>Hỏi mỗi 1 giây</p>
                 <p>90% responses: "Không"</p>
@@ -424,7 +442,7 @@
     <div class="slide-container">
         <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
         
-        <h2><i class="fa-solid fa-bolt"></i> Real-time Requirements</h2>
+        <h2><i class="fa-solid fa-bolt"></i> NHU CẦU REAL-TIME</h2>
         
         <div class="grid-4" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 20px;">
             <div class="neo-box">
@@ -469,7 +487,7 @@
     <div class="slide-container">
         <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
         
-        <h2><i class="fa-solid fa-bolt-lightning"></i> WebSockets: Đường Dây Nóng</h2>
+        <h2><i class="fa-solid fa-bolt-lightning"></i> WebSockets là gì</h2>
         
         <div class="grid-2" style="margin-top: 20px;">
             <div class="center">
@@ -510,7 +528,7 @@
     <div class="slide-container">
         <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
         
-        <h2><i class="fa-solid fa-handshake"></i> The Handshake</h2>
+        <h2><i class="fa-solid fa-handshake"></i> Cơ chế Handshake</h2>
         
         <div class="grid-3">
             <div class="neo-box rotate-neg-1">
@@ -660,7 +678,7 @@ Sec-WebSocket-Accept: HSmrc0sMlYUkAGmm5OPpG2HaGWk=<br>
     <div class="slide-container">
         <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
         
-        <h2><i class="fa-solid fa-code-branch"></i> Khi KHÔNG dùng WebSocket?</h2>
+        <h2><i class="fa-solid fa-code-branch"></i>WebSocket luôn tốt?</h2>
         
         <div class="grid-3">
             <div class="neo-box">
@@ -695,7 +713,7 @@ Sec-WebSocket-Accept: HSmrc0sMlYUkAGmm5OPpG2HaGWk=<br>
     </div>
 
     <!-- ============================================
-         SLIDE 9: STATELESS VS. STATEFUL
+         SLIDE 9a: STATELESS VS. STATEFUL
          ============================================ -->
     <div class="slide-container">
         <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
@@ -728,6 +746,48 @@ Sec-WebSocket-Accept: HSmrc0sMlYUkAGmm5OPpG2HaGWk=<br>
         
         <div class="slide-number">09</div>
     </div>
+    <!-- ============================================
+         SLIDE 9b: STATELESS VS. STATEFUL
+         ============================================ -->
+    <div class="slide-container">
+        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
+        
+        <h2><i class="fa-solid fa-scale-balanced"></i> Thử tưởng tượng</h2>
+        
+        <div class="grid-2">
+            <div class="neo-box" style="background: white;">
+                <h3 style="color: #00bdbd; text-shadow: 2px 2px 0px #00ffff;">
+                    <i class="fa-solid fa-unlink"></i> REST (Stateless)
+                </h3>
+                <p><strong>Giống: Mua hàng siêu thị</strong></p>
+                <p>Khách đến quầy nào cũng được.</p>
+                <p>Mỗi lần mua là một lần mới.</p>
+                <hr style="border: 1px dashed #ccc; margin: 10px 0;">
+                <p><strong><i class="fa-solid fa-up-right-and-down-left-from-center"></i> Mở rộng (Scale): DỄ</strong></p>
+                <p>Chỉ cần thuê thêm thu ngân (Server).</p>
+                <p>Khách đông quá thì chia đều ra.</p>
+            </div>
+            
+            <div class="neo-box rotate-1" style="background: white;">
+                <h3 style="color: #d100d1; text-shadow: 2px 2px 0px #ff66ff;">
+                    <i class="fa-solid fa-link"></i> WebSocket (Stateful)
+                </h3>
+                <p><strong>Giống: Gọi điện thoại</strong></p>
+                <p>Đã gọi ai là dính chặt với người đó.</p>
+                <p>Phải giữ kết nối liên tục.</p>
+                <hr style="border: 1px dashed #ccc; margin: 10px 0;">
+                <p><strong><i class="fa-solid fa-triangle-exclamation"></i> Mở rộng (Scale): KHÓ</strong></p>
+                <p>Nếu Server A đang giữ 1 triệu kết nối mà bị sập -> 1 triệu người dùng bị ngắt (Disconnect) ngay lập tức.</p>
+            </div>
+        </div>
+        
+        <div class="warning-box" style="margin-top: 20px;">
+            <i class="fa-solid fa-bolt"></i> CHỐT LẠI: REST dễ mở rộng vì "ai làm cũng được". WebSocket khó mở rộng vì "phải đúng người đó làm".
+        </div>
+        
+        <div class="slide-number">09</div>
+    </div>
+
 
     <!-- ============================================
          SLIDE 10: LOAD BALANCING VẤN ĐỀ
@@ -823,33 +883,41 @@ Sec-WebSocket-Accept: HSmrc0sMlYUkAGmm5OPpG2HaGWk=<br>
          ============================================ -->
     <div class="slide-container">
         
-        <h2><i class="fa-solid fa-users"></i> C10K Problem </h2>
+        <h2><i class="fa-solid fa-users"></i> C10K Problem (10,000 Kết Nối)</h2>
         
         <div class="grid-2">
-            <div class="neo-box">
-                <h3><i class="fa-solid fa-microchip"></i> Tài nguyên tiêu thụ</h3>
-                <p><strong>Mỗi WebSocket connection:</strong></p>
+            <div class="neo-box" style="background: white;">
+                <h3 style="color: #00bdbd; text-shadow: 2px 2px 0px #00ffff;">
+                    <i class="fa-solid fa-microchip"></i> Cái giá phải trả
+                </h3>
+                <p><strong>Mỗi kết nối WebSocket "ngốn" cái gì?</strong></p>
                 <ul>
-                    <li>~50KB RAM</li>
-                    <li>1 File Descriptor</li>
-                    <li>1 Thread/Process (tùy setup)</li>
-                    <li>TCP buffer memory</li>
+                    <li><i class="fa-solid fa-memory"></i> <strong>RAM:</strong> Tốn bộ nhớ để duy trì kết nối (dù không chat gì).</li>
+                    <li><i class="fa-solid fa-network-wired"></i> <strong>Cổng (Ports):</strong> Chiếm dụng tài nguyên file của hệ điều hành.</li>
                 </ul>
-                <p>Resources add up quickly</p>
+                <p style="font-style: italic; background: #eee; padding: 5px;">
+                    "Giống như khách sạn phải thuê 1 lễ tân riêng để đứng canh 1 vị khách 24/24."
+                </p>
             </div>
             
-            <div class="neo-box rotate-1">
-                <h3><i class="fa-solid fa-chart-line"></i> Giới hạn thực tế</h3>
-                <p><strong>Một server vật lý:</strong></p>
-                <p>10,000 - 100,000 connections</p>
-                <p>Tùy vào RAM, CPU, OS limits</p>
-                <p>File descriptors limit (~65k)</p>
-                <p>Memory là bottleneck</p>
+            <div class="neo-box rotate-1" style="background: white;">
+                <h3 style="color: #d100d1; text-shadow: 2px 2px 0px #ff66ff;">
+                    <i class="fa-solid fa-hand"></i> Giới hạn vật lý
+                </h3>
+                <p><strong>Server không phải "lỗ đen" vô tận</strong></p>
+                <ul>
+                    <li>Giới hạn ~65.000 cổng kết nối (Port limit).</li>
+                    <li>Hết RAM -> Server bị treo (Crash).</li>
+                    <li>CPU quá tải vì phải điểm danh hàng vạn kết nối.</li>
+                </ul>
+                <p style="font-style: italic; background: #eee; padding: 5px;">
+                    "Khách sạn hết phòng, hết nhân viên -> Buộc phải đuổi khách."
+                </p>
             </div>
         </div>
         
         <div class="highlight-box" style="margin-top: 20px;">
-            <i class="fa-solid fa-sitemap"></i> GIẢI PHÁP: Phải dùng <strong>Cluster</strong> nhiều server + Load Balancer thông minh (sticky sessions).
+            <i class="fa-solid fa-sitemap"></i> GIẢI PHÁP: Không thể dùng 1 máy to. Phải dùng <strong>nhiều máy nhỏ (Cluster)</strong> + Load Balancer thông minh.
         </div>
         
         <div class="slide-number">12</div>
@@ -863,35 +931,51 @@ Sec-WebSocket-Accept: HSmrc0sMlYUkAGmm5OPpG2HaGWk=<br>
         <h2><i class="fa-solid fa-cloud"></i> WebSocket + Serverless = ?</h2>
         
         <div class="grid-2">
-            <div class="neo-box" style="background: #c77dff; color: black;">
-                <h3><i class="fa-solid fa-skull"></i> Xung đột</h3>
-                <p><strong>Serverless (Lambda):</strong></p>
-                <p>"Chết sớm" (Timeout 15 phút)</p>
-                <p>Stateless by design</p>
-                <p>Cold starts</p>
-                <p>Ephemeral runtime</p>
+            <div class="neo-box" style="background: white;">
+                <h3 style="color: #d100d1; text-shadow: 2px 2px 0px #ff66ff;">
+                    <i class="fa-solid fa-skull"></i> Xung đột
+                </h3>
                 
-                <p><strong>WebSocket:</strong></p>
-                <p>"Sống dai" (Persistent)</p>
-                <p>Stateful connections</p>
-                <p>Long-lived</p>
-                <p>Memory resident</p>
+                <ul style="margin-bottom: 10px;">
+                    <li><strong>Serverless (Lambda):</strong>
+                        <br>⚡ Chỉ Sống 1 lúc (Max 15p).
+                        <br>🚫 Quên sạch (Stateless).
+                    </li>
+                    <li style="margin-top: 15px;"><strong>WebSocket:</strong>
+                        <br>♾️ "Sống dai" (Vài tiếng).
+                        <br>🧠 Cần nhớ (Stateful).
+                    </li>
+                </ul>
+                
+                <div style="background: #ffe6e6; padding: 8px; font-weight: bold; border: 2px solid #ffcccc; font-size: 16px;">
+                    ❌ Không thể ép "Ông làm ngắn hạn" đi trực ca dài hạn!
+                </div>
             </div>
             
-            <div class="neo-box rotate-1" style="background: #a8e6cf;">
-                <h3><i class="fa-solid fa-wrench"></i> Giải pháp hiện đại</h3>
-                <p><strong>1. Dịch vụ managed:</strong></p>
-                <p>AWS API Gateway V2 ($)</p>
-                <p>Pusher, Socket.io Cloud</p>
-                <p>They handle connections</p>
+            <div class="neo-box rotate-1" style="background: white;">
+                <h3 style="color: #00bdbd; text-shadow: 2px 2px 0px #00ffff;">
+                    <i class="fa-solid fa-wrench"></i> Mô hình "Thuê Bảo Vệ"
+                </h3>
                 
-                <p><strong>2. Serverless chỉ xử lý:</strong></p>
-                <p>Logic khi có event</p>
-                <p>Lambda được gọi dậy</p>
-                <p>Stateless business logic</p>
-                
-                <p><strong>3. Redis lưu state</strong></p>
+                <ul style="list-style: none; padding-left: 5px;">
+                    <li style="margin-bottom: 12px;">
+                        <strong>1. 🛡️ Bảo vệ (API Gateway):</strong>
+                        <br>Đứng hứng chịu kết nối thay cho Lambda.
+                    </li>
+                    <li style="margin-bottom: 12px;">
+                        <strong>2. 👔 Sếp (Lambda):</strong>
+                        <br>Chỉ dậy xử lý khi có việc (Event-driven).
+                    </li>
+                    <li>
+                        <strong>3. 📒 Sổ tay (Redis/Dynamo):</strong>
+                        <br>Ghi nhớ danh sách khách đang Online.
+                    </li>
+                </ul>
             </div>
+        </div>
+        
+        <div class="highlight-box" style="margin-top: 15px; font-size: 20px;">
+            <i class="fa-solid fa-check"></i> CHỐT: Tách rời phần "Kết nối" (Nặng) ra khỏi phần "Xử lý" (Nhẹ).
         </div>
         
         <div class="slide-number">13</div>
@@ -1144,10 +1228,10 @@ Sec-WebSocket-Accept: HSmrc0sMlYUkAGmm5OPpG2HaGWk=<br>
             <h1>Final Words</h1>
             
             <div class="quote-box" style="width: 90%; font-size: 22px;">
-                "Hệ thống Web không phải phép thuật. Nó là sự kết hợp của:<br>
-                • Quy tắc vật lý (Network latency)<br>
-                • Logic toán học (Algorithms)<br>
-                • Kiến trúc chúng ta đã học"
+                "Không có kiến trúc TỐT NHẤT, chỉ có kiến trúc PHÙ HỢP NHẤT"
+            </div>
+            <div class="quote-box" style="width: 90%; font-size: 22px;">
+                "Công nghệ tốt là nghệ thuật của sự đánh đổi (Trade-offs)."
             </div>
             
             <div style="margin-top: 40px; font-size: 20px; line-height: 1.8;">
@@ -1158,7 +1242,7 @@ Sec-WebSocket-Accept: HSmrc0sMlYUkAGmm5OPpG2HaGWk=<br>
             </div>
             
             <div class="highlight-box rotate-1" style="margin-top: 40px;">
-                <i class="fa-solid fa-rocket"></i> BẠN ĐÃ HOÀN THÀNH HÀNH TRÌNH BACKEND MASTERY!
+                <i class="fa-solid fa-rocket"></i> Hãy luôn theo dõi và cập nhật thêm các công nghệ mới!
             </div>
         </div>
         
@@ -1175,7 +1259,7 @@ Sec-WebSocket-Accept: HSmrc0sMlYUkAGmm5OPpG2HaGWk=<br>
             
             <div style="margin-top: 40px;">
                 <div class="highlight-box">
-                    <i class="fa-solid fa-hands-clapping"></i> CẢM ƠN ĐÃ THEO DÕI!
+                    <i class="fa-solid fa-hands-clapping"></i> CẢM ƠN MỌI NGƯỜI ĐÃ THEO DÕI!
                 </div>
                 <p style="margin-top: 20px; font-size: 18px;">
                     Bechovang
