@@ -169,12 +169,33 @@
         .neo-box { 
             background: white; 
             border: 4px solid black; 
-            padding: 20px 24px; 
+            /* 1. Giảm padding xuống để hộp gọn hơn */
+            padding: 12px 16px; 
+            
             box-shadow: 6px 6px 0px black; 
-            margin-bottom: 20px;
-            font-size: 18px;
-            height: 100%;
+            margin-bottom: 15px;
+            
+            /* 2. Giảm cỡ chữ trong hộp xuống 1 chút */
+            font-size: 16px; 
+            
+            /* 3. QUAN TRỌNG: Đổi height từ 100% thành auto */
+            /* Để hộp tự co lại theo nội dung, không bị kéo giãn vô lý */
+            height: auto; 
         }
+
+        /* Làm gọn tiêu đề H3 bên trong các loại box */
+        .neo-box h3, .rest-box h3, .graphql-box h3 {
+            font-size: 22px; /* Giảm cỡ chữ tiêu đề */
+            margin-bottom: 10px; /* Giảm khoảng cách dưới */
+            padding-bottom: 5px;
+        }
+
+        /* Giảm khoảng cách giữa các đoạn văn p trong box */
+        .neo-box p, .rest-box p, .graphql-box p {
+            margin-bottom: 8px;
+            font-size: 16px; /* Chữ nội dung nhỏ lại cho vừa vặn */
+        }
+
 
         /* Code Block */
         .code-block { 
@@ -312,18 +333,24 @@
         }
         
         .rest-box {
-            background: #00ffff;
+            /* ...giữ nguyên các dòng màu sắc... */
             border: 4px solid black;
-            padding: 20px;
+            
+            /* Giảm padding từ 20px xuống 12px */
+            padding: 12px; 
+            
             width: 45%;
             text-align: center;
             box-shadow: 8px 8px 0px black;
         }
-        
+
         .graphql-box {
-            background: #c77dff;
+            /* ...giữ nguyên các dòng màu sắc... */
             border: 4px solid black;
-            padding: 20px;
+            
+            /* Giảm padding từ 20px xuống 12px */
+            padding: 12px;
+            
             width: 45%;
             text-align: center;
             box-shadow: 8px 8px 0px black;
@@ -409,7 +436,6 @@
                 <div class="rest-box rotate-neg-1">
                     <h3 style="color: black;">RESTful API</h3>
                     <p><strong>Kẻ thống trị</strong></p>
-                    <p>Tiêu chuẩn công nghiệp</p>
                 </div>
                 
                 <div class="vs-badge">VS</div>
@@ -417,122 +443,55 @@
                 <div class="graphql-box rotate-1">
                     <h3 style="color: black;">GraphQL</h3>
                     <p><strong>Kẻ thách thức</strong></p>
-                    <p>Linh hoạt, hiện đại</p>
                 </div>
             </div>
             
             <p style="font-size: 24px; font-weight: 700; margin-top: 30px;">
-                <i class="fa-solid fa-user"></i> Người trình bày: [Tên bạn]
-            </p>
-            <p style="margin-top: 10px; font-style: italic;">
-                Hai võ sĩ quyền anh trên sàn đấu API
+                <i class="fa-solid fa-user"></i> Người trình bày: Nguyễn Ngọc Phúc
             </p>
         </div>
         
         <div class="slide-number">01</div>
     </div>
 
-    <!-- ============================================
-         SLIDE 2: API LÀ GÌ?
-         ============================================ -->
-    <div class="slide-container">
+
+
+<div class="slide-container">
         <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
         
-        <h2><i class="fa-solid fa-utensils"></i> API: Người Bồi Bàn</h2>
-        
-        <div class="grid-2">
-            <div class="neo-box rotate-1">
-                <h3>Định nghĩa</h3>
-                <p><strong>Application Programming Interface</strong></p>
-                <p>Người trung gian</p>
-                <p>Client ↔ Server</p>
-                <p>Giao tiếp chuẩn hóa</p>
-            </div>
-            
-            <div class="neo-box rotate-neg-1">
-                <h3>Ẩn dụ nhà hàng</h3>
-                <p><strong>Khách (Client)</strong> → Đưa order</p>
-                <p><strong>Bồi bàn (API)</strong> → Chuyển xuống bếp</p>
-                <p><strong>Bếp (Server)</strong> → Nấu đồ ăn</p>
-                <p><strong>Bồi bàn</strong> → Mang lên cho khách</p>
-            </div>
-        </div>
-        
-        <div class="highlight-box" style="margin-top: 20px;">
-            <i class="fa-solid fa-book-open"></i> REST và GraphQL là 2 cách viết "Thực đơn" (Menu) khác nhau!
-        </div>
-        
-        <div class="slide-number">02</div>
-    </div>
-
-    <!-- ============================================
-         SLIDE 3: ẨN DỤ CỐT LÕI
-         ============================================ -->
-    <div class="slide-container">
-        
-        <h2>The Core Metaphor</h2>
-        
-        <div class="grid-2">
-            <div class="center">
-                <div class="icon-large icon-accent-cyan">
-                    <i class="fa-solid fa-bus"></i>
-                </div>
-                <h3>REST = Xe Buýt</h3>
-                <p><strong>Các trạm cố định (URL)</strong></p>
-                <p>/users/1</p>
-                <p>/posts/99</p>
-                <p>Xuống đúng trạm</p>
-                <p>Fixed routes</p>
-            </div>
-            
-            <div class="center">
-                <div class="icon-large icon-accent-pink">
-                    <i class="fa-solid fa-taxi"></i>
-                </div>
-                <h3>GraphQL = Grab/Taxi</h3>
-                <p><strong>Nói chính xác đích đến</strong></p>
-                <p>"Cho tôi name và posts"</p>
-                <p>Đi thẳng đến đó</p>
-                <p>Custom routes</p>
-            </div>
-        </div>
-        
-        <div class="quote-box" style="margin-top: 30px;">
-            "REST: Bạn thích ăn gì? Có combo A, B, C thôi.<br>
-            GraphQL: Bạn muốn gì? Tôi làm đúng món đó cho bạn."
-        </div>
-        
-        <div class="slide-number">03</div>
-    </div>
-
-    <!-- ============================================
-         SLIDE 4: REST LÀ GÌ?
-         ============================================ -->
-    <div class="slide-container">
-        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
-        
-        <h2><i class="fa-solid fa-chess-rook"></i> RESTful API</h2>
+        <h2><i class="fa-solid fa-chess-rook"></i> CÁCH DÙNG REST</h2>
         
         <div class="grid-2">
             <div class="neo-box">
-                <h3>Representational State Transfer</h3>
-                <p><strong>Mọi thứ là Tài nguyên</strong></p>
-                <p>Resource-oriented</p>
-                <p>Mỗi resource có URL riêng</p>
-                <p>Standard HTTP</p>
+                <h3>Nguyên tắc cốt lõi</h3>
+                
+                <p><strong>1. URL là Danh Từ (Noun)</strong></p>
+                <p style="font-size: 18px; color: #333;">
+                    <i class="fa-solid fa-xmark" style="color: red;"></i> Không dùng: <code>/getUser</code><br>
+                    <i class="fa-solid fa-check" style="color: green;"></i> Chỉ dùng: <code>/users</code>
+                </p>
+                
+                <p><strong>2. Định danh duy nhất</strong></p>
+                <p>Mỗi dữ liệu có 1 "địa chỉ nhà" riêng.</p>
+                
+                <p><strong>3. Chuẩn HTTP</strong></p>
+                <p>Dùng Method (GET, POST) làm hành động.</p>
             </div>
             
             <div class="neo-box rotate-1">
-                <h3>Định danh</h3>
-                <p><strong>"Địa chỉ nhà" của dữ liệu</strong></p>
-                <div class="code-block" style="font-size: 14px; margin: 10px 0;">
-GET    /users/1<br>
-GET    /posts/99<br>
-POST   /users<br>
-PUT    /users/1<br>
-DELETE /users/1<br>
+                <h3>Ví dụ thực tế</h3>
+                <p><strong>Hành động (Verb) + Địa chỉ (Noun)</strong></p>
+                
+                <div class="code-block" style="font-size: 15px; margin: 15px 0;">
+GET    /users/1   <span class="comment">// Đọc User 1</span><br>
+POST   /users     <span class="comment">// Tạo User mới</span><br>
+PUT    /users/1   <span class="comment">// Sửa User 1</span><br>
+DELETE /users/1   <span class="comment">// Xóa User 1</span>
                 </div>
-                <p>CRUD operations</p>
+                
+                <div style="background:var(--accent-yellow); padding: 8px; border: 2px solid black; font-weight:bold; font-size: 16px;">
+                    <i class="fa-solid fa-lightbulb"></i> Mẹo: Nhìn URL biết là AI. Nhìn Method biết làm GÌ.
+                </div>
             </div>
         </div>
         
@@ -604,17 +563,18 @@ DELETE /users/1<br>
             <div class="neo-box rotate-1">
                 <h3>Thực tế REST</h3>
                 <p><strong>GET /users/1 trả về:</strong></p>
-                <div class="code-block" style="font-size: 14px; margin: 10px 0;">
-{<br>
-  "id": 1,<br>
-  "name": "Tony",<br>
-  "email": "tony@...",<br>
-  "address": "...",<br>
-  "phone": "...",<br>
-  "created_at": "...",<br>
-  "updated_at": "..."<br>
-}<br>
-                </div>
+
+    <div class="code-block" style="font-size: 14px; margin: 10px 0;">
+&#123;<br>
+&nbsp;&nbsp;"id": 1,<br>
+&nbsp;&nbsp;"name": "Tony",<br>
+&nbsp;&nbsp;"email": "tony@...",<br>
+&nbsp;&nbsp;"address": "...",<br>
+&nbsp;&nbsp;"phone": "...",<br>
+&nbsp;&nbsp;"created_at": "...",<br>
+&nbsp;&nbsp;"updated_at": "..."<br>
+&#125;
+    </div>
                 <p>Wasted bandwidth</p>
             </div>
         </div>
@@ -663,37 +623,43 @@ GET /users/1/posts → [{...}, {...}]<br>
         <div class="slide-number">07</div>
     </div>
 
-    <!-- ============================================
-         SLIDE 8: N+1 PROBLEM - CƠN ÁC MỘNG
-         ============================================ -->
     <div class="slide-container">
         
-        <h2><i class="fa-solid fa-bug"></i> N+1 Problem</h2>
+        <h2><i class="fa-solid fa-bug"></i> N+1 Problem: Cơn ác mộng</h2>
         
         <div class="grid-2">
             <div class="neo-box">
-                <h3>Mô tả</h3>
-                <p><strong>10 bài viết + Tên tác giả từng bài</strong></p>
-                <p>News feed</p>
-                <p>Social network</p>
-                <p>Complex relationships</p>
+                <h3>Tình huống</h3>
+                <p><strong>Hiển thị News Feed (10 bài)</strong></p>
+                <p>Yêu cầu: Hiện 10 status + Tên tác giả của từng status.</p>
+                <hr style="border: 2px solid #ccc; margin: 10px 0;">
+                <p><strong>Vấn đề của dữ liệu:</strong></p>
+                <p>Trong Database, bảng <code>Post</code> chỉ lưu <code>author_id</code> (số 1, 2...), không lưu Tên.</p>
             </div>
             
             <div class="neo-box rotate-1">
-                <h3>REST phải gọi</h3>
-                <p><strong>1 request: GET /posts</strong></p>
-                <p>→ Lấy 10 bài viết</p>
-                <p><strong>10 requests: GET /users/{id}</strong></p>
-                <p>→ Lấy 10 tên tác giả</p>
+                <h3>REST phải làm gì?</h3>
+    <div class="code-block" style="font-size: 14px; margin: 10px 0;">
+    GET /posts <br>
+    -&gt; Trả về 10 bài (chỉ có ID tác giả)<br><br>
+
+    // Bước 2: Phải đi hỏi tên từng người (N request)<br>
+    Loop (10 lần) &#123;<br>
+    &nbsp;&nbsp;GET /users/1 -&gt; "Tên là A"<br>
+    &nbsp;&nbsp;GET /users/2 -&gt; "Tên là B"<br>
+    &nbsp;&nbsp;...<br>
+    &#125;
+    </div>
+                <p>Giống như đi chợ 10 lần để mua 10 món đồ.</p>
             </div>
         </div>
         
-        <div class="warning-box" style="font-size: 24px; text-align: center;">
-            <i class="fa-solid fa-calculator"></i> TỔNG: 11 REQUESTS CHO 1 MÀN HÌNH!
+        <div class="warning-box" style="font-size: 22px; text-align: center;">
+            <i class="fa-solid fa-calculator"></i> CÔNG THỨC: 1 (Danh sách) + N (Chi tiết) = N+1 Requests
         </div>
         
-        <div class="quote-box" style="margin-top: 20px;">
-            "REST trở nên cồng kềnh khi dữ liệu có quan hệ phức tạp. Mỗi mối quan hệ = Thêm 1 request."
+        <div class="highlight-box" style="font-size: 18px; margin-top: 10px; transform: rotate(0deg);">
+            <i class="fa-solid fa-triangle-exclamation"></i> HẬU QUẢ: Danh sách càng dài (N càng lớn) -> App càng lag -> Server càng quá tải.
         </div>
         
         <div class="slide-number">08</div>
@@ -950,10 +916,10 @@ GET /users/1/posts → [{...}, {...}]<br>
         <h2><i class="fa-solid fa-hard-drive"></i> Round 2: Caching</h2>
         
         <div class="versus-box">
-            <div class="rest-box" style="background: #00ff00;">
-                <h3 style="color: black;">REST</h3>
-                <div class="icon-large">
-                    <i class="fa-solid fa-trophy"></i>
+            <div class="rest-box" style="background: white;">
+                <h3 style="color: #00bdbd; text-shadow: 2px 2px 0px #00ffff;">REST</h3>
+                <div class="icon-large" style="color: #00bdbd;">
+                    <i class="fa-solid fa-trophy" style="filter: drop-shadow(3px 3px 0px #00ffff);"></i>
                 </div>
                 <p><strong>THẮNG TUYỆT ĐỐI</strong></p>
                 <p>Browser cache</p>
@@ -962,10 +928,10 @@ GET /users/1/posts → [{...}, {...}]<br>
                 <p>URL-based caching</p>
             </div>
             
-            <div class="graphql-box" style="background: #ff6b6b;">
-                <h3 style="color: black;">GraphQL</h3>
-                <div class="icon-large">
-                    <i class="fa-solid fa-skull-crossbones"></i>
+            <div class="graphql-box" style="background: white;">
+                <h3 style="color: #d100d1; text-shadow: 2px 2px 0px #ff66ff;">GraphQL</h3>
+                <div class="icon-large" style="color: #d100d1;">
+                    <i class="fa-solid fa-skull-crossbones" style="filter: drop-shadow(3px 3px 0px #ff66ff);"></i>
                 </div>
                 <p><strong>RẤT KHÓ CACHE</strong></p>
                 <p>1 URL duy nhất</p>
@@ -975,7 +941,7 @@ GET /users/1/posts → [{...}, {...}]<br>
             </div>
         </div>
         
-        <div class="warning-box" style="margin-top: 20px;">
+        <div class="warning-box" style="margin-top: 5px;">
             <i class="fa-solid fa-triangle-exclamation"></i> CẢNH BÁO: GraphQL không tận dụng được cache của Browser/CDN. Phải implement cache phức tạp.
         </div>
         
@@ -990,10 +956,10 @@ GET /users/1/posts → [{...}, {...}]<br>
         <h2><i class="fa-solid fa-graduation-cap"></i> Round 3: Learning Curve</h2>
         
         <div class="versus-box">
-            <div class="rest-box" style="background: #00ff00;">
-                <h3 style="color: black;">REST</h3>
-                <div class="icon-large">
-                    <i class="fa-solid fa-face-smile"></i>
+            <div class="rest-box" style="background: white;">
+                <h3 style="color: #00bdbd; text-shadow: 2px 2px 0px #00ffff;">REST</h3>
+                <div class="icon-large" style="color: #00bdbd;">
+                    <i class="fa-solid fa-face-smile" style="filter: drop-shadow(3px 3px 0px #00ffff);"></i>
                 </div>
                 <p><strong>DỄ HỌC</strong></p>
                 <p>Ai cũng biết HTTP</p>
@@ -1002,21 +968,21 @@ GET /users/1/posts → [{...}, {...}]<br>
                 <p>Beginner friendly</p>
             </div>
             
-            <div class="graphql-box" style="background: #ff6b6b;">
-                <h3 style="color: black;">GraphQL</h3>
-                <div class="icon-large">
-                    <i class="fa-solid fa-face-dizzy"></i>
+            <div class="graphql-box" style="background: white;">
+                <h3 style="color: #d100d1; text-shadow: 2px 2px 0px #ff66ff;">GraphQL</h3>
+                <div class="icon-large" style="color: #d100d1;">
+                    <i class="fa-solid fa-face-dizzy" style="filter: drop-shadow(3px 3px 0px #ff66ff);"></i>
                 </div>
-                <p><strong>ĐƯỜNG CONG HỌC TẬP CAO</strong></p>
-                <p>Phải học query language</p>
+                <p><strong>RẤT KHÓ HỌC</strong></p>
+                <p>Phải học Query Language</p>
                 <p>Schema design</p>
-                <p>Resolvers</p>
+                <p>Resolvers & Type System</p>
                 <p>Complex setup</p>
             </div>
         </div>
         
         <div class="highlight-box" style="margin-top: 20px;">
-            <i class="fa-solid fa-chart-line"></i> GraphQL yêu cầu team có skill cao hơn. Không phải cho những người mới bắt đầu.
+            <i class="fa-solid fa-chart-line"></i> GraphQL yêu cầu team có skill cao hơn (Senior). Không dành cho "tay mơ" mới nhập môn.
         </div>
         
         <div class="slide-number">16</div>
@@ -1071,7 +1037,7 @@ GET /users/1/posts → [{...}, {...}]<br>
     <div class="slide-container">
         <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
         
-        <h2><i class="fa-solid fa-clipboard-check"></i> Cheat Sheet - So sánh</h2>
+        <h2><i class="fa-solid fa-clipboard-check"></i> So sánh</h2>
         
         <table class="comparison-table">
             <thead>
@@ -1132,20 +1098,24 @@ GET /users/1/posts → [{...}, {...}]<br>
         <h2><i class="fa-solid fa-chess-knight"></i> Chiến lược lựa chọn</h2>
         
         <div class="grid-2">
-            <div class="neo-box" style="background: #00ffff;">
-                <h3><i class="fa-solid fa-check"></i> CHỌN REST KHI</h3>
+            <div class="neo-box" style="background: white;">
+                <h3 style="color: #00bdbd; text-shadow: 2px 2px 0px #00ffff;">
+                    <i class="fa-solid fa-check" style="margin-right: 10px;"></i> CHỌN REST KHI
+                </h3>
                 <ul>
                     <li>Web tin tức, Blog (cần Cache tốt)</li>
                     <li>Hệ thống đơn giản, ít quan hệ</li>
                     <li>Team mới, muốn làm nhanh</li>
                     <li>Public API cho third-party</li>
                     <li>E-commerce catalog</li>
-                    <li>KISS principle</li>
+                    <li>KISS principle (Keep It Simple)</li>
                 </ul>
             </div>
             
-            <div class="neo-box rotate-1" style="background: #c77dff;">
-                <h3><i class="fa-solid fa-check"></i> CHỌN GraphQL KHI</h3>
+            <div class="neo-box rotate-1" style="background: white;">
+                <h3 style="color: #d100d1; text-shadow: 2px 2px 0px #ff66ff;">
+                    <i class="fa-solid fa-check" style="margin-right: 10px;"></i> CHỌN GraphQL KHI
+                </h3>
                 <ul>
                     <li>Mobile App (tiết kiệm 3G)</li>
                     <li>Dữ liệu chằng chịt quan hệ</li>
@@ -1205,7 +1175,7 @@ GET /users/1/posts → [{...}, {...}]<br>
     <div id="nav-controls">
         <button id="nav-first" title="First slide (Home)">&#124;&lt;</button>
         <button id="nav-prev" title="Previous (Left Arrow)">&lt; Prev</button>
-        <span id="slide-counter">1 / 20</span>
+        <span id="slide-counter">1 / 18</span>
         <button id="nav-next" title="Next (Right Arrow / Space)">Next &gt;</button>
         <button id="nav-last" title="Last slide (End)">&gt;&#124;</button>
     </div>
