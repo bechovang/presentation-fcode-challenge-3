@@ -459,7 +459,7 @@
 <div class="slide-container">
         <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
         
-        <h2><i class="fa-solid fa-chess-rook"></i> CÁCH DÙNG REST</h2>
+        <h2><i class="fa-solid fa-chess-rook"></i> REST = Noun + verb</h2>
         
         <div class="grid-2">
             <div class="neo-box">
@@ -498,50 +498,6 @@ DELETE /users/1   <span class="comment">// Xóa User 1</span>
         <div class="slide-number">04</div>
     </div>
 
-    <!-- ============================================
-         SLIDE 5: CÁCH REST HOẠT ĐỘNG
-         ============================================ -->
-    <div class="slide-container">
-        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
-        
-        <h2><i class="fa-solid fa-arrows-turn-to-dots"></i> REST Verbs (HTTP Methods)</h2>
-        
-        <div class="grid-4" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 20px;">
-            <div class="neo-box">
-                <h3><i class="fa-solid fa-download"></i> GET</h3>
-                <p><strong>Lấy dữ liệu</strong></p>
-                <p>Read-only</p>
-                <p>Safe operation</p>
-            </div>
-            
-            <div class="neo-box rotate-1">
-                <h3><i class="fa-solid fa-plus"></i> POST</h3>
-                <p><strong>Tạo mới</strong></p>
-                <p>Create resource</p>
-                <p>Thêm vào DB</p>
-            </div>
-            
-            <div class="neo-box rotate-neg-1">
-                <h3><i class="fa-solid fa-pen"></i> PUT</h3>
-                <p><strong>Sửa toàn bộ</strong></p>
-                <p>Update resource</p>
-                <p>Replace data</p>
-            </div>
-            
-            <div class="neo-box rotate-2">
-                <h3><i class="fa-solid fa-trash"></i> DELETE</h3>
-                <p><strong>Xóa</strong></p>
-                <p>Remove resource</p>
-                <p>Delete from DB</p>
-            </div>
-        </div>
-        
-        <div class="warning-box">
-            <i class="fa-solid fa-triangle-exclamation"></i> QUY TẮC: Server quy định trả về gì → Client nhận cái đó. Không được đòi hỏi thêm bớt!
-        </div>
-        
-        <div class="slide-number">05</div>
-    </div>
 
     <!-- ============================================
          SLIDE 6: OVER-FETCHING VẤN ĐỀ 1
@@ -700,7 +656,7 @@ GET /users/1/posts → [{...}, {...}]<br>
         ============================================ -->
     <div class="slide-container">
         
-        <h2><i class="fa-solid fa-magnifying-glass"></i> Client-Driven Queries</h2>
+        <h2><i class="fa-solid fa-magnifying-glass"></i> Dùng Queries để lấy data</h2>
         
         <div class="grid-2">
             <div class="neo-box">
@@ -787,51 +743,6 @@ GET /users/1/posts → [{...}, {...}]<br>
         <div class="slide-number">11</div>
     </div>
 
-
-    <!-- ============================================
-         SLIDE 12: SCHEMA & TYPE SYSTEM
-         ============================================ -->
-    <div class="slide-container">
-        
-        <h2><i class="fa-solid fa-puzzle-piece"></i> Strong Type System</h2>
-        
-        <div class="grid-2">
-            <div class="neo-box">
-                <h3>Schema</h3>
-                <div class="code-block" style="font-size: 14px; margin: 10px 0;">
-                    type User {<br>
-                    id: ID!<br>
-                    &nbsp;name: String!<br>
-                    &nbsp;email: String<br>
-                    &nbsp;posts: [Post]!<br>
-                    }<br><br>
-                    type Post {<br>
-                    &nbsp;id: ID!<br>
-                    &nbsp;title: String!<br>
-                    &nbsp;content: String<br>
-                    &nbsp;author: User!<br>
-                    }<br>
-                </div>
-                <p>Blueprint rõ ràng</p>
-            </div>
-            
-            <div class="neo-box rotate-1">
-                <h3>Lợi ích</h3>
-                <p><strong>Frontend + Backend khớp nhau</strong></p>
-                <p>Tự động sinh docs</p>
-                <p>Type safety</p>
-                <p>Auto-completion</p>
-                <p>Validation</p>
-                <p>No more API contract conflicts</p>
-            </div>
-        </div>
-        
-        <div class="highlight-box">
-            <i class="fa-solid fa-file-contract"></i> GraphQL Schema là "Hợp đồng" giữa Frontend và Backend. Cả 2 đều biết chính xác dữ liệu trao đổi.
-        </div>
-        
-        <div class="slide-number">12</div>
-    </div>
 
     <!-- ============================================
          SLIDE 13: CASE STUDY - FACEBOOK
@@ -1141,33 +1052,9 @@ GET /users/1/posts → [{...}, {...}]<br>
         <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
         
         <div class="center">
-            <h1>Final Verdict</h1>
+            <h1>End part 3</h1>
             
-            <div class="quote-box" style="width: 90%; font-size: 24px;">
-                "REST chưa chết, GraphQL không phải thuốc tiên.<br>
-                Hãy chọn công cụ đúng cho công việc đúng."
-            </div>
-            
-            <div class="grid-2" style="width: 100%; margin-top: 40px;">
-                <div class="neo-box rotate-neg-1">
-                    <h3><i class="fa-solid fa-helmet-safety"></i> REST</h3>
-                    <p><strong>Tiêu chuẩn công nghiệp</strong></p>
-                    <p>Stable & Predictable</p>
-                    <p>Battle-tested</p>
-                    <p>Still going strong</p>
-                </div>
-                
-                <div class="neo-box rotate-1">
-                    <h3><i class="fa-solid fa-bolt"></i> GraphQL</h3>
-                    <p><strong>Sự linh hoạt</strong></p>
-                    <p>Flexible & Efficient</p>
-                    <p>Modern approach</p>
-                    <p>Growing fast</p>
-                </div>
-            </div>
-            
-        </div>
-        
+           
         <div class="slide-number">20</div>
     </div>
 

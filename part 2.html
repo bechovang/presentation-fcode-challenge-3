@@ -391,36 +391,7 @@
         <div class="slide-number">01</div>
     </div>
 
-    <!-- ============================================
-         SLIDE 2: RECAP & ĐẶT VẤN ĐỀ
-         ============================================ -->
-    <div class="slide-container">
-        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
-        
-        <h2><i class="fa-solid fa-rotate-left"></i> Recap & Vấn Đề</h2>
-        
-        <div class="grid-2">
-            <div class="neo-box rotate-1">
-                <h3>Đã biết</h3>
-                <p><strong>Server xử lý Request</strong></p>
-                <p>1 người dùng → dễ</p>
-                <p>Simple architecture works</p>
-            </div>
-            
-            <div class="neo-box rotate-neg-1">
-                <h3>Vấn đề mới</h3>
-                <p><strong>1 TRIỆU người dùng</strong></p>
-                <p>Cách sắp xếp code<br>= Sống hay Chết</p>
-                <p>Organization matters</p>
-            </div>
-        </div>
-        
-        <div class="warning-box" style="margin-top: 20px;">
-            <i class="fa-solid fa-question"></i> Tại sao Facebook, Netflix phục vụ cả tỷ người mà không sập?
-        </div>
-        
-        <div class="slide-number">02</div>
-    </div>
+
 
     <!-- ============================================
          SLIDE 3: ẨN DỤ KIẾN TRÚC
@@ -649,7 +620,7 @@
             
             <div class="neo-box rotate-1">
                 <h3>Đặc điểm</h3>
-                <p><strong>Loosely coupled</strong></p>
+                <p><strong>liên kết lỏng lẻo</strong></p>
                 <p>Chạy trên server riêng</p>
                 <p>Có thể dùng ngôn ngữ khác nhau</p>
             </div>
@@ -658,47 +629,6 @@
         <div class="slide-number">09</div>
     </div>
 
-    <!-- ============================================
-         SLIDE 10: GIAO TIẾP MICROSERVICES
-         ============================================ -->
-    <div class="slide-container">
-        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
-        
-        <h2><i class="fa-solid fa-comments"></i> Cách chúng "nói chuyện"</h2>
-        
-        <div>
-            <!-- <div class="architecture-icon microservices-icon" style="margin-bottom: 30px;">
-                <i class="fa-solid fa-network-wired"></i>
-            </div> -->
-            
-            <div class="grid-2" style="width: 100%;">
-                <div class="neo-box">
-                    <h3>REST API</h3>
-                    <p><strong>HTTP/HTTPS</strong></p>
-                    <p>JSON format</p>
-                    <p>Simple & universal</p>
-                </div>
-                
-                <div class="neo-box rotate-neg-1">
-                    <h3>gRPC</h3>
-                    <p><strong>Protocol Buffers</strong></p>
-                    <p>Binary format</p>
-                    <p>Siêu nhanh</p>
-                </div>
-            </div>
-            
-            <div class="code-block" style="margin-top: 20px; width: 80%;">
-            // Order Service gọi Inventory Service<br>
-            POST /api/inventory/update<br>
-            {<br>
-            "productId": "123",<br>
-            "quantity": -1<br>
-            }<br>
-            </div>
-        </div>
-        
-        <div class="slide-number">10</div>
-    </div>
 
     <!-- ============================================
          SLIDE 11: SỨC MẠNH MICROSERVICES
@@ -772,38 +702,6 @@
         <div class="slide-number">12</div>
     </div>
 
-    <!-- ============================================
-         SLIDE 13: CASE STUDY - AMAZON
-         ============================================ -->
-    <div class="slide-container">
-        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
-        
-        <h2><i class="fa-brands fa-aws"></i> Case Study: Amazon API Mandate</h2>
-        
-        <div class="grid-2">
-            <div class="neo-box">
-                <h3>2002 - Bezos ra lệnh</h3>
-                <p><strong>CẤM truy cập DB của nhau</strong></p>
-                <p>Bắt buộc giao tiếp qua API</p>
-                <p>Tất cả services có interface</p>
-                <p>No direct DB access</p>
-            </div>
-            
-            <div class="neo-box rotate-1">
-                <h3>Kết quả</h3>
-                <p><strong>Biến mớ hỗn độn → Microservices vĩ đại</strong></p>
-                <p>Tiền đề của AWS</p>
-                <p>Công ty trị giá nghìn tỷ</p>
-                <p>Culture change success</p>
-            </div>
-        </div>
-        
-        <div class="quote-box" style="margin-top: 20px;">
-            "Microservices không chỉ là code, nó là văn hóa tổ chức. Không có văn hóa đúng → Chắc chắn thất bại."
-        </div>
-        
-        <div class="slide-number">13</div>
-    </div>
 
     <!-- ============================================
          SLIDE 14: SERVERLESS LÀ GÌ?
@@ -1050,34 +948,11 @@
         <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
         
         <div class="center">
-            <h1>Key Takeaways</h1>
+            <h1>End Part 2</h1>
             
-            <div class="quote-box" style="width: 90%;">
-                "Không có kiến trúc tốt nhất, chỉ có kiến trúc phù hợp nhất với giai đoạn phát triển của công ty."
-            </div>
-            
-            <div class="grid-3" style="width: 100%; margin-top: 40px;">
-                <div>
-                    <h3>Monolithic</h3>
-                    <p>Start với cái này</p>
-                    <p>KISS principle</p>
-                </div>
-                
-                <div>
-                    <h3>Microservices</h3>
-                    <p>Khi cần scale</p>
-                    <p>Prepare for complexity</p>
-                </div>
-                
-                <div>
-                    <h3>Serverless</h3>
-                    <p>Tiết kiệm chi phí</p>
-                    <p>Event-driven tasks</p>
-                </div>
-            </div>
             
             <div class="highlight-box rotate-neg-1" style="margin-top: 40px;">
-                <i class="fa-solid fa-microphone"></i> Q&A Session - Hỏi gì cũng được!
+                <i class="fa-solid fa-microphone"></i> thanks for watching!
             </div>
         </div>
         

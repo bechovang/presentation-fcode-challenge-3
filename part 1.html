@@ -479,27 +479,6 @@
         <div class="slide-number">02</div>
     </div>
 
-    <!-- ============================================
-         SLIDE 3: KHÁI NIỆM 'HỘP ĐEN'
-         ============================================ -->
-    <div class="slide-container">
-        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
-        
-        <h2>'Hộp Đen'</h2>
-        
-        <div class="iceberg-container">
-            <img src="tangbang.png"
-                    alt="Iceberg image"
-                    width="400"
-                    style="max-width:100%; height:auto;">
-        </div>
-        
-        <div class="highlight-box" style="margin-top: 40px;">
-            <i class="fas fa-box-open"></i> Hôm nay chúng ta sẽ mở chiếc hộp đen này
-        </div>
-        
-        <div class="slide-number">03</div>
-    </div>
 
     <!-- ============================================
          SLIDE 4: NHÂN VẬT 1 - CLIENT
@@ -614,39 +593,7 @@
         <div class="slide-number">06</div>
     </div>
 
-    <!-- ============================================
-         SLIDE 7: DNS & IP - HỆ THỐNG ĐỊNH VỊ
-         ============================================ -->
-    <div class="slide-container">
-        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
-        
-        <h2>Hệ Thống Định Vị: DNS & IP</h2>
-        
-        <div class="neo-box" style="margin-bottom: 20px;">
-            <h3>Vấn đề</h3>
-            <p>Làm sao Client tìm được nhà của Server giữa biển Internet?</p>
-        </div>
-        
-        <div class="grid-2">
-            <div class="neo-box rotate-1">
-                <h3><i class="fas fa-map-marker-alt"></i> IP Address</h3>
-                <p>Địa chỉ nhà</p>
-                <div class="code-block" style="font-size: 14px; margin: 10px 0;">
-                    192.168.1.1<br>
-                    172.217.194.100 (Google)
-                </div>
-            </div>
-            
-            <div class="neo-box rotate-neg-1">
-                <h3><i class="fas fa-address-book"></i> DNS</h3>
-                <p>Cuốn danh bạ điện thoại</p>
-                <p>Dịch google.com → IP</p>
-                <p><small>Giống như tìm số điện thoại</small></p>
-            </div>
-        </div>
-        
-        <div class="slide-number">07</div>
-    </div>
+    
 
     <!-- ============================================
          SLIDE 8: TỔNG QUAN HÀNH TRÌNH
@@ -660,12 +607,6 @@
             <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 30px;">
                 <div class="network-node">
                     <h3>Client</h3>
-                </div>
-                <div class="network-arrow">
-                    <i class="fas fa-arrow-right"></i>
-                </div>
-                <div class="network-node rotate-1">
-                    <h3>Internet</h3>
                 </div>
                 <div class="network-arrow">
                     <i class="fas fa-arrow-right"></i>
@@ -706,7 +647,7 @@
                 <h3 style="font-size: 20px;">Phong bì thư</h3>
                 
                 <div style="text-align: left; margin-top: 15px;">
-                    <p><strong>To:</strong> https://api.example.com/login</p>
+                    <p><strong>To:</strong> https://api.exam.com/login</p>
                     <p><strong>Method:</strong> POST</p>
                     <p><strong>Body:</strong> {"user": "Tuấn", "password": "***"}</p>
                 </div>
@@ -728,38 +669,6 @@
         <div class="slide-number">09</div>
     </div>
 
-    <!-- ============================================
-         SLIDE 10: BƯỚC 2 - VẬN CHUYỂN QUA INTERNET
-         ============================================ -->
-    <div class="slide-container">
-        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
-        
-        <h2>Bước 2: Vận Chuyển Qua Internet</h2>
-        
-        <div class="grid-2">
-            <div class="neo-box">
-                <h3><i class="fas fa-split"></i> Cơ chế</h3>
-                <p>Gói tin được chia nhỏ</p>
-                <p>Truyền qua cáp quang dưới biển</p>
-                <p>Qua các Router định tuyến</p>
-            </div>
-            
-            <div class="neo-box rotate-1">
-                <h3><i class="fas fa-tachometer-alt"></i> Tốc độ</h3>
-                <div class="highlight-box" style="background: var(--accent-pink); color: white;">
-                    ≈ 299,792 km/s
-                </div>
-                <p>Gần bằng tốc độ ánh sáng</p>
-            </div>
-        </div>
-        
-        <div class="neo-box" style="margin-top: 20px;">
-            <p><strong>Bản đồ:</strong> Các tuyến cáp quang biển thế giới</p>
-            <p><small>Xương sống của Internet toàn cầu</small></p>
-        </div>
-        
-        <div class="slide-number">10</div>
-    </div>
 
     <!-- ============================================
          SLIDE 11: BƯỚC 3 - SERVER XỬ LÝ
@@ -887,41 +796,6 @@
     </div>
 
     <!-- ============================================
-         SLIDE 14: BƯỚC 6 - RENDERING
-         ============================================ -->
-    <div class="slide-container">
-        <div class="slide-header">Tony's Friends Community | tony@vibery.app</div>
-        
-        <h2>Bước 6: Rendering (Thưởng thức)</h2>
-        
-        <div class="grid-2">
-            <div class="neo-box">
-                <h3><i class="fas fa-paint-brush"></i> Trình duyệt nhận</h3>
-                <div class="code-block" style="font-size: 14px;">
-                    {<br>
-                    &nbsp;&nbsp;"status": "success",<br>
-                    &nbsp;&nbsp;"user": "Tuấn",<br>
-                    &nbsp;&nbsp;"message": "Đăng nhập thành công"<br>
-                    }
-                </div>
-            </div>
-            
-            <div class="neo-box rotate-1">
-                <h3><i class="fas fa-eye"></i> Vẽ lên màn hình</h3>
-                <p>Trang web đổi màu</p>
-                <p>Hiển thị thông báo</p>
-                <p>Chuyển hướng trang</p>
-            </div>
-        </div>
-        
-        <div class="highlight-box" style="margin-top: 20px;">
-            <i class="fas fa-check-circle"></i> Người dùng thấy: "Đăng nhập thành công!"
-        </div>
-        
-        <div class="slide-number">14</div>
-    </div>
-
-    <!-- ============================================
          SLIDE 15: HTTP - NGÔN NGỮ GIAO TIẾP
          ============================================ -->
     <div class="slide-container">
@@ -963,186 +837,7 @@
         <div class="slide-number">15</div>
     </div>
 
-    <!-- ============================================
-         SLIDE 16: TẦM QUAN TRỌNG CỦA HEADERS
-         ============================================ -->
-    <div class="slide-container">
-        
-        <h2>Tầm Quan Trọng Của Headers</h2>
-        
-        <div class="neo-box" style="margin-bottom: 20px;">
-            <h3>Metadata - Thông tin phụ</h3>
-            <p>Nhưng cực kỳ quan trọng!</p>
-        </div>
-        
-        <div class="grid-2">
-            <div class="code-block">
-                <span class="comment"># HTTP Headers Examples</span><br>
-                Content-Type: application/json<br>
-                User-Agent: Chrome/Windows<br>
-                Authorization: Bearer xyz123<br>
-                Accept-Language: vi-VN
-            </div>
-            
-            <div class="neo-box rotate-1">
-                <h3>Ví dụ thực tế</h3>
-                <p><strong>Content-Type:</strong> Báo server biết tôi gửi tiếng Anh hay tiếng Việt</p>
-                <p><strong>User-Agent:</strong> Tôi đang dùng iPhone hay Laptop</p>
-                <p><strong>Cookie/Token:</strong> Vé thông hành (chứng minh đã đăng nhập)</p>
-            </div>
-        </div>
-        
-        <div class="slide-number">16</div>
-    </div>
 
-    <!-- ============================================
-         SLIDE 17: STATELESS - KHÔNG LƯU TRẠNG THÁI
-         ============================================ -->
-    <div class="slide-container">
-        
-        <h2>Stateless (Không Lưu Trạng Thái)</h2>
-        
-        <div class="center" style="margin-bottom: 30px;">
-            <div class="icon-large">
-                <i class="fas fa-fish"></i>
-            </div>
-            <p style="font-size: 24px; font-weight: 700;">Chú cá vàng của Internet</p>
-        </div>
-        
-        <div class="grid-2">
-            <div class="neo-box rotate-neg-1">
-                <h3>Đặc điểm</h3>
-                <p>Server "mất trí nhớ" sau mỗi request</p>
-                <p>Request thứ 2 không liên quan request thứ 1</p>
-            </div>
-            
-            <div class="neo-box rotate-1">
-                <h3>Ý nghĩa</h3>
-                <p>Muốn Server nhớ, Client phải gửi lại Token mỗi lần</p>
-                <p>Giống như: "Tôi là Tuấn, đã đăng nhập lúc sáng"</p>
-            </div>
-        </div>
-        
-        <div class="highlight-box" style="margin-top: 20px;">
-            <i class="fas fa-brain"></i> Server không có bộ nhớ dài hạn
-        </div>
-        
-        <div class="slide-number">17</div>
-    </div>
-
-    <!-- ============================================
-         SLIDE 18: CASE STUDY - THẢM HỌA KNIGHT CAPITAL
-         ============================================ -->
-    <div class="slide-container">
-        
-        <h2>Case Study: Knight Capital (2012)</h2>
-        
-        <div class="neo-box" style="background: #ff0000; color: white; border-color: black;">
-            <h3 style="color: white;">Thảm họa tài chính</h3>
-            <p><i class="fas fa-skull-crossbones"></i> 440 triệu USD trong 45 phút</p>
-            <p><small>Công ty chứng khoán hàng đầu Mỹ</small></p>
-        </div>
-        
-        <div class="grid-2" style="margin-top: 20px;">
-            <div class="neo-box">
-                <h3>Nguyên nhân</h3>
-                <p><i class="fas fa-bug"></i> Lỗi Deploy lên Server</p>
-                <p><i class="fas fa-unlink"></i> Mô hình Client-Server bị lệch pha</p>
-            </div>
-            
-            <div class="neo-box rotate-1">
-                <h3>Chi tiết</h3>
-                <p><i class="fas fa-check-circle"></i> Client gửi lệnh mua bán đúng</p>
-                <p><i class="fas fa-server"></i> 1 trong 8 Server chứa "Logic cũ"</p>
-                <p><i class="fas fa-times-circle"></i> Xử lý sai lệnh giao dịch</p>
-            </div>
-        </div>
-        
-        <div class="slide-number">18a</div>
-    </div>
-
-    <!-- ============================================
-        SLIDE 18b: CASE STUDY - THẢM HỌA KNIGHT CAPITAL (PHẦN 2)
-        ============================================ -->
-    <div class="slide-container">
-
-        <div class="center">
-            <div class="icon-large" style="color: #ff0000;">
-                <i class="fas fa-robot"></i>
-            </div>
-            
-            <div class="highlight-box" style="background: black; color: white; margin: 20px 0;">
-                Server điên cuồng mua đỉnh bán đáy tự động
-            </div>
-        </div>
-        
-        <div class="grid-2">
-            <div class="neo-box">
-                <h3><i class="fas fa-chart-line"></i> Hậu quả</h3>
-                <p>Mất 440 triệu USD trong 45 phút</p>
-                <p>Công ty suýt phá sản</p>
-                <p>Thị trường chứng khoán Mỹ chấn động</p>
-            </div>
-            
-            <div class="neo-box rotate-1">
-                <h3><i class="fas fa-code"></i> Bài học kỹ thuật</h3>
-                <p>Testing trước khi deploy</p>
-                <p>Feature flags cho code mới</p>
-                <p>Rollback plan luôn sẵn sàng</p>
-            </div>
-        </div>
-        
-        <div class="quote-box" style="margin-top: 20px;">
-            <i class="fas fa-quote-left"></i> 
-            "Mô hình Client-Server rất mạnh, nhưng chỉ cần sai lệch 1 dòng code 
-            ở phía Server, hậu quả là khôn lường."
-        </div>
-        
-        <div class="slide-number">18b</div>
-    </div>
-
-    <!-- ============================================
-         SLIDE 19: TỔNG KẾT
-         ============================================ -->
-    <div class="slide-container">
-        
-        <h2>Tổng Kết</h2>
-        
-        <div class="grid-3">
-            <div class="neo-box">
-                <div class="icon-large icon-accent-pink">
-                    <i class="fas fa-comments"></i>
-                </div>
-                <h3>1. Mô hình</h3>
-                <p>Internet hoạt động dựa trên Hỏi - Trả lời</p>
-                <p>Client-Server là nền tảng</p>
-            </div>
-            
-            <div class="neo-box rotate-1">
-                <div class="icon-large icon-accent-cyan">
-                    <i class="fas fa-language"></i>
-                </div>
-                <h3>2. Ngôn ngữ</h3>
-                <p>HTTP là ngôn ngữ chung</p>
-                <p>Headers & Status Codes quan trọng</p>
-            </div>
-            
-            <div class="neo-box rotate-neg-1">
-                <div class="icon-large icon-accent-green">
-                    <i class="fas fa-project-diagram"></i>
-                </div>
-                <h3>3. Quy trình</h3>
-                <p>Mỗi click chuột kích hoạt chuỗi phức tạp</p>
-                <p>Network → Server → Database</p>
-            </div>
-        </div>
-        
-        <div class="highlight-box" style="margin-top: 20px;">
-            <i class="fas fa-lightbulb"></i> Hiểu để xây dựng hệ thống tốt hơn
-        </div>
-        
-        <div class="slide-number">19</div>
-    </div>
 
     <!-- ============================================
          SLIDE 20: Q&A - HỎI ĐÁP
